@@ -1,128 +1,87 @@
-% -----------------------------------------------------------------------------
-% -----------------------------------------------------------------------------
-%  Universidade Federal do Amazonas
-%  Instituto de Computação
-%  Ciência da Computação
-%
-%  Adaptado de pacote abntex2 http://code.google.com/p/abntex2/
-%     por Roberto Cidade Fonseca.
-% -----------------------------------------------------------------------------
-% -----------------------------------------------------------------------------
+% -----------------------------------------------------------
+% Universidade Federal do Amazonas - UFAM
+% Faculdade de Tecnologia - FT
+% Engenharia da Computação - FT05
+% Período Letivo 2023/01
+% -----------------------------------------------------------
+% Monografia de Conclusão de Curso entitulada:
+% IsenSys - Processador de Solicitações de Isenção de
+%           Taxa de Inscrição em Concursos Públicos
+% por Felipe André <felipeandre@ufam.edu.br>
+% -----------------------------------------------------------
+% Utilizando o modelo de pacote 'abntex2', adaptado por
+% Roberto Cidade Fonseca, do Instituto de Computação da UFAM,
+% disponível em: https://icomp.ufam.edu.br/normas-para-tcc/modelos-de-monografia.html
+% -----------------------------------------------------------
 
 \documentclass[
-	% -- opções da classe memoir --
-	12pt,				% tamanho da fonte
-	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	12pt,			% tamanho da fonte
+	openright,		% capítulos começam em página ímpar (insere página vazia caso preciso)
 	oneside,	
-	a4paper,				% tamanho do papel.
-	% -- opções da classe abntex2 --
-	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
-	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
-	%subsection=TITLE,		% títulos de subseções convertidos em letras maiúsculas
-	%subsubsection=TITLE,	% títulos de subsubseções convertidos em letras maiúsculas
-	% -- opções do pacote babel --
-	english,				% idioma adicional para hifenização
-	brazil				% o último idioma é o principal do documento
-]{abntex2/abntex2} % Entre chaves vai o caminho para o arquivo .cls
+	a4paper,		% tamanho do papel
+	english,		% idioma adicional para hifenização
+	brazil			% o último idioma é o principal do documento
+]{abntex2/abntex2}  % Entre chaves vai o caminho para o arquivo .cls
 
-% ---
-% Pacotes básicos
-% ---
-\usepackage{bookman}				% Usa a fonte Bookman Old Style
-\usepackage[T1]{fontenc}			% Selecao de codigos de fonte.
-\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+% ----------| Pacotes básicos |----------
+\usepackage{bookman}			% Usa a fonte 'Bookman Old Style'
+\usepackage[T1]{fontenc}		% Seleção de códigos de fonte
+\usepackage[utf8]{inputenc}		% Codificação do documento (conversão automática dos acentos)
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
 
-\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
-\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[brazilian,hyperpageref]{backref}  % Páginas com as citações na bibl
+\usepackage[alf]{abntex2cite}                 % Citações no padrão ABNT
 
-
-\titulo{Título do trabalho}
+% ----------| Preâmbulo |----------
+\titulo{IsenSys - Processador de Solicitações de Isenção de Taxa de Inscrição em Concursos Públicos}
 \autor{Felipe André Souza da Silva}
 \local{Manaus - AM}
 \data{Outubro de 2023}
-\orientador[Orientador(a)]{Nome e titulação do(a) professor(a) orientador(a)}
-\instituicao{%
-  Universidade Federal do Amazonas
-  \par
-  Faculdade de Tecnologia}
-\curso{%
-  Bacharelado em Engenharia da Computação}
+\orientador[Orientador:]{Dr. Edson Nascimento Silva Júnior}
+\instituicao{Universidade Federal do Amazonas}
+\curso{Bacharelado em Engenharia da Computação}
 \tipotrabalho{Monografia}
-% O preambulo deve conter o tipo do trabalho, o objetivo, 
-% o nome da instituição e a área de concentração 
-\preambulo{Monografia de Graduação apresentada à Faculdade de Tecnologia da Universidade Federal do Amazonas como requisito parcial para a obtenção do grau de bacharel em Engenharia da Computação.}
+\preambulo{Monografia de Graduação apresentada à Faculdade de Tecnologia da UFAM como requisito parcial para a obtenção do grau de bacharel em Engenharia da Computação.}
 
-% Informações do PDF
+% ----------| Informações do PDF |----------
 \makeatletter
 \hypersetup{
-    	%pagebackref=true,
 	pdftitle={\@title}, 
 	pdfauthor={\@author},
-    	pdfsubject={\imprimirpreambulo},
+    pdfsubject={\imprimirpreambulo},
     pdfcreator={LaTeX with abnTeX2},
 	pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
 	bookmarksdepth=4
 }
 \makeatother
 
-% --- 
-% Espaçamentos entre linhas e parágrafos 
-% --- 
-
-% O tamanho do parágrafo é dado por:
+% ----------| Espaçamentos entre linhas e parágrafos |----------
 \setlength{\parindent}{1.3cm}
 
-% Controle do espaçamento entre um parágrafo e outro:
-%\setlength{\parskip}{0.2cm}  % tente também \onelineskip
-
-%\setbeforesecskip{3em}
-%\setbeforesubsecskip{3em}
-
-% ---
-% compila o indice
-% ---
+% ----------| Compila o Índice |----------
 \makeindex
 
-% ---------------------------------------------------
-% INICIO DE DOCUMENTO
-% ---------------------------------------------------
-
+% ----------| Início do Documento |----------
 \begin{document}
 
 \noindent
 
 % Seleciona o idioma do documento (conforme pacotes do babel)
-%\selectlanguage{english}
 \selectlanguage{brazil}
 
-% Retira espaço extra obsoleto entre as frases.
+% Retira espaço extra obsoleto entre as frases
 \frenchspacing
 
-% ----------------------------------------------------------
-% ELEMENTOS PRÉ-TEXTUAIS
-% ----------------------------------------------------------
-% \pretextual
-
-% ---
-% Capa
-% ---
+% Compila a Capa
 \imprimircapa
-% ---
 
-% ---
-% Folha de rosto
-% (o * indica que haverá a ficha bibliográfica)
-% ---
+% Compila a Folha de rosto (o * indica que haverá a ficha bibliográfica)
 \imprimirfolhaderosto*
-% ---
 
-% ---
-% Inserir folha de aprovação
-% ---
-
+% Folha de aprovação
+%
 % Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
 % 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
 % do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
@@ -134,15 +93,13 @@
 	\parindent=0pt
 	\setlength{\ABNTEXsignskip}{1.5cm}
 
-	Monografia de Graduação sob o título <\textit{Título da monografia}> apresentada por <Nome do aluno> e aceita pelo Instituto de Computação da Universidade Federal do Amazonas, sendo aprovada por todos os membros da banca examinadora abaixo especificada:
+	Monografia de Graduação sob o título \textit{\imprimirtitulo} apresentada por {\imprimirautor} e aceita pela Faculdade de Tecnologia da {\imprimirinstituicao}, sendo aprovada por todos os membros da banca examinadora abaixo especificada:
 
-	\assinatura{\fontsize{12}{15}\selectfont Titulação e nome do(a) orientador(a) \\ \fontsize{11}{15}\selectfont \imprimirorientadorRotulo~ \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\assinatura{\fontsize{12}{15}\selectfont {\imprimirorientador} \\ \fontsize{11}{15} \selectfont {\fontsize{10}{12}\selectfont Instituto de Computação \par \imprimirinstituicao }}
 	\vspace{1cm}
-	\assinatura{\fontsize{12}{15}\selectfont Titulação e nome do(a) membro da banca examinadora \\ \fontsize{11}{15}\selectfont Co-orientador(a), se houver \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\assinatura{Dr. Walter Esteves de Castro Júnior \\ {\fontsize{10}{12}\selectfont Departamento de Física \par \imprimirinstituicao}}
 	\vspace{1cm}
-	\assinatura{Titulação e nome do membro da banca examinadora \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
-	\vspace{1cm}
-	\assinatura{Titulação e nome do membro da banca examinadora \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\assinatura{Nome do Membro 2 \\ {\fontsize{10}{12}\selectfont Departamento de Membro 2 \par \imprimirinstituicao}}
 	\vfill
       
 	\begin{center}
@@ -154,41 +111,31 @@
   
 \end{folhadeaprovacao}
 
-% ---
 % Dedicatória
-% ---
 \begin{dedicatoria}
    \vspace*{\fill}
    \noindent
-   \leftskip=5cm
-
-   Homenagem que o autor presta a uma ou mais pessoas.
-
+   \leftskip=7cm
+   \textit{À minha mãe, mulher guerreira e inspiradora quem me deu forças para concluir esta graduação.}
    \vspace{5cm}
 \end{dedicatoria}
-% ---
 
-% ---
 % Agradecimentos
-% ---
 \begin{agradecimentos}
 
 Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elaboração do trabalho, sejam eles pessoas ou mesmo organizações.
 
 \end{agradecimentos}
 
-% ---
 % Epígrafe
-% ---
 \begin{epigrafe}
     \vspace*{\fill}
 	\begin{flushright}
-		\textit{Citação}
+		\textit{Lorem ipsum}
 
 		Autor
 	\end{flushright}\vspace{4cm}
 \end{epigrafe}
-% ---
 
 % ---
 % RESUMOS
