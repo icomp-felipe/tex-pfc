@@ -1,0 +1,512 @@
+% -----------------------------------------------------------------------------
+% -----------------------------------------------------------------------------
+%  Universidade Federal do Amazonas
+%  Instituto de Computação
+%  Ciência da Computação
+%
+%  Adaptado de pacote abntex2 http://code.google.com/p/abntex2/
+%     por Roberto Cidade Fonseca.
+% -----------------------------------------------------------------------------
+% -----------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+	oneside,	
+	a4paper,				% tamanho do papel.
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,		% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE,	% títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,				% idioma adicional para hifenização
+	brazil				% o último idioma é o principal do documento
+]{abntex2/abntex2} % Entre chaves vai o caminho para o arquivo .cls
+
+% ---
+% Pacotes básicos
+% ---
+\usepackage{bookman}				% Usa a fonte Bookman Old Style
+\usepackage[T1]{fontenc}			% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+
+\titulo{Título do trabalho}
+\autor{Felipe André Souza da Silva}
+\local{Manaus - AM}
+\data{Outubro de 2023}
+\orientador[Orientador(a)]{Nome e titulação do(a) professor(a) orientador(a)}
+\instituicao{%
+  Universidade Federal do Amazonas
+  \par
+  Faculdade de Tecnologia}
+\curso{%
+  Bacharelado em Engenharia da Computação}
+\tipotrabalho{Monografia}
+% O preambulo deve conter o tipo do trabalho, o objetivo, 
+% o nome da instituição e a área de concentração 
+\preambulo{Monografia de Graduação apresentada à Faculdade de Tecnologia da Universidade Federal do Amazonas como requisito parcial para a obtenção do grau de bacharel em Engenharia da Computação.}
+
+% Informações do PDF
+\makeatletter
+\hypersetup{
+    	%pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+    	pdfsubject={\imprimirpreambulo},
+    pdfcreator={LaTeX with abnTeX2},
+	pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
+	bookmarksdepth=4
+}
+\makeatother
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+%\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+%\setbeforesecskip{3em}
+%\setbeforesubsecskip{3em}
+
+% ---
+% compila o indice
+% ---
+\makeindex
+
+% ---------------------------------------------------
+% INICIO DE DOCUMENTO
+% ---------------------------------------------------
+
+\begin{document}
+
+\noindent
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+
+% Isto é um exemplo de Folha de aprovação, elemento obrigatório da NBR
+% 14724/2011 (seção 4.2.1.3). Você pode utilizar este modelo até a aprovação
+% do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
+% imagem da página assinada pela banca com o comando abaixo:
+%
+% \includepdf{folhadeaprovacao_final.pdf}
+%
+\begin{folhadeaprovacao}
+	\parindent=0pt
+	\setlength{\ABNTEXsignskip}{1.5cm}
+
+	Monografia de Graduação sob o título <\textit{Título da monografia}> apresentada por <Nome do aluno> e aceita pelo Instituto de Computação da Universidade Federal do Amazonas, sendo aprovada por todos os membros da banca examinadora abaixo especificada:
+
+	\assinatura{\fontsize{12}{15}\selectfont Titulação e nome do(a) orientador(a) \\ \fontsize{11}{15}\selectfont \imprimirorientadorRotulo~ \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\vspace{1cm}
+	\assinatura{\fontsize{12}{15}\selectfont Titulação e nome do(a) membro da banca examinadora \\ \fontsize{11}{15}\selectfont Co-orientador(a), se houver \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\vspace{1cm}
+	\assinatura{Titulação e nome do membro da banca examinadora \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\vspace{1cm}
+	\assinatura{Titulação e nome do membro da banca examinadora \\ {\fontsize{10}{12}\selectfont Departamento \par Universidade}}
+	\vfill
+      
+	\begin{center}
+		\fontsize{12}{15}\selectfont
+		\vspace*{0.5cm}
+		\imprimirlocal, data de aprovação (por extenso).
+		\vspace*{1cm}
+	\end{center}
+  
+\end{folhadeaprovacao}
+
+% ---
+% Dedicatória
+% ---
+\begin{dedicatoria}
+   \vspace*{\fill}
+   \noindent
+   \leftskip=5cm
+
+   Homenagem que o autor presta a uma ou mais pessoas.
+
+   \vspace{5cm}
+\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+
+Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elaboração do trabalho, sejam eles pessoas ou mesmo organizações.
+
+\end{agradecimentos}
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+    \vspace*{\fill}
+	\begin{flushright}
+		\textit{Citação}
+
+		Autor
+	\end{flushright}\vspace{4cm}
+\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+
+ 	O resumo deve apresentar de forma concisa os pontos relevantes de um texto, fornecendo uma visão rápida e clara do conteúdo e das conclusões do trabalho. O texto, redigido na forma impessoal do verbo, é constituído de uma sequência de frases concisas e objetivas e não de uma simples enumeração de tópicos, não ultrapassando 500 palavras, seguido, logo abaixo, das palavras representativas do conteúdo do trabalho, isto é, palavras-chave e/ou descritores. Por exemplo, deve-se evitar, na redação do resumo, o uso de fórmulas, equações, diagramas e símbolos, optando-se, quando necessário, pela transcrição na forma extensa, além de não incluir citações bibliográficas.
+
+ \textit{Palavras-chave}: Palavra-chave 1, Palavra-chave 2, Palavra-chave 3.
+
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+ \begin{otherlanguage*}{english}
+   This is the english abstract.
+
+   \vspace{\onelineskip}
+ 
+   \noindent 
+   \textit{Keywords}: Keyword 1, Keyword 2, Keyword 3.
+ \end{otherlanguage*}
+\end{resumo}
+
+% ---
+% inserir lista de figuras
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de tabelas
+% ---
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
+% ---
+
+% ---
+% inserir lista de abreviaturas e siglas
+% ---
+\begin{siglas}
+  \item[ABNT] Associação Brasileira de Normas Técnicas
+  \item[abnTeX] ABsurdas Normas para TeX
+\end{siglas}
+% ---
+
+% ---
+% inserir lista de símbolos
+% ---
+\begin{simbolos}
+  \item[$ \lambda $] Lambda
+\end{simbolos}
+% ---
+
+% ---
+% inserir o sumario
+% ---
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+\cleardoublepage
+% ---
+
+\textual
+
+\chapter{Introdução}
+
+	A introdução é a parte inicial do texto e que possibilita uma visão geral de
+todo o trabalho, devendo constar a delimitação do assunto tratado, objetivos
+da pesquisa, motivação para o desenvolvimento da mesma e outros
+elementos necessários para situar o tema do trabalho.
+
+	\section{Contextualização ou definição do problema}
+	
+		Qual o problema que você está tentando resolver através do trabalho? Quais
+		as restrições de projeto envolvidas?
+
+		Nesta seção, você deve descrever a situação ou o contexto geral referente ao
+		assunto em questão, devem constar informações atualizadas visando a
+		proporcionar maior consistência ao trabalho.
+
+	\section{Objetivos}
+
+		Os objetivos constituem a finalidade de um trabalho científico, ou seja, a
+		meta que se pretende atingir com a elaboração da pesquisa.
+		
+		Podemos distinguir dois tipos de objetivos em um trabalho científico:
+		
+		\begin{itemize}
+			\item Objetivos gerais – são aqueles mais amplos. São as metas de longo alcance, as contribuições que se desejam oferecer com a execução da pesquisa.
+
+			\item Objetivos específicos – são a delimitação das metas mais específicas dentro do trabalho. São elas que, somadas, conduzirão ao desfecho do objetivo geral.
+		\end{itemize}
+		
+		Como os objetivos indicam ação, recomenda-se que eles sejam definidos por meio de verbos, tais como analisar, avaliar, caracterizar, discutir, diagnosticar, investigar, implantar, pesquisar, realizar, determinar, etc.
+		
+	\section{Organização do Trabalho}
+	
+		Nesta seção deve ser apresentado como está organizado o trabalho, sendo descrito, portanto, do que trata cada capítulo.
+
+
+% ---
+% Capítulo 2
+% ---
+\chapter{Capítulo 2}
+
+	Este é o primeiro capítulo da parte central do trabalho, isto é, o
+desenvolvimento, a parte mais extensa de todo o trabalho. Geralmente o
+desenvolvimento é dividido em capítulos, cada um com seções e subseções,
+cujo tamanho e número de divisões variam em função da natureza do
+conteúdo do trabalho.
+
+	Em geral, a parte de desenvolvimento é subdividida em três capítulos:
+
+	\begin{itemize}
+		\item \textit{referencial ou embasamento teórico} – texto no qual se deve apresentar os aspectos teóricos, isto é, os conceitos utilizados e a definição dos mesmos; nesta parte faz-se a revisão de literatura sobre o assunto, resumindo-se os resultados de estudos feitos por outros autores, cujas obras citadas e consultadas devem constar nas referências;
+	
+		\item \textit{metodologia do trabalho ou procedimentos metodológicos} – deve constar o instrumental, os métodos e as técnicas aplicados para a elaboração do trabalho;
+	
+		\item \textit{resultados} – devem ser apresentados, de forma objetiva, precisa e clara, tanto os resultados positivos quanto os negativos que foram obtidos com o desenvolvimento do trabalho, sendo feita uma discussão que consiste na avaliação circunstanciada, na qual se estabelecem relações, deduções e generalizações.
+	\end{itemize}
+
+	É recomendável que o número total de páginas referente à parte de desenvolvimento não ultrapasse 60 (sessenta) páginas.
+
+	\section{Seção 1}
+
+		Teste de figura:
+
+		\begin{figure}[h!]
+			\begin{center}
+			    \includegraphics[scale=0.5]{abntex2/ufam-logo}
+			\end{center}
+			\caption{\label{fig_grafico}Logo da UFAM. Retirado da Internet}
+		\end{figure}
+		
+		Continuação do texto.
+		
+	\section{Seção 2}
+	
+		Referenciamento da figura inserida na seção anterior: 2.1
+		
+	\section{Seção 3}
+	
+		Seção 3
+		
+	\section{Seção 4}
+	
+		Seção 4
+
+% ---
+% Capítulo 3
+% ---
+\chapter{Capítulo 3}
+
+	Algumas regras devem ser observadas na redação da monografia:
+
+	\begin{itemize}
+		\item ser claro, preciso, direto, objetivo e conciso, utilizando frases curtas e evitando ordens inversas desnecessárias;
+		
+		\item construir períodos com no máximo duas ou três linhas, bem como parágrafos com cinco linhas cheias, em média, e no máximo oito (ou seja, não construir parágrafos e períodos muito longos, pois isso cansa o(s) leitor(es) e pode fazer com que ele(s) percam a linha de raciocínio desenvolvida);
+		
+		\item a simplicidade deve ser condição essencial do texto; a simplicidade do texto não implica necessariamente repetição de formas e frases desgastadas, uso exagerado de voz passiva (como será iniciado, será realizado), pobreza vocabular etc. Com palavras conhecidas de todos, é possível escrever de maneira original e criativa e produzir frases elegantes, variadas, fluentes e bem alinhavadas;
+		
+		\item adotar como norma a ordem direta, por ser aquela que conduz mais facilmente o leitor à essência do texto, dispensando detalhes irrelevantes e indo diretamente ao que interessa, sem rodeios (verborragias);
+
+		\item não começar períodos ou parágrafos seguidos com a mesma palavra, nem usar repetidamente a mesma estrutura de frase;
+
+		\item desprezar as longas descrições e relatar o fato no menor número possível de palavras;
+		
+		\item recorrer aos termos técnicos somente quando absolutamente indispensáveis e nesse caso colocar o seu significado entre parênteses (ou seja, não se deve admitir que todos os que lerão o trabalho já dispõem de algum conhecimento desenvolvido no mesmo);
+		
+		\item dispensar palavras e formas empoladas ou rebuscadas, que tentem
+transmitir ao leitor mera ideia de erudição;
+
+		\item não perder de vista o universo vocabular do leitor, adotando a seguinte
+regra prática: nunca escrever o que não se diria;
+
+		\item usar termos coloquiais ou de gíria com extrema parcimônia (ou mesmo
+nem serem utilizados) e apenas em casos muito especiais, para não darem ao leitor a ideia de vulgaridade e descaracterizar o trabalho;
+
+		\item ser rigoroso na escolha das palavras do texto, desconfiando dos
+sinônimos perfeitos ou de termos que sirvam para todas as ocasiões;
+
+		\item em geral, há uma palavra para definir uma situação;
+
+		\item encadear o assunto de maneira suave e harmoniosa, evitando a
+criação de um texto onde os parágrafos se sucedem uns aos outros
+como compartimentos estanques, sem nenhuma fluência entre si;
+
+		\item ter um extremo cuidado durante a redação do texto, principalmente
+com relação às regras gramaticais e ortográficas da língua;
+
+		\item geralmente todo o texto é escrito na forma impessoal do verbo, não se utilizando,
+portanto, de termos em primeira pessoa, seja do plural ou do singular.
+
+	\end{itemize}
+
+	Continuação.
+	
+	\section{Seção 1}
+	
+		Teste de uma tabela:
+
+		\begin{table}[htbp]
+			\caption{Tabela sem sentido.}
+			\label{tabela-ssentido}
+			\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				Título Coluna & Título Coluna \\
+				1 & 2 \\
+				\hline
+				X & Y \\
+				\hline
+				X & W \\
+				\hline
+			\end{tabular}
+			\end{center}
+		\end{table}
+		
+	\section{Seção 2}
+	
+		Seção 2.
+
+	\section{Seção 3}
+	
+		Seção 3.
+		
+% - - -
+% Capítulo 4
+% - - -
+\chapter{Capítulo 4}
+
+	\section{Seção 1}
+	
+		Teste de símbolo:
+		
+		$\lambda$
+		
+	\section{Seção 2}
+	
+		Teste de abreviaturas:
+		
+% - - -
+% Capítulo 5
+% - - -
+\chapter{Capítulo 5}
+
+	\section{Seção 1}
+	
+		Seção 1.
+	
+	\section{Seção 2}
+	
+		Alguns exemplos de citação:
+
+		Na tese de Doutorado de Paquete, discute-se sobre algoritmos de busca local estocásticos aplicados a problemas de Otimização Combinatória considerando múltiplos objetivos. Por sua vez, o trabalho de, publicado nos anais do IEEE CEC de 2003, mostra uma técnica de arquivamento também empregada no desenvolvimento de algoritmos evolucionários multiobjetivo, trabalho esse posteriormente estendido para um capítulo de livro dos mesmos autores. Por m, no relatório técnico de Jaszkiewicz (1998), fala-se sobre um algoritmo genético híbrido para problemas multi- critério, enquanto no artigo de jornal de Lopez et al. (LÓPEZ-IBÁÑEZ; PAQUETE; STÜTZLE, 2006) trata-se do trade-o entre algoritmos genéticos e metodologias de busca local, também aplicados no contexto multicritério e relacionado de alguma forma ao trabalho de Jaszkiewicz (1998).
+
+		Outros exemplos relacionados encontram-se em (SILBERSCHATZ; KORTH; SUDARSHAN, 2002) (livro), (TURAU, 2001) (referência da Web) e (AGRA, 2004) (dissertação de Mestrado).
+
+		\subsection{Subseção 2.1}
+	
+			Seção 2.1
+			
+	\section{Seção 3}
+	
+		Seção 3
+		
+\chapter{Considerações finais}
+
+	As considerações finais formam a parte final (fechamento) do texto, sendo dito de forma resumida (1) o que foi desenvolvido no presente trabalho e quais os resultados do mesmo, (2) o que se pôde concluir após o desenvolvimento bem como as principais contribuições do trabalho, e (3) perspectivas para o desenvolvimento de trabalhos futuros. O texto referente às considerações finais do autor deve salientar a extensão e os resultados da contribuição do trabalho e os argumentos utilizados estar baseados em dados comprovados e fundamentados nos resultados e na discussão do texto, contendo deduções lógicas correspondentes aos objetivos do trabalho, propostos inicialmente.
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+\Spacing{1.5}
+% -----------------------------------------------------------------------------
+% Referencias Bibliograficas
+% -----------------------------------------------------------------------------
+\bibliography{experimental}
+
+% ----------------------------------------------------------
+% Apêndices
+% ----------------------------------------------------------
+
+% ---
+% Inicia os apêndices
+% ---
+\begin{apendicesenv}
+
+% ----------------------------------------------------------
+\chapter{Primeiro apêndice}
+% ----------------------------------------------------------
+
+Os apêndices são textos ou documentos elaborados pelo autor, a fim de complementar sua argumentação, sem prejuízo da unidade nuclear do trabalho.
+
+\end{apendicesenv}
+
+% Anexos
+% ----------------------------------------------------------
+
+% ---
+% Inicia os anexos
+% ---
+\begin{anexosenv}
+
+% ---
+\chapter{Primeiro anexo.}
+% ---
+
+Os anexos são textos ou documentos não elaborados pelo autor, que servem de fundamentação, comprovação e ilustração.
+
+\end{anexosenv}
+
+\end{document}
