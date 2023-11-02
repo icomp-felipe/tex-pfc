@@ -371,6 +371,42 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 
 \chapter{Desenvolvimento do \textit{IsenSys}}
 
+	Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de forma completa porém, concisa.
+	
+	O desenvolvimento do \textit{motor} do sistema é regido pelas normas de formato de arquivo e diretivas definidas no documento de orientações gerais do SISTAC \cite{sistac-gerais} e no manual de envio e recebimento de arquivos \cite{sistac-formatos}, versão 10.0, publicada em 24/06/2016.
+	
+	Os requisitos funcionais (RF) do sistema são:
+	
+	\begin{itemize}
+
+		\item O sistema deverá permitir a importação de dados de candidatos através de arquivos do tipo \textit{csv} ou planilhas do \textit{Microsoft Excel} (RF01);
+		\item O sistema deverá permitir o cadastro e edição de dados da instituição gerente (RF02);
+		\item O sistema deverá realizar testes de integridade nos dados importados (RF03);
+		\item O sistema deverá gerar arquivos de importação para o SISTAC (RF04);
+		\item O sistema só pode entregar um arquivo de importação com os dados de candidatos em sua plena completude e integridade (RF05);
+		\item Dados de candidatos que foram informados de forma incompleta ou inválida deverão ser exportados em uma planilha de erros (RF06);
+		\item O sistema deverá permitir a importação do arquivo de retorno do SISTAC (RF07);
+		\item A partir do arquivo de retorno do SISTAC, o sistema deverá produzir editais de publicação de resultados (RF08);
+		\item O sistema também deve permitir a importação de uma planilha com erros, para inclusão nos editais públicos (RF09);
+		\item O sistema deve gerar relatórios de estatísticas de candidatos deferidos e indeferidos (RF10);
+		\item O sistema deverá gerar um relatório de similaridade entre nomes de candidatos recursantes (RF11).
+		
+	\end{itemize}
+	
+	Os requisitos não-funcionais (RF) do sistema são:
+	
+	\begin{itemize}
+		
+		\item A linguagem \textit{Java Standard Edittion (Java SE)} foi utilizada no desenvolvimento da aplicação (RNF01);
+		\item A versão mínima da \textit{Java Virtual Machine (JVM)} a ser utilizada é a 15 (RNF02);
+		\item O projeto foi desenvolvido utilizando o \textit{Java Development Kit (OpenJDK)} na versão 21 (RNF03);
+		\item A suíte de interface gráfica utilizada é o \textit{Java Swing} (RNF04);
+		\item Por questões de simplicidade, todas as telas foram construídas utilizando layout absoluto com janela não redimensionável (RNF05);
+		\item A versão do \textit{Apache POI} utilizada é a 5.2.3, lançada em 17/09/2022 (RNF06);
+		\item A versão do \textit{JasperReports\textregistered} utilizada é a 6.26.0, lançada em 11/09/2023 (RNF07);
+		\item O sistema pode ser executado em qualquer computador com suporte mínimo à \textit{JDK 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF08).
+		
+	\end{itemize}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
