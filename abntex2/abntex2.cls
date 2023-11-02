@@ -254,11 +254,11 @@
 
 \RequirePackage{titlesec}
 \titlespacing*{\section}
-{0pt}{2\baselineskip}{0pt}
+{0pt}{0\baselineskip}{0pt}
 \titlespacing*{\subsection}
-{0pt}{2\baselineskip}{0pt}
+{0pt}{0\baselineskip}{0pt}
 \titlespacing*{\subsubsection}
-{0pt}{2\baselineskip}{0pt}
+{0pt}{0\baselineskip}{0pt}
 
 % ------------------------------------------------------------------------
 % ------------------------------------------------------------------------
@@ -841,6 +841,9 @@
 \newcommand{\titulo}[1]{\title{#1}}
 \newcommand{\imprimirtitulo}{\thetitle}
 
+\newcommand{\tituloeng}[1]{\def\@tituloeng{#1}}
+\newcommand{\imprimirtituloeng}{\@tituloeng}
+
 % Comandos de dados - autor (use \and para multiplos autores)
 \newcommand{\autor}[1]{\author{#1}}
 \newcommand{\imprimirautor}{\theauthor}
@@ -985,6 +988,22 @@
 
    \begin{abstract}
   }{\end{abstract}\PRIVATEclearpageifneeded}
+
+\newenvironment{abstracteng}[1][\resumoname]{%
+  \PRIVATEbookmarkthis{#1}
+  \renewcommand{\abstractnamefont}{\fontsize{18}{22}\selectfont}
+  \renewcommand{\abstractname}{\ABNTEXchapterupperifneeded{#1}}
+
+  {\begin{center}
+  \fontsize{18}{22}\selectfont\imprimirtituloeng
+  \end{center}}\vspace*{1cm}
+  {\begin{flushright}
+  \fontsize{12}{15}\selectfont
+   Author: \imprimirautor \par Advisor: \imprimirorientador
+   \end{flushright}}\vspace*{1.5cm}
+
+  \begin{abstract}
+ }{\end{abstract}\PRIVATEclearpageifneeded}
   
 \newenvironment{resumoumacoluna}[1][\resumoname]{%
    \PRIVATEbookmarkthis{#1}

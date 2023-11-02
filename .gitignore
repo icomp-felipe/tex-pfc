@@ -1,4 +1,7 @@
 *.aux
+*.bbl
+*.blg
+*.brf
 *.idx
 *.lof
 *.log

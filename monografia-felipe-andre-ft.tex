@@ -30,15 +30,39 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+\usepackage{indentfirst}        % Indenta o primeiro parágrafo de cada seção.
 
 \usepackage[brazilian,hyperpageref]{backref}  % Páginas com as citações na bibl
-\usepackage[alf]{abntex2cite}                 % Citações no padrão ABNT
+\usepackage[num]{abntex2cite}                 % Citações no padrão ABNT
+\citebrackets[]
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+	Nenhuma citação no texto.%
+	\or
+	Citado na página #2.%
+	\else
+	Citado #1 vezes nas páginas #2.%
+	\fi}%
+% ---
 
 % ----------| Preâmbulo |----------
 \titulo{IsenSys - Processador de Solicitações de Isenção de Taxa de Inscrição em Concursos Públicos}
+\tituloeng{IsenSys - A Processor of Public Examination Subscription Fee Requests for Exemption}
 \autor{Felipe André Souza da Silva}
 \local{Manaus - AM}
-\data{Outubro de 2023}
+\data{Novembro de 2023}
 \orientador[Orientador:]{Dr. Edson Nascimento Silva Júnior}
 \instituicao{Universidade Federal do Amazonas}
 \curso{Bacharelado em Engenharia da Computação}
@@ -53,6 +77,11 @@
     pdfsubject={\imprimirpreambulo},
     pdfcreator={LaTeX with abnTeX2},
 	pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=black,
+	filecolor=magenta,
+	urlcolor=blue,
 	bookmarksdepth=4
 }
 \makeatother
@@ -97,9 +126,9 @@
 
 	\assinatura{\fontsize{12}{15}\selectfont {\imprimirorientador} \\ \fontsize{11}{15} \selectfont {\fontsize{10}{12}\selectfont Instituto de Computação \par \imprimirinstituicao }}
 	\vspace{1cm}
-	\assinatura{Dr. Walter Esteves de Castro Júnior \\ {\fontsize{10}{12}\selectfont Departamento de Física \par \imprimirinstituicao}}
+	\assinatura{Dra. Fabíola Guerra Nakamura \\ {\fontsize{10}{12}\selectfont Instituto de Computação \par \imprimirinstituicao}}
 	\vspace{1cm}
-	\assinatura{Nome do Membro 2 \\ {\fontsize{10}{12}\selectfont Departamento de Membro 2 \par \imprimirinstituicao}}
+	\assinatura{Dr. José Francisco Magalhães Netto \\ {\fontsize{10}{12}\selectfont Instituto de Computação \par \imprimirinstituicao}}
 	\vfill
       
 	\begin{center}
@@ -116,7 +145,7 @@
    \vspace*{\fill}
    \noindent
    \leftskip=7cm
-   \textit{À minha mãe, mulher guerreira e inspiradora quem me deu forças para concluir esta graduação.}
+   \textit{À minha mãe, mulher guerreira e fonte de inspiração e forças para conclusão deste curso de graduação.}
    \vspace{5cm}
 \end{dedicatoria}
 
@@ -147,21 +176,26 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 
 	Este documento versa sobre o desenvolvimento de um aplicativo computacional para processar solicitações de isenção de taxa de inscrição em concursos públicos de acordo com as normativas do Ministério do Desenvolvimento Social do Brasil e os interesses da Comissão Permanente de Concursos da UFAM. O sistema, que opera coletivamente com o Sistema de Isenção de Taxa de Concurso, do Ministério do Desenvolvimento Social do Brasil, permite que um órgão gestor prepare dados pessoais de candidatos solicitantes de isenção de taxa de inscrição para envio ao sistema do Ministério do Desenvolvimento, e após o processamento de tais solicitações pelo sistema, gere editais de publicação e relatórios com o objetivo de garantir a lisura e transparência deste processo tão democrático. No desenvolvimento foi utilizada a linguagem de programação \textit{Java} e tecnologias de grande consolidação no mercado como o \textit{Jasper Reports}, para geração de relatórios e o \textit{Apache POI}, adicionando suporte a arquivos do \textit{Microsoft Excel}.
 
-	\textit{Palavras-chave}: isenção de taxa de inscrição, concurso, Ministério do Desenvolvimento Social, Java.
+	\vspace{\onelineskip}
+
+	\noindent
+	\textit{Palavras-chave}: taxa de inscrição, isenção, concurso público, Java.
 
 \end{resumo}
 
 % resumo em inglês
-\begin{resumo}[Abstract]
+\begin{abstracteng}[Abstract]
  \begin{otherlanguage*}{english}
-   This is the english abstract.
+ 	
+ 	This document relates to the development of a computer application that facilitates applying for the waiving of fees when sitting public examinations. This is in accordance with the guidelines set by the Brazilian Ministry of Social Development and the requirements of the UFAM Permanent Commission for Examinations. The app system works with the System of Exemption Fees of the Ministry, allowing anyone concerned to handle the personal data of candidates applying for exemption, in order for it to be sent to the Ministry's system. After this process, it creates a public notice and reports, guaranteeing smoothness and transparency in the democratic process. \textit{Java} programming language was used in the development of the app. Other compatible technologies, such as \textit{Jasper Reports}, was used to generate reports and the \textit{Apache POI}, for the processing of \textit{Microsoft Excel} files.
 
    \vspace{\onelineskip}
  
    \noindent 
-   \textit{Keywords}: Keyword 1, Keyword 2, Keyword 3.
+   \textit{Keywords}: examination fee, exemption, public examination, Java.
+   
  \end{otherlanguage*}
-\end{resumo}
+\end{abstracteng}
 
 % ---
 % inserir lista de figuras
@@ -210,18 +244,18 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 \textual
 
 \chapter{Introdução}
-
-	Com missão de cultivar o saber em todas as áreas do conhecimento por meio do ensino, pesquisa e da extensão, a Universidade Federal do Amazonas (UFAM) é uma das principais
-	portas de entrada para o desenvolvimento pessoal e intelectual, contando com cerca de xxxx alunos e 3400 servidores distribuídos em seis \textit{campi} ao redor do Estado do Amazonas, em 2023.
+	
+	Com a missão de cultivar o saber em todas as áreas do conhecimento por meio do ensino, pesquisa e da extensão, a Universidade Federal do Amazonas (UFAM) é uma das principais
+	portas de entrada para o desenvolvimento pessoal e intelectual, contando com cerca de 29.000 alunos e 3.400 servidores distribuídos em seis \textit{campi} ao redor do Estado do Amazonas, em 2023.
 	
 	Tomando como objeto de estudo e inspiração para este trabalho, um setor específico desta universidade foi adotado: a Comissão Permanente de Concursos (COMPEC), que é um órgão
 	suplementar responsável pela execução dos principais processos seletivos de graduação e concursos para provimento de cargos da universidade.
 	
-	Uma das tarefas mais democráticas e delicadas executadas por este setor é o processo de isenção de pagamento de taxa de inscrição em processos seletivos ou concursos.
+	Uma das tarefas mais democráticas e delicadas executadas por este setor é o processo de isenção de pagamento de taxa de inscrição em concursos e processos seletivos.
 	
 	Atualmente a COMPEC, como qualquer outra entidade do poder executivo do Brasil, adota três tipos de categorias de isenção: por cadastro no Registro Brasileiro de Doadores Voluntários de Medula Óssea (REDOME), por comprovação de baixa renda e curso de nível médio de forma gratuita e por meio do Cadastro Único para Programas Sociais do Governo Federal (CadÚnico).
 	
-	Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, onde 8.353 deles tiveram isenção concedida.
+	Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, onde 8.353 deles tiveram isenção de taxa de inscrição concedida.
 	
 	Com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a categoria de isenção mais volumosa em termos de solicitação: a categoria via CadÚnico, regulamentada pelo decreto n{\textdegree} 6.593, de 2 de outubro de 2008.
 	
@@ -252,15 +286,15 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 % ---
 % Capítulo 2
 % ---
-\chapter{Capítulo 2}
+\chapter{Referencial Teórico}
 
-	Este é o primeiro capítulo da parte central do trabalho, isto é, o
-desenvolvimento, a parte mais extensa de todo o trabalho. Geralmente o
-desenvolvimento é dividido em capítulos, cada um com seções e subseções,
-cujo tamanho e número de divisões variam em função da natureza do
-conteúdo do trabalho.
+	Este capítulo referencia as principais ferramentas utilizadas no desenvolvimento da aplicação \textit{IsenSys}, tais como linguagem de programação e bibliotecas de funções.
+	
+	\section{Java}
+	
+	A linguagem de programação Java \cite{java} é magnífica!
 
-	Em geral, a parte de desenvolvimento é subdividida em três capítulos:
+	Em geral \cite{ibge1993}, a parte de desenvolvimento é subdividida em três capítulos:
 
 	\begin{itemize}
 		\item \textit{referencial ou embasamento teórico} – texto no qual se deve apresentar os aspectos teóricos, isto é, os conceitos utilizados e a definição dos mesmos; nesta parte faz-se a revisão de literatura sobre o assunto, resumindo-se os resultados de estudos feitos por outros autores, cujas obras citadas e consultadas devem constar nas referências;
@@ -428,7 +462,7 @@ portanto, de termos em primeira pessoa, seja do plural ou do singular.
 % -----------------------------------------------------------------------------
 % Referencias Bibliograficas
 % -----------------------------------------------------------------------------
-\bibliography{experimental}
+\bibliography{monografia-felipe-andre-ft}
 
 % ----------------------------------------------------------
 % Apêndices
