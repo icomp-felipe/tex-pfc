@@ -415,7 +415,7 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 	
 	Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de candidatos para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
 	
-	\subsection{Modelagem de um Candidato}
+	\subsection{Modelagem de um Candidato} \label{candidato}
 	
 	Os dados pessoais de um candidato são o objeto principal deste sistema, pois são eles quem solicitam isenção e têm uma resposta de deferimento ou não destas. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
 
@@ -535,7 +535,7 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		\end{center}
 	\end{figure}
 
-	\subsection{A classe \textit{ParseResult}}
+	\subsection{A classe \textit{ParseResult}} \label{cap-parse-result}
 	
 	Esta classe é responsável por concentrar o resultado da extração de dados do(s) arquivo(s) de entrada em duas listas:
 		
@@ -645,11 +645,87 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		\end{center}
 	\end{figure}
 	
+	\subsection{Exportadores de Dados}
+	
+	O estado final do processo de importação de dados dos candidatos solicitantes consiste na concentração deles na classe \textit{ParseResult} [\ref{cap-parse-result}]. A partir daqui, os dados dos candidatos considerados válidos pela classe \textit{CandidatoBuilder} estão prontos para serem exportados para o arquivo no formato de envio do SISTAC \cite{sistac-formatos}. Os dados de solicitações inválidas são exportados para uma planilha do \textit{Microsoft Excel}, para futuro processamento no módulo de retorno.
+	
+	\subsubsection{O exportador \textit{CSVSheetWriter}}
+	
+	Esta classe tem como função exportar os dados de candidatos válidos para o(s) arquivo(s) no formato de envio do SISTAC. Na primeira linha do arquivo é impresso o cabeçalho com alguns dados da instituição gestora (configurados previamente) e nas demais, os dados são dispostos de acordo com o formatação exigida no manual do SISTAC \cite{sistac-formatos}.
+	
+	Empiricamente foi descoberto que o SISTAC tem um limite máximo de candidatos por arquivo de envio setado em 2000. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de candidatos ultrapasse este limite.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama de classe do exportador de dados \textit{CSVSheetWriter}}
+			\label{csvwriter-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{CSVSheetWriter}} \\ \hline
+				\\ \hline
+				+write()                                      \\
+				+getSistacFilename()                          \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsubsection{O exportador \textit{ExcelSheetWriter}}
+	
+	Esta classe tem a função de exportar os dados de candidatos inválidos para uma planilha do \textit{Microsoft Excxel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder}.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama de classe do exportador de dados \textit{ExcelSheetWriter}}
+			\label{excelwriter-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{ExcelSheetWriter}} \\ \hline
+				\\ \hline
+				+write()                                      \\
+				+printHeader()                          \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
 	\subsection{Integração do Módulo de Envio}
 	
-	Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados dos candidatos para envio ao SISTAC.
+	Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados dos candidatos para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de um candidato, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama do Fluxo de Dados dos Candidatos}
+			\label{envio-uml}
+			
+			\includegraphics[scale=0.5]{img/envio-uml}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	Em resumo, os dados dos candidatos solicitantes são extraídos de acordo com o tipo de arquivo de origem, pelas classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} que, por sua vez, chamam a classe \textit{CandidatoBuilder} para validar os dados extraídos e, caso sejam 100\% válidos, um novo objeto \textit{Candidato} é gerado, do contrário, uma exceção do tipo \textit{RowParseException} é lançada com informações de todos os campos inválidos (por meio de \textit{FieldParseException}). Por fim, os dados são concentrados no objeto \textit{ParseResult} e estão prontos para exportação.
 	
 	\subsection{Interface Gráfica do Módulo de Envio}
+	
+	Como premissa no desenvolvimento do \textit{frontend} do \textit{IsenSys}, simplicidade e usabilidade sobressaem-se, mas sem perder a essência de uma aplicação robusta e consolidada. Na figura a seguir, está ilustrada a única tela do módulo de envio.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Interface Gráfica do Módulo de Envio}
+			\label{envio-ui}
+			
+			\includegraphics[scale=0.5]{img/envio-ui}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
 	
 	
 

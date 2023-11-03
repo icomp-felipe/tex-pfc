@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>460</y>
+      <w>230</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Candidato
+--
++nome: String
++nis: String
++dataNascimento: DateTime
++sexo: char
++rg: String
++dataEmissaoRG: DateTime
++orgaoEmissorRG: String
++cpf: String
++nomeMae: String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>420</x>
+      <y>240</y>
+      <w>230</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>CandidatoBuilder
+--
+
+--
++build()
++parseNome()
++parseNIS()
++parseData()
++parseSexo()
++parseRG()
++parseOrgao()
++parseCPF()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>770</x>
+      <y>220</y>
+      <w>230</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>FieldParseException
+--
+
+--
++getMessage()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>740</x>
+      <y>380</y>
+      <w>320</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>RowParseException
+--
++linha: int
++nis: String
++cpf: String
++nome: String
++listaExcecoes: List&lt;FieldParseException&gt;
+--
++addException()
++hasException()
++getMessage()
++getErrorSummaryArray()
++getErrorSummaryString()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>590</x>
+      <y>730</y>
+      <w>320</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>ParseResult
+--
++listaCandidato: List&lt;Candidato&gt;
++listaExcecoes: List&lt;RowParseException&gt;
+--
++addCandidato()
++addExcecao()
++getListaCandidatos()
++getListaExcecoes()
++sortLists()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>300</x>
+      <y>30</y>
+      <w>230</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>CSVSheetReader
+--
+
+--
++read()
++readRetorno()
++readLine()
++getInstituicao()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>580</x>
+      <y>30</y>
+      <w>230</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>ExcelSheetReader
+--
+
+--
++read()
+++readErros()
++readLine()
++getCellContent()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>390</x>
+      <y>140</y>
+      <w>120</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>100.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>590</x>
+      <y>140</y>
+      <w>110</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;100.0;90.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>530</x>
+      <y>410</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;50.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>640</x>
+      <y>260</y>
+      <w>150</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>130.0;10.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>870</x>
+      <y>300</y>
+      <w>30</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>860</x>
+      <y>570</y>
+      <w>30</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;160.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>510</x>
+      <y>630</y>
+      <w>140</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>120.0;100.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>
