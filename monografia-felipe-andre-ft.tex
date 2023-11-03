@@ -408,6 +408,132 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		
 	\end{itemize}
 
+	\section{Desenvolvimento do \textit{backend}}
+	
+	Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} da aplicação, responsável pelo processamento das solicitações de isenção para envio ao SISTAC e, posteriormente, a geração de relatórios e editais com base nos dados retornados do sistema.
+	
+	Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares do sistema.
+	
+	\subsection{Modelagem de um Candidato}
+	
+	Os dados pessoais de um candidato são o objeto principal deste sistema, pois são eles quem solicitam isenção e têm uma resposta de deferimento ou não destas. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
+
+	% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+	\begin{table}[H]
+	
+		\caption{Dados pessoais de candidatos e seus formatos.}
+		\label{tabela-dados-candidato}
+	
+		\begin{tabular}{|c|l|c|c|c|}
+			\hline
+			\textbf{Campo} & \multicolumn{1}{c|}{\textbf{Descrição}} & \textbf{\begin{tabular}[c]{@{}c@{}}Máximo de\\ Caracteres\end{tabular}} & \textbf{Tipo} & \textbf{Formato} \\ \hline
+			Nome & \begin{tabular}[c]{@{}l@{}}Nome completo do candidato\\ sem caracteres especiais e\\ sem abreviações\end{tabular} & 100 & Texto &  \\ \hline
+			NIS & \begin{tabular}[c]{@{}l@{}}Número de identificação social\\ do candidato\end{tabular} & 11 & Numérico &  \\ \hline
+			\begin{tabular}[c]{@{}c@{}}Data de\\ Nascim.\end{tabular} & \begin{tabular}[c]{@{}l@{}}Data de nascimento do\\ candidato\end{tabular} & 8 & Numérico & ddmmaaaa \\ \hline
+			Sexo & Sexo do candidato & 1 & Texto & M ou F \\ \hline
+			RG & \begin{tabular}[c]{@{}l@{}}Número do Documento de\\ Identidade do candidato\end{tabular} & 16 & \begin{tabular}[c]{@{}c@{}}Alfanu-\\ mérico\end{tabular} &  \\ \hline
+			\begin{tabular}[c]{@{}c@{}}Data de\\ Emissão\end{tabular} & \begin{tabular}[c]{@{}l@{}}Data de emissão do Documen-\\ to de Identidade\end{tabular} & 8 & Numérico & ddmmaaaa \\ \hline
+			Sigla RG & \begin{tabular}[c]{@{}l@{}}Sigla do órgão emissor do\\ Documento de Identidade\end{tabular} & 30 & \begin{tabular}[c]{@{}c@{}}Alfanu-\\ mérico\end{tabular} &  \\ \hline
+			CPF & Número do CPF do candidato & 11 & Numérico &  \\ \hline
+			\begin{tabular}[c]{@{}c@{}}Nome\\ da Mãe\end{tabular} & \begin{tabular}[c]{@{}l@{}}Nome completo da mãe do\\ candidato, sem caracteres\\ especiais e sem abreviações\end{tabular} & 100 & Texto &  \\ \hline
+		\end{tabular}
+		
+	\end{table}
+	
+	De posse dos dados e tipos, foi concebida a modelagem da entidade \textit{Candidato}, de acordo com o diagrama a seguir.
+
+	% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da entidade \textit{Candidato}}
+			\label{candidato-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{Candidato}} \\ \hline
+				+nome: String \\
+				+nis: String \\
+				+dataNascimento: DateTime \\
+				+sexo: char \\
+				+rg: String \\
+				+dataEmissaoRG: DateTime \\
+				+orgaoEmissorRG: String \\
+				+cpf: String \\
+				+nomeMae: String \\ \hline
+				\\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
+	De acordo com o diagrama de classe da entidade \textit{Candidato}, nota-se que esta apenas armazena dados. As validações nos campos são garantidas por uma classe intermediária, detalhada na seção seguinte.
+	
+	\subsection{A classe \textit{CandidatoBuilder}}
+	
+	Esta classe é responsável por montar um \textit{Candidato} com os dados extraídos de um arquivo de entrada. Durante esse processo ela realiza uma série de validações nos dados, e caso haja pelo menos uma inconsistência, uma exceção com detalhes desta inconsistência é lançada, caso contrário, significa que foi possível construir um objeto respeitando todos os requisitos do SISTAC \cite{sistac-formatos}. Segue o diagrama de classe do \textit{CandidatoBuilder}.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da entidade \textit{CandidatoBuilder}}
+			\label{candidatobuilder-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{CandidatoBuilder}} \\ \hline
+				\\ \hline
+				+build() \\
+				+parseNome() \\
+				+parseNIS() \\
+				+parseData() \\
+				+parseSexo() \\
+				+parseRG() \\
+				+parseOrgao() \\
+				+parseCPF() \\ \hline
+			\end{tabular}
+		
+		\end{center}
+	\end{figure}
+	
+	Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador}, lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso.
+	
+	Para registrar inconsistências em cada um dos campos de dados de um \textit{Candidato}, é utilizada a classe de exceção \textit{FieldParseException} que, por sua vez, é incorporada à classe de exceção \textit{RowParseException}, montada com todas as exceções percebidas pelo método \textit{build()}.
+
+	\subsection{A classe de exceção \textit{FieldParseException}}
+	
+	Como forma de descentralizar as tratativas de validação de dados de candidatos, a classe de exceção \textit{FieldParseException} é responsável por armazenar informações sobre o motivo de um campo não ter sido validado e qual campo gerou esta exceção. Esta classe apenas estende a superclasse \textit{Exception} e monta uma \textit{String} formatada com o motivo e o nome do campo que não foi validado.
+
+	\subsection{A classe de exceção \textit{RowParseException}}	
+
+	Com o objetivo de concentrar todas as exceções de validação dos campos de dados de um \textit{Candidato}, a classe de exceção \textit{RowParseException} armazena tais exceções em uma lista encadeada e ainda adiciona informações que ajudam a identificar qual foi o candidato que gerou a(s) exceção(ões) e ainda em qual posição do arquivo de entrada ele está.
+	
+	A seguir é possível visualizar o diagrama de classe de \textit{RowParseException}.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da entidade \textit{RowParseException}}
+			\label{rowparseexception-uml}
+
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{RowParseException}} \\ \hline
+				+linha: int \\
+				+nis: String \\
+				+cpf: String \\
+				+nome: String \\
+				+listaExcecoes: List\textless{}FieldParseException\textgreater{} \\ \hline
+				+addException() \\
+				+hasException() \\
+				+getMessage() \\
+				+getErrorSummaryArray() \\
+				+getErrorSummaryString() \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
 % ----------------------------------------------------------
