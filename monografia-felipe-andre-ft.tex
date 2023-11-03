@@ -220,6 +220,7 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 \begin{siglas}
   \item[COMPEC] Comissão Permanente de Concursos
   \item[MDS] Ministério do Desenvolvimento Social
+  \item[NIS] Número de Identificação Social
   \item[PSConcursos] Sistema de Concursos da UFAM
   \item[SISTAC] Sistema de Isenção de Taxa de Concurso
   \item[UFAM] Universidade Federal do Amazonas
@@ -407,12 +408,12 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		\item O sistema pode ser executado em qualquer computador com suporte mínimo à \textit{JDK 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF08).
 		
 	\end{itemize}
+	
+	O sistema conta com dois módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e outro dedicado a processar os arquivos de retorno do SISTAC e produzir relatórios e editais de publicação. As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
 
-	\section{Desenvolvimento do \textit{backend}}
+	\section{Desenvolvimento do Módulo de Envio}
 	
-	Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} da aplicação, responsável pelo processamento das solicitações de isenção para envio ao SISTAC e, posteriormente, a geração de relatórios e editais com base nos dados retornados do sistema.
-	
-	Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares do sistema.
+	Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de candidatos para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
 	
 	\subsection{Modelagem de um Candidato}
 	
@@ -533,6 +534,124 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 			
 		\end{center}
 	\end{figure}
+
+	\subsection{A classe \textit{ParseResult}}
+	
+	Esta classe é responsável por concentrar o resultado da extração de dados do(s) arquivo(s) de entrada em duas listas:
+		
+	\begin{enumerate}
+			
+		\item Lista de \textit{Candidato}: onde são armazenados apenas dados de candidatos que passaram com sucesso por todas as validações de campos;
+		\item Lista de \textit{RowParseException}: onde são armazenadas a identificação do candidato e o(s) motivos(s) de invalidação de campo(s).
+			
+	\end{enumerate}
+	
+	A seguir podemos compreender melhor a classe por meio de seu diagrama.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da entidade \textit{ParseResult}}
+			\label{parseresult-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{ParseResult}} \\ \hline
+				+listaCandidatos: List\textless{}Candidato\textgreater{} \\
+				+listaExcecoes: List\textless{}RowParseException\textgreater{} \\ \hline
+				+addCandidato() \\
+				+addExcecao() \\
+				+getListaCandidatos() \\
+				+getListaExcecoes() \\
+				+sortLists() \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{Importadores de Dados de Candidato}
+	
+	O \textit{IsenSys} é capaz de importar dados pessoais de candidatos em dois formatos:
+	
+	\begin{enumerate}
+		
+		\item Arquivo \textit{.csv}: que é um arquivo de texto puro (sem formatação), contendo um cabeçalho na sua primeira linha e os dados pessoais requeridos pelo sistema nas outras linhas. O arquivo deve estar codificado em UTF-8, com separador por tabulação, vírgula ou ponto-e-vírgula.
+		
+		\item Planilha do \textit{Microsoft Excel (.xlsx)}: a planilha deve conter um cabeçalho na primeira linha com os nomes dos campos e nas demais linhas os dados dos candidatos.
+		
+	\end{enumerate}
+
+	Nos dois casos a ordem da disposição dos dados é extremamente importante para a correta importação. Tanto as colunas do arquivo \textit{csv} quanto as da planilha do \textit{Microsoft Excel} devem respeitar a seguinte ordem:
+	
+	\begin{enumerate}
+		
+		\item Nome completo;
+		\item NIS;
+		\item Data de nascimento;
+		\item Sexo;
+		\item Número de RG;
+		\item Data de emissão do RG;
+		\item Órgão emissor do RG;
+		\item CPF;
+		\item Nome completo da mãe.
+		
+	\end{enumerate}
+	
+	Para cada tipo de arquivo foi implementado um importador, contendo as especificidades de tratamento de cada formato. Os dados extraídos pelos importadores são então enviados ao \textit{CandidatoBuilder} que irá construir um objeto \textit{Candidato}, tornando todo o processo de tratativa de arquivos transparente às classes superiores.
+	
+	\subsubsection{O importador \textit{CSVSheetReader}}
+	
+	Para o arquivo \textit{.csv} temos o importador descrito na classe \textit{CSVSheetReader}, que é util tanto para o módulo de envio, através do método \textit{read()}, quanto pelo módulo de retorno, através do método \textit{readRetorno()}. A princípio o papel deste importador é detectar o tipo de separador do arquivo \textit{.csv} e extrair os dados de uma linha. A seguir temos seu diagrama de classe.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem do importador de dados \textit{CSVSheetReader}}
+			\label{csvreader-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{CSVSheetReader}} \\ \hline
+				\\ \hline
+				+read() \\
+				+readRetorno() \\
+				+readLine() \\
+				+getInstituicao() \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsubsection{O importador \textit{ExcelSheetReader}}
+
+	Este importador também é comum aos dois módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos e entregá-los ao \textit{CandidatoBuilder}. Seu diagrama de classe está disposto na figura a seguir.
+
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem do importador de dados \textit{ExcelSheetReader}}
+			\label{excelreader-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{ExcelSheetReader}} \\ \hline
+				\\ \hline
+				+read() \\
+				+readErros() \\
+				+readLine() \\
+				+getCellContent() \\ \hline
+			\end{tabular}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{Integração do Módulo de Envio}
+	
+	Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados dos candidatos para envio ao SISTAC.
+	
+	\subsection{Interface Gráfica do Módulo de Envio}
+	
+	
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
