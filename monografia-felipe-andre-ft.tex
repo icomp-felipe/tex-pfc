@@ -727,7 +727,41 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		\end{center}
 	\end{figure}
 	
+	No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC, tais como CNPJ, nome fantasia e razão social da instituição gestora.
 	
+	No painel 'Arquivo de Entrada' é possível selecionar o arquivo de origem dos dados de solicitações dos candidatos, atualmente planilhas do \textit{Microsoft Excel} e arquivos \textit{csv} são suportados. Também é possível recarregar o arquivo previamente selecionado ou limpar sua seleção. Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas no fundo deste painel, como ilustra a figura a seguir.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Interface Gráfica do Módulo de Envio (arquivo carregado)}
+			\label{envio-ui-loaded}
+			
+			\includegraphics[scale=0.5]{img/envio-ui-loaded}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	Os dois primeiros campos do painel 'Arquivo de Saída' (Num. do Edital e Sequência) também são exigências descritas no manual de envio do SISTAC. O campo 'Num. do Edital' faz parte do nome do arquivo de envio, juntamente com a identificação de sua sequência. Cada arquivo possui uma sequência, geralmente iniciada em '1'. Se dois arquivos são gerados, temos então as sequências '1' e '2'. Sequências são reiniciadas a cada novo dia. Ainda neste painel, podemos escolher o diretório de escrita dos arquivos ou limpar sua seleção.
+
+	Por fim, após todos os dados serem fornecidos, a exportação pode ser realizada clicando no ícone de salvar (disquete). As figuras abaixo ilustram a saída dos arquivos após alimentar a interface com algumas informações.
+
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Tela de Envio preenchida e arquivos de saída}
+			\label{envio-ui-processed}
+			
+			\includegraphics[scale=0.4]{img/envio-ui-processed}
+			\includegraphics[scale=0.3]{img/envio-files}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+
+	De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha pode ser consultada de forma avulsa, mas será necessária para a montagem do edital de publicação no módulo de retorno.
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
