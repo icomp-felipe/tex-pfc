@@ -218,6 +218,7 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 % inserir lista de abreviaturas e siglas
 % ---
 \begin{siglas}
+	\item[CSV] \textit{Comma-separated values} - valores separados por vírgula
   \item[COMPEC] Comissão Permanente de Concursos
   \item[MDS] Ministério do Desenvolvimento Social
   \item[NIS] Número de Identificação Social
@@ -230,9 +231,9 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 % ---
 % inserir lista de símbolos
 % ---
-\begin{simbolos}
-  \item[$ \lambda $] Lambda
-\end{simbolos}
+%\begin{simbolos}
+%  \item[$ \lambda $] Lambda
+%\end{simbolos}
 % ---
 
 % ---
@@ -762,6 +763,296 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 	\end{figure}
 
 	De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha pode ser consultada de forma avulsa, mas será necessária para a montagem do edital de publicação no módulo de retorno.
+
+\section{Desenvolvimento do Módulo de Retorno}
+	
+	Esta seção tem por objetivo detalhar o desenvolvimento do \textit{(backend)} de processamento do arquivo de retorno do SISTAC. A partir dele é possível gerar relatórios com algumas métricas e estatísticas úteis ao órgão gestor, bem como editais de publicação.
+	
+	Utilizando a mesma metodologia abordada na seção anterior, vamos começar compreendendo o fluxo de informações conhecendo as classes envolvidas no processo e, posteriormente, conhecer a interface gráfica.
+	
+	\subsection{Modelagem de um Retorno}
+	
+	Para este módulo, apenas alguns dados das solicitações dos candidatos são aproveitados. Temos então a concepção da classe \textit{Retorno}, de acordo com a especificação descrita na figura a seguir:
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da Entidade \textit{Retorno}}
+			\label{retorno-uml}
+				
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{Retorno}} \\ \hline
+				+situacao: char                        \\
+				+nome: String                          \\
+				+nis: String                           \\
+				+cpf: String                           \\
+				+motivo: int                           \\
+				+nomeAnterior: String                  \\ \hline
+				+defere()                              \\
+				+isDeferido()                          \\
+				+compareTo()                           \\ \hline
+			\end{tabular}
+				
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{A classe \textit{ListaRetornos}}
+
+	Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia que o módulo de retorno subdivide-se em dois: retorno preliminar e retorno definitivo. Por enquanto, temos que esta classe armazena dados úteis que facilitam a transição entre os dois tipos de retorno.
+
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama de classe de \textit{ListaRetornos}}
+			\label{listaretornos-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{ListaRetornos}}         \\ \hline
+				+listaRetornos: List\textless{}Retorno\textgreater{} \\
+				+cnpj: String                                        \\
+				+nomeFantasia: String                                \\
+				+razaoSocial: String                                 \\
+				+edital: String                                      \\
+				+dataEdital: String                                  \\
+				+cabecalho: String                                   \\ \hline
+				+get()                                               \\
+				+size()                                              \\
+				+getList()                                           \\
+				+clone()                                             \\
+				+add()                                               \\
+				+update()                                            \\
+				+sort()                                              \\ \hline
+			\end{tabular}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{A classe \textit{Compilation}}
+	
+	Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}. Útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama de classe de \textit{Compilation}}
+			\label{compilation-uml}
+			
+			\begin{tabular}{|l|}
+			\hline
+			\multicolumn{1}{|c|}{\textbf{Compilation}} \\ \hline
+			\\ \hline
+			+save()                                    \\
+			+load()                                    \\ \hline
+			\end{tabular}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}	
+	
+	\subsection{Modelagem de uma Situacao}
+	
+	De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas previamente. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema. Durante a confecção do edital de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Modelagem da Entidade \textit{Situacao}}
+			\label{situacao-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{Situacao}} \\ \hline
+				+id: String                             \\
+				+motivo: String                         \\
+				+descricao: String                      \\ \hline
+				                                        \\ \hline
+			\end{tabular}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{A classe \textit{SituacaoDAO}}
+	
+	Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'} contido no diretório de recursos do \textit{IsenSys} para uma lista de \textit{Situacao}, útil na confecção do edital de publicação.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama de classe de \textit{SituacaoDAO}}
+			\label{situacaodao-uml}
+			
+			\begin{tabular}{|l|}
+				\hline
+				\multicolumn{1}{|c|}{\textbf{SituacaoDAO}} \\ \hline
+				                                           \\ \hline
+				+load()                                    \\ \hline
+			\end{tabular}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{Geradores de Relatório}
+	
+	O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) retorno(s) do SISTAC. Cada uma das classes que os implementam contam com o método 'export()' que é capaz de compilar e exportar o relatório para o formato PDF. A figura abaixo ilustra a estrutura de classe dos três geradores.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagramas de classe dos Geradores de Relatório}
+			\label{geradores-uml}
+			
+			\begin{tabular}{|l|l|l|l|l|}
+			\cline{1-1} \cline{3-3} \cline{5-5}
+			\multicolumn{1}{|c|}{\textbf{PDFEdital}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+			&  &                                          &  &                                               \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+			+export()                                &  & +export()                                &  & +export()                                     \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+			\end{tabular}
+			
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsection{Integração do Módulo de Retorno}
+	
+	Conhecendo individualmente os agentes envolvidos no módulo de retorno, podemos realizar uma abordagem integrada. Existem dois tipos de retorno implementados no \textit{IsenSys}:
+	
+	\subsubsection{Retorno Preliminar}
+	
+	Este é o submódulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura abaixo ilustra o fluxo das informações do submódulo.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
+			\label{preliminar-fluxo}
+			
+			\includegraphics[scale=0.5]{img/retorno-prelim-uml}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam os arquivos de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
+	
+	Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEdital} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
+	
+	\subsubsection{Interface Gráfica do Submódulo de Retorno Preliminar}
+	
+	A figura abaixo ilustra a implementação da interface gráfica do submódulo de retorno preliminar do \textit{IsenSys}.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Interface Gráfica do Submódulo de Retorno Preliminar}
+			\label{retorno-prelim-ui}
+			
+			\includegraphics[scale=0.6]{img/retorno-prelim-ui}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC, tais como CNPJ, nome fantasia e razão social da instituição gestora.
+	
+	Em 'Arquivos de Entrada' é possível selecionar o(s) arquivo(s) de retorno do SISTAC e a planilha contendo os erros de validação (gerada no módulo de envio). O usuário também é capaz de limpar a seleção dos arquivos. Abaixo estão enumerados alguns detalhes sobre os arquivos:
+	
+	\begin{itemize}
+		
+		\item \textbf{Retorno Sistac:} o usuário deve selecionar SEMPRE o primeiro arquivo de retorno do SISTAC, caso haja mais de um, o carregamento dos demais arquivos é feito de forma automática, basta que estejam no mesmo diretório do primeiro arquivo.
+		
+		\item \textbf{Planilha Erros:} aqui o usuário deve selecionar a planilha de erros gerada pelo módulo de envio do \textit{IsenSys}.
+		
+	\end{itemize}
+	
+	Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas no canto inferior deste painel, como ilustra a figura a seguir.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Interface Gráfica do Submódulo de Retorno Preliminar}
+			\label{retorno-prelim-ui-processed}
+			
+			\includegraphics[scale=0.6]{img/retorno-prelim-ui-processed}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo submódulo (edital de publicação, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Arquivos de Saída do submódulo 'Retorno Preliminar'}
+			\label{retorno-prelim-files}
+			
+			\includegraphics[scale=0.5]{img/retorno-prelim-files}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	\subsubsection{Retorno Definitivo}
+	
+	Este é o submódulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do submódulo preliminar, através de um arquivo de compilação (gerado por \textit{Compilation}) e importar os novos retornos do SISTAC.
+
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Diagrama do Fluxo de Dados no Retorno Definitivo}
+			\label{retorno-def-uml}
+			
+			\includegraphics[scale=0.5]{img/retorno-def-uml}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} que carrega os dados provenientes do resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
+	
+	\subsubsection{Interface Gráfica do Submódulo de Retorno Definitivo}
+	
+	A figura abaixo ilustra a implementação da interface gráfica do submódulo de retorno definitivo do \textit{IsenSys}.
+	
+	\begin{figure}[H]
+		\begin{center}
+			
+			\caption{Interface Gráfica do Submódulo de Retorno Definitivo}
+			\label{retorno-def-ui}
+			
+			\includegraphics[scale=0.6]{img/retorno-def-ui}
+			\legend{Fonte: Produzida pelo autor}
+			
+		\end{center}
+	\end{figure}
+	
+	Ao carregar o arquivo de compilação, alguma informações são exibidas no canto inferior do painel 'Resultado Preliminar'. O cabeçalho do edital também é carregado.
+	
+	Da mesma forma que no submódulo do resultado preliminar, o arquivo de retorno a ser selecionado deve ser sempre o primeiro, os demais são carregados automaticamente desde que estejam no mesmo diretório do primeiro arquivo.
+	
+	Se algum arquivo de entrada for selecionado, tanto de retorno quanto de erros, os dados são mesclados com os provenientes do resultado preliminar da seguinte forma:
+	
+	\begin{itemize}
+		
+		\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade;
+		
+		\item \textbf{Erros:} aqui todos os erros são mesclados.
+		
+	\end{itemize}
+	
+	Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
