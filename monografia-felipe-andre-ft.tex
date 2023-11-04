@@ -79,7 +79,7 @@
     pdfcreator={LaTeX with abnTeX2},
 	pdfkeywords={abnt}{latex}{abntex}{abntex2}{trabalho acadêmico},
 	colorlinks=true,
-	linkcolor=blue,
+	linkcolor=black,
 	citecolor=black,
 	filecolor=magenta,
 	urlcolor=blue,
@@ -135,7 +135,7 @@
 	\begin{center}
 		\fontsize{12}{15}\selectfont
 		\vspace*{0.5cm}
-		\imprimirlocal, data de aprovação (por extenso).
+		\imprimirlocal, 08 de Novembro de 2023.
 		\vspace*{1cm}
 	\end{center}
   
@@ -222,7 +222,6 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
   \item[COMPEC] Comissão Permanente de Concursos
   \item[MDS] Ministério do Desenvolvimento Social
   \item[NIS] Número de Identificação Social
-  \item[PSConcursos] Sistema de Concursos da UFAM
   \item[SISTAC] Sistema de Isenção de Taxa de Concurso
   \item[UFAM] Universidade Federal do Amazonas
 \end{siglas}
@@ -274,16 +273,24 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 		
 		\begin{itemize}
 			
-			\item Objetivo 1;
-			\item Objetivo 2;
-			\item Objetivo 3;
-			\item Objetivo 4;
+			\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC;
+			\item Utilizar das boas práticas de programação para tornar o projeto exportável futuramente;
+			\item Implementar uma interface gráfica simples e intuitiva, com dicas e tratamentos de exceções.
 			
 		\end{itemize}
 		
 	\section{Organização da Monografia}
 	
-		Nesta seção deve ser apresentado como está organizado o trabalho, sendo descrito, portanto, do que trata cada capítulo.
+		Esta monografia possui a seguinte estrutura de capítulos:
+		
+		\begin{itemize}
+			
+			\item \textbf{Capítulo 2}: aborda os fundamentos teóricos, principais tecnologias e bibliotecas utilizadas no desenvolvimento do \textit{IsenSys};
+			\item \textbf{Capítulo 3}: detalha o processo de desenvolvimento do \textit{IsenSys}, por meio de diagramas de classes, detalhamento de suas funcionalidades e exibição da interface gráfica;
+			\item \textbf{Capítulo 4}: apresenta resultados e métricas que permitem ter um comparativo entre o antes e depois da implementação do \textit{IsenSys};
+			\item \textbf{Capítulo 5}: concentra as considerações finais, conclusão e futuras atualizações no \textit{IsenSys}.
+			
+		\end{itemize}
 
 \chapter{Referencial Teórico}
 
@@ -1063,38 +1070,5 @@ Agradecimentos dirigidos àqueles que contribuíram de maneira relevante à elab
 % Referencias Bibliograficas
 % -----------------------------------------------------------------------------
 \bibliography{monografia-felipe-andre-ft}
-
-% ----------------------------------------------------------
-% Apêndices
-% ----------------------------------------------------------
-
-% ---
-% Inicia os apêndices
-% ---
-\begin{apendicesenv}
-
-% ----------------------------------------------------------
-\chapter{Primeiro apêndice}
-% ----------------------------------------------------------
-
-Os apêndices são textos ou documentos elaborados pelo autor, a fim de complementar sua argumentação, sem prejuízo da unidade nuclear do trabalho.
-
-\end{apendicesenv}
-
-% Anexos
-% ----------------------------------------------------------
-
-% ---
-% Inicia os anexos
-% ---
-\begin{anexosenv}
-
-% ---
-\chapter{Primeiro anexo.}
-% ---
-
-Os anexos são textos ou documentos não elaborados pelo autor, que servem de fundamentação, comprovação e ilustração.
-
-\end{anexosenv}
 
 \end{document}
