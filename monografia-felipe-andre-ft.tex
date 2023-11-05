@@ -254,11 +254,11 @@
 		
 		Uma das tarefas mais democráticas e delicadas executadas por este setor é o processo de isenção de pagamento de taxa de inscrição em concursos e processos seletivos.
 		
-		Atualmente a COMPEC, como qualquer outra entidade do poder executivo do Brasil, adota três tipos de categorias de isenção: por cadastro no Registro Brasileiro de Doadores Voluntários de Medula Óssea (REDOME), por comprovação de baixa renda e curso de nível médio de forma gratuita e por meio do Cadastro Único para Programas Sociais do Governo Federal (CadÚnico).
+		Atualmente a COMPEC, como qualquer outro órgão do poder executivo do Brasil, adota três tipos de modalidades de isenção: por cadastro no Registro Brasileiro de Doadores Voluntários de Medula Óssea (REDOME), por comprovação de baixa renda e curso de nível médio de forma gratuita e por meio do Cadastro Único para Programas Sociais do Governo Federal (CadÚnico).
 		
 		Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, onde 8.353 deles tiveram isenção de taxa de inscrição concedida.
 		
-		Com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a categoria de isenção mais volumosa em termos de solicitação: a categoria via CadÚnico, regulamentada pelo decreto n{\textdegree} 6.593, de 2 de outubro de 2008.
+		Com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar dados, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a modalidade de isenção mais volumosa em termos de solicitação: a modalidade CadÚnico, regulamentada pelo Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto}.
 		
 		A aplicação, denominada \textit{IsenSys}, procura ainda fornecer uma interface simples e objetiva, com dicas e tratamentos de forma a instruir intuitivamente sua utilização ao usuário, tomando ainda como alicerce no seu desenvolvimento, os cinco princípios fundamentais da Administração Pública do Brasil: legalidade, impessoalidade, moralidade, publicidade e eficiência.
 
@@ -266,14 +266,14 @@
 		
 			\subsection{Objetivo Geral}
 			
-			Este projeto possui como objetivo apresentar um aplicativo processador de solicitações de isenção de taxa de inscrição de acordo com a regulamentação do CadÚnico, de forma a permitir agilidade e acurácia nos resultados, por parte de uma unidade gestora do governo federal do Brasil.
+			Esta monografia possui como objetivo apresentar um aplicativo processador de solicitações de isenção de taxa de inscrição de acordo com a regulamentação do CadÚnico \cite{cadunico-decreto}, de forma a permitir agilidade e acurácia nos resultados, por parte de um órgão gestor do Poder Executivo do Brasil.
 			
 			\subsection{Objetivos Específicos}
 			
 			\begin{itemize}
 				
-				\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC;
-				\item Utilizar das boas práticas de programação para tornar o projeto exportável futuramente;
+				\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC \cite{sistac-formatos};
+				\item Utilizar das boas práticas de programação para tornar o projeto simples e permitir colaboração;
 				\item Implementar uma interface gráfica simples e intuitiva, com dicas e tratamentos de exceções.
 				
 			\end{itemize}
@@ -286,102 +286,122 @@
 				
 				\item \textbf{Capítulo 2}: aborda os fundamentos teóricos, principais tecnologias e bibliotecas utilizadas no desenvolvimento do \textit{IsenSys};
 				\item \textbf{Capítulo 3}: detalha o processo de desenvolvimento do \textit{IsenSys}, por meio de diagramas de classes, detalhamento de suas funcionalidades e exibição da interface gráfica;
-				\item \textbf{Capítulo 4}: apresenta resultados e métricas que permitem ter um comparativo entre o antes e depois da implementação do \textit{IsenSys};
-				\item \textbf{Capítulo 5}: concentra as considerações finais, conclusão e futuras atualizações no \textit{IsenSys}.
+				\item \textbf{Capítulo 4}: descreve resultados e métricas que permitem ter um comparativo entre o antes e depois da implementação do \textit{IsenSys};
+				\item \textbf{Capítulo 5}: apresenta as considerações finais, conclusão e futuras atualizações no \textit{IsenSys}.
 				
 			\end{itemize}
 	
 	% ----------| Capítulo 2: Referencial Teórico |----------
-	\chapter{Referencial Teórico}
+	\chapter{Referencial Teórico} \label{cap2-referencial}
 	
-		Este capítulo referencia as principais ferramentas utilizadas no desenvolvimento da aplicação \textit{IsenSys}, tais como linguagem de programação e bibliotecas de funções.
+		Este capítulo referencia as principais ferramentas e tecnologias utilizadas no desenvolvimento do \textit{IsenSys}, tais como linguagem de programação, bibliotecas de funções e o ambiente de desenvolvimento.
 		
-		\section{Java}
+		\section{Java} \label{java}
 		
-			A linguagem de programação Java \cite{java} é uma das mais bem conceituadas e utilizadas ao redor do mundo. Concebida em meados de 1995 pela empresa \textit{Sun Microsystems}, tem conquistado o mundo pela sua simplicidade, forma de organização e versatilidade entre os vários sistemas operacionais.
+			A linguagem de programação Java \cite{java} é uma das mais bem conceituadas e utilizadas ao redor do mundo. Concebida em meados de 1995 pela empresa \textit{Sun Microsystems}, tem conquistado o mundo pela sua simplicidade, boa curva de aprendizagem, forma de organização e versatilidade entre os vários sistemas operacionais e dispositivos.
 		
-			Por ser uma linguagem independente de plataforma, ela permite que uma mesma aplicação possa ser executada em diversos sistemas operacionais de diversas arquiteturas, sem a necessidade de adaptação ou reconstrução de código por parte do desenvolvedor, comportamento que torna suas aplicações escaláveis e robustas.
+			Por ser uma linguagem independente de plataforma, ela permite que uma mesma aplicação possa ser executada em diversos equipamentos portando sistemas operacionais de diversas arquiteturas, sem a necessidade de adaptação ou reconstrução de código por parte do desenvolvedor, comportamento que torna suas aplicações escaláveis e robustas.
 		
-			\begin{figure}[H]
-				
-				\caption{\label{java-logo}Logomarca do \textit{Java}}
+			\begin{figure}[h]
 				\begin{center}
-					\includegraphics[scale=0.04]{img/java-logo}
-				\end{center}
-				\legend{Fonte: \url{https://www.oracle.com/br/java/technologies/java-se-glance.html}}
 				
+					\caption{Logomarca do \textit{Java}}
+					\label{java-img}
+								
+					\includegraphics[scale=0.04]{img/java-logo}
+					
+					\legend{Fonte: \url{https://www.oracle.com/br/java/technologies/java-se-glance.html}}
+					
+				\end{center}
 			\end{figure}
 		
 			Atualmente mantida pela empresa \textit{Oracle Corporation}, a linguagem continua sendo livre e gratuita para utilização pessoal e para algumas classes de aplicações, e possui uma rica e extensa comunidade de suporte e documentação. As atualizações regulares também são gratuitas e sempre trazem otimizações, novas funcionalidades e melhorias de segurança.
 
-			Provavelmente o leitor já tenha utilizado algumas das aplicações implementadas utilizando a tecnologia Java, tais como os programas de declaração de imposto sobre a renda (IRPF e IRPJ), Processo Judicial Eletrônico (PJe), \textit{MATLAB}, famoso no mundo da engenharia e até o próprio sistema \textit{Android}, um dos principais sistemas operacionais para dispositivos móveis.
+			Provavelmente o leitor já tenha utilizado algumas das aplicações implementadas utilizando a tecnologia Java, programas como: declaração de imposto sobre a renda (IRPF e IRPJ), Processo Judicial Eletrônico (PJe), \textit{MATLAB}, famoso no mundo da engenharia e até o próprio sistema \textit{Android}, um dos principais sistemas operacionais para dispositivos móveis.
 		
-		\section{JasperReports\textregistered}
+		\section{JasperReports\textregistered} \label{jasper-reports}
 		
-			A biblioteca \textit{JasperReports\textregistered} \cite{jasper} é gratuita e uma das mais robustas e populares utilizadas para criação de relatórios em \textit{Java}. Possui sua própria suíte de design, onde o desenvolvedor pode rapidamente configurar um novo relatório com poucos passos, seguindo guias e instruções no editor.
+			A biblioteca \textit{JasperReports\textregistered} \cite{jasper} é gratuita e uma das mais robustas e populares utilizadas para criação de relatórios para aplicações Java. Possui sua própria suíte de design, onde o desenvolvedor pode rapidamente configurar um novo relatório com poucos passos, seguindo guias e instruções diretamente na interface gráfica do editor.
 			
-			Por ser desenvolvida utilizando a linguagem \textit{Java}, ela também apresenta o mesmo comportamento em qualquer sistema operacional onde está disponível, produzindo relatórios de alta qualidade e escalabilidade, oferecendo opções de exportação para outros formatos conhecidos, tais como \textit{PDF}, \textit{Web} e \textit{Microsoft Word}.
+			Por ser desenvolvida utilizando a linguagem Java, ela também apresenta o mesmo comportamento e visualização em qualquer sistema operacional onde está disponível, produzindo relatórios de alta qualidade e escalabilidade, oferecendo opções de exportação para outros formatos conhecidos, tais como \textit{PDF}, \textit{Web} e \textit{Microsoft Word}.
 			
-			\begin{figure}[H]
-				\caption{\label{jasper-reports}Suíte de desenvolvimento \textit{JasperReports\textregistered}.}
+			\begin{figure}[h]
 				\begin{center}
-					\includegraphics[scale=0.35]{img/jaspersoft}
+				
+				
+				\caption{Suíte de desenvolvimento \textit{JasperReports\textregistered}}
+				\label{jasper-img}
+				
+				\includegraphics[scale=0.35]{img/jaspersoft}
+				
 				\end{center}
-				\legend{Fonte: Produzida pelo autor}
 			\end{figure}
 
-		\section{Apache POI}
+		\section{Apache POI} \label{apache-poi}
 		
-			O \textit{Apache POI} \cite{poi} também é uma biblioteca gratuita escrita utilizando a linguagem \textit{Java}, que adiciona suporte de leitura e escrita de dados em documentos do \textit{Microsoft Office} diretamente das aplicações \textit{Java}, sem a necessidade de aquisição e instalação dos aplicativos da \textit{Microsoft}.
+			O \textit{Apache POI} \cite{poi} também é uma biblioteca gratuita escrita utilizando a linguagem Java, que adiciona suporte de leitura e escrita de dados em documentos do \textit{Microsoft Office} diretamente das aplicações Java, sem a necessidade de aquisição e instalação dos aplicativos da \textit{Microsoft}.
 			
 			Este complemento é desenvolvido e mantido pela \textit{fundação Apache}, que é uma organização mundial sem fins lucrativos criada para dar suporte de desenvolvimento a projetos de programação de código aberto, ou seja, livres para todos.
 			
 			Por ser uma fundação composta por uma comunidade descentralizada, suas soluções estão em constante melhoria, fornecendo ao desenvolvedor final peças de \textit{software} com qualidade garantida.
 
-			\begin{figure}[H]
-				\caption{\label{apache-poi}Logo da biblioteca \textit{Apache POI}.}
+			\begin{figure}[h]
 				\begin{center}
+					
+					\caption{Logo da biblioteca \textit{Apache POI}}
+					\label{apache-poi-img}
+					
 					\includegraphics[scale=0.35]{img/apache-poi}
+					
+					\legend{Fonte: \url{https://poi.apache.org}}
+					
 				\end{center}
-				\legend{Fonte: \url{https://poi.apache.org}}
 			\end{figure}
 
-		\section{Apache Maven}
+		\section{Apache Maven} \label{maven}
 		
-			Até o presente momento foram citadas algumas bibliotecas utilizadas como complemento de código para a linguagem \textit{Java}, prática muito comum entre os desenvolvedores em qualquer linguagem de programação. Porém, muitas vezes sua gerência pode ser complicada se realizada de forma manual, pois bibliotecas resultam em arquivos, que podem sofrer corrompimento ou passar por atualizações de versão.
+			Até o presente momento foram citadas algumas bibliotecas utilizadas como complemento de código para a linguagem Java, prática muito comum entre os desenvolvedores em qualquer linguagem de programação. Porém, muitas vezes sua gerência pode ser complicada se realizada de forma manual, pois bibliotecas resultam em arquivos, que podem sofrer corrompimento ou passar por atualizações de versão.
 			
-			O \textit{Apache Maven} \cite{maven} surge como uma ferramenta de gerenciamento e compreensão de projetos escritos em \textit{Java}, onde é possível organizar bibliotecas e publicá-las de forma gratuita para utilização pela comunidade de desenvolvimento. Podemos esperar também funcionalidades como atualizações, verificação de integridade e autoinstalação.
+			O \textit{Apache Maven} \cite{maven} surge como uma ferramenta de gerenciamento e compreensão de projetos escritos em Java, onde é possível organizar bibliotecas e publicá-las de forma gratuita para utilização pela comunidade de desenvolvimento. Podemos esperar também funcionalidades como atualizações, verificação de integridade e autoinstalação.
 			
-			A utilização deste gerente é muito simples, tendo em vista que muitas suítes de desenvolvimento oferecem suporte nativo ao \textit{Maven}. Após instalada, basta organizar as dependências (bibliotecas) do projeto em um arquivo especifico denominado 'pom.xml'.
+			A utilização deste gerente é muito simples, tendo em vista que muitas suítes de desenvolvimento oferecem suporte nativo ao \textit{Maven}. Após instalada, basta organizar as dependências (bibliotecas) do projeto em um arquivo especifico denominado 'pom.xml', salvar e esperar que o próprio \textit{Maven} configure as bibliotecas no projeto.
 
-			\begin{figure}[H]
-				\caption{\label{maven-logo}Logo do gerente de projetos \textit{Apache Maven}.}
+			\begin{figure}[h]
 				\begin{center}
+					
+					\caption{Logo do gerente de projetos \textit{Apache Maven}}
+					\label{maven-img}
+				
 					\includegraphics[scale=0.5]{img/maven-logo}
+					
+					\legend{Fonte: \url{https://maven.apache.org}}
+					
 				\end{center}
-				\legend{Fonte: \url{https://maven.apache.org}}
 			\end{figure}
 
-		\section{Eclipse IDE}
+		\section{Eclipse IDE} \label{eclipse-ide}
 		
 			No mundo do desenvolvimento de software, agilidade e escalabilidade estão entre as qualidades mais requisitadas nas linguagens. Como forma de satisfazer tais demandas, existe no mercado uma vasta gama do que chamamos de \textit{IDE - integrated development environment} ou ambiente de desenvolvimento integrado, amplamente aceitos pela comunidade.
 			
-			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem \textit{Java}, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc.
+			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem Java, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc e ainda por ser de código aberto, pode ser modificado para outras finalidades.
 			
-			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e até o já mencionado \textit{Apache Maven} \cite{maven}.
+			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} \cite{maven}.
 
 			\begin{figure}[H]
-				\caption{\label{eclipse-ide}\textit{Eclipse IDE}.}
 				\begin{center}
+				
+					\caption{\textit{Eclipse IDE}}
+					\label{eclipse-img}
+				
 					\includegraphics[scale=0.25]{img/eclipse-ide}
+					
 				\end{center}
-				\legend{Fonte: Produzida pelo autor}
 			\end{figure}
 
 	% ----------| Capítulo 3: Desenvolvimento do IsenSys |----------
-	\chapter{Desenvolvimento do \textit{IsenSys}}
+	\chapter{Desenvolvimento do \textit{IsenSys}} \label{cap3-desenvolvimento}
 
-		Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de forma completa porém, concisa.
+		Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de forma objetiva.
 		
 		O desenvolvimento do \textit{motor} do sistema é regido pelas normas de formato de arquivo e diretivas definidas no documento de orientações gerais do SISTAC \cite{sistac-gerais} e no manual de envio e recebimento de arquivos \cite{sistac-formatos}, versão 10.0, publicada em 24/06/2016.
 		
