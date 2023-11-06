@@ -440,6 +440,47 @@
 	
 		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC, produzir relatórios e editais de publicação preliminar e definitivo. As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
 
+		\section{Tela Inicial}
+		
+			A tela inicial do \textit{IsenSys} agrupa botões que dão acesso a todas as funcionalidades implementadas no sistema. Na primeira utilização é recomendável que o usuário configure os dados do órgão gestor, por meio do botão 'Configurações do Sistema'. A figura a seguir mostra a tela inicial do \textit{IsenSys}.
+			
+			\begin{figure}[h]
+				\begin{center}
+					
+					\caption{Tela Inicial do \textit{IsenSys}}
+					\label{tela-inicial-img}
+					
+					\includegraphics[scale=0.5]{img/inicial}
+					
+				\end{center}
+			\end{figure}
+
+		\section{Tela de Configurações do Sistema}
+		
+			Algumas configurações são necessárias para o correto funcionamento do \textit{IsenSys}. São elas:
+			
+			\begin{itemize}
+				
+				\item \textbf{CNPJ:} indica o número de CNPJ do órgão gestor;
+				\item \textbf{Nome Fantasia:} indica o nome fantasia do órgão gestor, contendo no máximo 100 caracteres, segundo o manual do SISTAC \cite{sistac-formatos};
+				\item \textbf{Razão Social:} indica a razão social do órgão gestor, também contendo no máximo 100 caracteres, segundo o manual do SISTAC \cite{sistac-formatos};
+				\item \textbf{Índices da Planilha de Importação:} indica os índices dos campos de dados dispostos no arquivo de importação de solicitações. Tais índices começam em '0' e vão incrementando a cada coluna. Tomando como exemplo um arquivo de importação do \textit{Microsoft Excel}, a coluna 'A', tem o índice '0', a coluna 'C' tem o índice '2' e assim sucessivamente. Todos os índices devem ser preenchidos.
+				
+			\end{itemize}
+			
+			As configurações são salvas em um arquivo binário contido no diretório de recursos do sistema, sob o caminho '\textit{config/program.dat}'.
+
+			\begin{figure}[h]
+				\begin{center}
+					
+					\caption{Tela de Configurações do Sistema}
+					\label{configs-img}
+					
+					\includegraphics[scale=0.45]{img/configs-ui}
+					
+				\end{center}
+			\end{figure}
+
 		\section{Desenvolvimento do Módulo de Envio}
 	
 			Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de solicitações de isenção para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
