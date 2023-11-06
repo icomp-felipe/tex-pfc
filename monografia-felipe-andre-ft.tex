@@ -155,7 +155,7 @@
 
 		Em primeiro lugar quero agradecer à minha família que é pequena, mas super unida, minha mãe Adriana, aos meus irmãos Anna Beatriz e Maurício Júnior (\textit{in memoriam}) e nossa amiga Nira, pelo amor incondicional, apoio emocional e encorajamento constante que me proporcionaram durante todos esses anos. Vocês são minha âncora e minha maior motivação.
 		
-		Aos meus grandes amigos: Alexsandro Evangelista, Arianne Kaist, Hítalo Viana, Leonardo Pinheiro, Maurianne Kaist, Milena Lizandra, Munhoz, Naiara e Will que compartilharam comigo as alegrias, desafios e preocupações deste percurso, agradeço pela amizade, colaboração, apoio mútuo e por não me permitir enlouquecer.
+		Aos meus grandes amigos: Alexsandro Evangelista, Arianne Kaist, Hítalo Viana, Leonardo Pinheiro, Maurianne Kaist, Milena Lizandra, Munhoz, Naiara, Nilba, Tiago e Will que compartilharam comigo as alegrias, desafios e preocupações deste percurso, agradeço pela amizade, colaboração, apoio mútuo e por não me permitir enlouquecer.
 		
 		Também expresso minha gratidão ao meu orientador, Prof. Edson Jr. pela orientação, PACIÊNCIA, dedicação e perseverança ao longo deste processo. Suas orientações e \textit{insights} e sua motivação foram fundamentais para o desenvolvimento deste trabalho e para o meu crescimento como acadêmico e profissional.
 		
@@ -1099,6 +1099,38 @@
 					\end{itemize}
 	
 					Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
+
+		\section{Relatório de Similaridade}
+		
+			Uma necessidade especial tornou necessária a implementação de um relatório que calculasse o quão similar é o nome de um candidato na fase de solicitação na fase de recurso.
+			
+			Empiricamente foi detectado que um candidato qualquer que teve sua solicitação de isenção indeferida em primeira instância e recursou trocando seus dados pessoais pelos de alguém que tem ciência de isenção garantida, teve recurso deferido pelo SISTAC.
+			
+			Como forma de evitar que tais candidatos praticantes deste ato ilícito tivessem isenção deferida sem ciência do órgão gestor, foi desenvolvido um relatório chamado de 'Relatório de Similaridade e Distância entre Nomes', que computa porcentagens das referidas métricas utilizando o algoritmo de \textit{Jaro-Winkler}, entre o nome informado na fase de solicitação e recurso, pelo candidato.
+			
+			O algoritmo é executado tomando como base candidatos que tiveram solicitação de isenção indeferida em primeira instância, mas deferida após recurso, gerando um relatório com o comparativo entre nomes e as duas métricas (similaridade e distância), ordenado pela ordem crescente de similaridade.
+			
+			%Algumas classes estão envolvidas na confecção deste relatório, são elas: a classe \textit{Similaridade}
+
+		\section{Diretório de Recursos do \textit{IsenSys}}
+		
+			O \textit{IsenSys} conta com alguns arquivos de configuração e recursos que estão dispostos em um diretório chamado '\textit{res}', existente no mesmo nível de diretório do arquivo executável do \textit{IsenSys}.
+			
+			A seguir estão listados os recursos e seus caminhos relativos ao diretório raiz da aplicação.
+			
+			\begin{itemize}
+				
+				\item \textbf{\textit{config/program.dat:}} contém as configurações globais do sistema;
+				\item \textbf{\textit{fonts/fonts-extension.jar:}} fontes utilizadas na confecção dos relatórios;
+				\item \textbf{\textit{i18n/*.lng:}} arquivos contendo as strings de interface do sistema;
+				\item \textbf{\textit{icon/*.png:}} contém os ícones utilizados nas telas;
+				\item \textbf{\textit{img/:}} diretório contendo as imagens de fundo das telas;
+				\item \textbf{\textit{relatorios/*.jasper:}} arquivos dos relatórios;
+				\item \textbf{\textit{situacoes/situacoes.csv:}} arquivo contendo as situações de indeferimento.
+				
+			\end{itemize}
+			
+			Para o correto funcionamento do sistema é recomendável que o usuário não altere o conteúdo destes arquivos manualmente, tampouco os exclua, renomeie ou os troque de diretório.
 
 	\chapter{Implementação e Resultados}
 	
