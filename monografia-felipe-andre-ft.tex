@@ -295,7 +295,7 @@
 	% ----------| Capítulo 2: Referencial Teórico |----------
 	\chapter{Referencial Teórico} \label{cap2-referencial}
 	
-		Este capítulo referencia as principais ferramentas e tecnologias utilizadas no desenvolvimento do \textit{IsenSys}, tais como linguagem de programação, bibliotecas de funções e o ambiente de desenvolvimento.
+		Este capítulo referencia as principais ferramentas e tecnologias utilizadas no desenvolvimento do \textit{IsenSys}, tais como linguagem de programação, bibliotecas de funções e o ambiente de desenvolvimento. A última seção deste capítulo explica e detalha o funcionamento do processo de isenção adotado pela COMPEC.
 		
 		\section{Java} \label{java}
 		
@@ -320,6 +320,73 @@
 
 			Provavelmente o leitor já tenha utilizado algumas das aplicações implementadas utilizando a tecnologia Java, programas como: declaração de imposto sobre a renda (IRPF e IRPJ), Processo Judicial Eletrônico (PJe), \textit{MATLAB}, famoso no mundo da engenharia e até o próprio sistema \textit{Android}, um dos principais sistemas operacionais para dispositivos móveis.
 		
+		\section{Apache Commons Text\texttrademark} \label{commons-text}
+		
+			O \textit{Apache Commons Text\texttrademark} \cite{commons-text} é uma biblioteca livre (\textit{open-source}) escrita em linguagem Java, desenvolvida e mantida pela \textit{Apache Software Foundation}. Ela oferece funcionalidades para manipulação e processamento de texto, tornando tarefas comuns de manipulação de strings mais eficientes e simples para desenvolvedores Java.
+		
+			Algumas das funcionalidades da biblioteca são: manipulação e escapamento de \textit{Strings}, algoritmos de distância e similaridade, tokenização, geração de senhas aleatórias, formatação em geral, dentre muitas outras.
+		
+		\section{Apache Maven} \label{maven}
+		
+			Até o presente momento foram citadas algumas bibliotecas utilizadas como complemento de código para a linguagem Java, prática muito comum entre os desenvolvedores em qualquer linguagem de programação. Porém, muitas vezes sua gerência pode ser complicada se realizada de forma manual, pois bibliotecas resultam em arquivos, que podem sofrer corrompimento ou passar por atualizações de versão.
+		
+			O \textit{Apache Maven} \cite{maven} surge como uma ferramenta de gerenciamento e compreensão de projetos escritos em Java, onde é possível organizar bibliotecas e publicá-las de forma gratuita para utilização pela comunidade de desenvolvimento. Podemos esperar também funcionalidades como atualizações, verificação de integridade e autoinstalação.
+		
+			A utilização deste gerente é muito simples, tendo em vista que muitas suítes de desenvolvimento oferecem suporte nativo ao \textit{Maven}. Após instalada, basta organizar as dependências (bibliotecas) do projeto em um arquivo especifico denominado 'pom.xml', salvar e esperar que o próprio \textit{Maven} configure as bibliotecas no projeto.
+			
+			\begin{figure}[h]
+				\begin{center}
+					
+					\caption{Logo do gerente de projetos \textit{Apache Maven}}
+					\label{maven-img}
+					
+					\includegraphics[scale=0.5]{img/maven-logo}
+					
+					\legend{Fonte: \url{https://maven.apache.org}}
+					
+				\end{center}
+			\end{figure}
+		
+		\section{Apache POI} \label{apache-poi}
+		
+			O \textit{Apache POI} \cite{poi} também é uma biblioteca gratuita escrita utilizando a linguagem Java, que adiciona suporte de leitura e escrita de dados em documentos do \textit{Microsoft Office} diretamente das aplicações Java, sem a necessidade de aquisição e instalação dos aplicativos da \textit{Microsoft}.
+			
+			Este complemento é desenvolvido e mantido pela \textit{fundação Apache}, que é uma organização mundial sem fins lucrativos criada para dar suporte de desenvolvimento a projetos de programação de código aberto, ou seja, livres para todos.
+			
+			Por ser uma fundação composta por uma comunidade descentralizada, suas soluções estão em constante melhoria, fornecendo ao desenvolvedor final peças de \textit{software} com qualidade garantida.
+			
+			\begin{figure}[h]
+				\begin{center}
+					
+					\caption{Logo da biblioteca \textit{Apache POI}}
+					\label{apache-poi-img}
+					
+					\includegraphics[scale=0.35]{img/apache-poi}
+					
+					\legend{Fonte: \url{https://poi.apache.org}}
+					
+				\end{center}
+			\end{figure}
+		
+		\section{Eclipse IDE} \label{eclipse-ide}
+		
+			No mundo do desenvolvimento de software, agilidade e escalabilidade estão entre as qualidades mais requisitadas nas linguagens. Como forma de satisfazer tais demandas, existe no mercado uma vasta gama do que chamamos de \textit{IDE - integrated development environment} ou ambiente de desenvolvimento integrado, amplamente aceitos pela comunidade.
+			
+			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem Java, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc e ainda por ser de código aberto, pode ser modificado para outras finalidades.
+			
+			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} \cite{maven}.
+			
+			\begin{figure}[h]
+				\begin{center}
+					
+					\caption{\textit{Eclipse IDE}}
+					\label{eclipse-img}
+					
+					\includegraphics[scale=0.25]{img/eclipse-ide}
+					
+				\end{center}
+			\end{figure}
+		
 		\section{JasperReports\textregistered} \label{jasper-reports}
 		
 			A biblioteca \textit{JasperReports\textregistered} \cite{jasper} é gratuita e uma das mais robustas e populares utilizadas para criação de relatórios para aplicações Java. Possui sua própria suíte de design, onde o desenvolvedor pode rapidamente configurar um novo relatório com poucos passos, seguindo guias e instruções diretamente na interface gráfica do editor.
@@ -338,78 +405,7 @@
 				\end{center}
 			\end{figure}
 			
-		\section{Joda-Time} \label{joda-time}
-		
-			A biblioteca \textit{Joda-Time} \cite{joda-time} facilita praticamente qualquer operação e manipulação com datas em um sistema Java, tarefa que é deveras complicada utilizando apenas os recursos nativos da linguagem. Com uma boa documentação e as mais diversas classes para cálculos, formatação e operações com data, tem conquistado muitos desenvolvedores a utilizá-la em seus projetos.
-			
-			Felizmente, \textit{Joda-Time} é uma biblioteca livre para utilização pessoal e comercial, licenciada sobre a \textit{Licença Apache 2.0}. Também é considerada consolidada e estável, estando até os dias atuais recebendo atualizações de otimização e novas funcionalidades.
-
-		\section{Apache POI} \label{apache-poi}
-		
-			O \textit{Apache POI} \cite{poi} também é uma biblioteca gratuita escrita utilizando a linguagem Java, que adiciona suporte de leitura e escrita de dados em documentos do \textit{Microsoft Office} diretamente das aplicações Java, sem a necessidade de aquisição e instalação dos aplicativos da \textit{Microsoft}.
-			
-			Este complemento é desenvolvido e mantido pela \textit{fundação Apache}, que é uma organização mundial sem fins lucrativos criada para dar suporte de desenvolvimento a projetos de programação de código aberto, ou seja, livres para todos.
-			
-			Por ser uma fundação composta por uma comunidade descentralizada, suas soluções estão em constante melhoria, fornecendo ao desenvolvedor final peças de \textit{software} com qualidade garantida.
-
-			\begin{figure}[h]
-				\begin{center}
-					
-					\caption{Logo da biblioteca \textit{Apache POI}}
-					\label{apache-poi-img}
-					
-					\includegraphics[scale=0.35]{img/apache-poi}
-					
-					\legend{Fonte: \url{https://poi.apache.org}}
-					
-				\end{center}
-			\end{figure}
-			
-		\section{Apache Commons} \label{commons-text}
-		
-			
-
-		\section{Apache Maven} \label{maven}
-		
-			Até o presente momento foram citadas algumas bibliotecas utilizadas como complemento de código para a linguagem Java, prática muito comum entre os desenvolvedores em qualquer linguagem de programação. Porém, muitas vezes sua gerência pode ser complicada se realizada de forma manual, pois bibliotecas resultam em arquivos, que podem sofrer corrompimento ou passar por atualizações de versão.
-			
-			O \textit{Apache Maven} \cite{maven} surge como uma ferramenta de gerenciamento e compreensão de projetos escritos em Java, onde é possível organizar bibliotecas e publicá-las de forma gratuita para utilização pela comunidade de desenvolvimento. Podemos esperar também funcionalidades como atualizações, verificação de integridade e autoinstalação.
-			
-			A utilização deste gerente é muito simples, tendo em vista que muitas suítes de desenvolvimento oferecem suporte nativo ao \textit{Maven}. Após instalada, basta organizar as dependências (bibliotecas) do projeto em um arquivo especifico denominado 'pom.xml', salvar e esperar que o próprio \textit{Maven} configure as bibliotecas no projeto.
-
-			\begin{figure}[h]
-				\begin{center}
-					
-					\caption{Logo do gerente de projetos \textit{Apache Maven}}
-					\label{maven-img}
-				
-					\includegraphics[scale=0.5]{img/maven-logo}
-					
-					\legend{Fonte: \url{https://maven.apache.org}}
-					
-				\end{center}
-			\end{figure}
-
-		\section{Eclipse IDE} \label{eclipse-ide}
-		
-			No mundo do desenvolvimento de software, agilidade e escalabilidade estão entre as qualidades mais requisitadas nas linguagens. Como forma de satisfazer tais demandas, existe no mercado uma vasta gama do que chamamos de \textit{IDE - integrated development environment} ou ambiente de desenvolvimento integrado, amplamente aceitos pela comunidade.
-			
-			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem Java, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc e ainda por ser de código aberto, pode ser modificado para outras finalidades.
-			
-			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} \cite{maven}.
-
-			\begin{figure}[H]
-				\begin{center}
-				
-					\caption{\textit{Eclipse IDE}}
-					\label{eclipse-img}
-				
-					\includegraphics[scale=0.25]{img/eclipse-ide}
-					
-				\end{center}
-			\end{figure}
-			
-		\section{Algoritmo de \textit{Jaro-Winkler}} \label{jaro-winkler}
+		\section{\textit{Jaro-Winkler}} \label{jaro-winkler}
 		
 			O algoritmo de \textit{Jaro-Winkler} \cite{jaro-winkler} é uma técnica de comparação de strings que mede a semelhança entre duas sequências de caracteres. Ele é frequentemente utilizado para encontrar correspondências aproximadas entre strings, especialmente em aplicações de deduplicação de dados e pesquisa de registros. A seguir, encontra-se um resumo da implementação do algoritmo.
 			
@@ -472,6 +468,15 @@
 			
 			O valor resultante de $\text{Jaro\_Winkler\_Sim}$ está dentro do intervalo [0, 1], onde 0 indica nenhuma semelhança e 1 indica correspondência perfeita. Quanto maior o valor, maior a semelhança entre as duas strings.
 			
+		\section{Joda-Time} \label{joda-time}
+			
+			A biblioteca \textit{Joda-Time} \cite{joda-time} facilita praticamente qualquer operação e manipulação com datas em um sistema Java, tarefa que é deveras complicada utilizando apenas os recursos nativos da linguagem. Com uma boa documentação e as mais diversas classes para cálculos, formatação e operações com data, tem conquistado muitos desenvolvedores a utilizá-la em seus projetos.
+			
+			Felizmente, \textit{Joda-Time} é uma biblioteca livre para utilização pessoal e comercial, licenciada sobre a \textit{Licença Apache 2.0}. Também é considerada consolidada e estável, estando até os dias atuais recebendo atualizações de otimização e novas funcionalidades.
+
+		\section{Processo de Isenção} \label{isencao}
+		
+			as
 
 	% ----------| Capítulo 3: Desenvolvimento do IsenSys |----------
 	\chapter{Desenvolvimento do \textit{IsenSys}} \label{cap3-desenvolvimento}
@@ -991,7 +996,7 @@
 	
 			\subsection{Modelagem de uma Situacao}
 	
-				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
+				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema \ref{recursos}. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
 	
 				\begin{figure}[h]
 					\begin{center}
@@ -1167,7 +1172,7 @@
 	
 					\begin{itemize}
 						
-						\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade;
+						\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade \ref{similaridade};
 						
 						\item \textbf{Erros:} aqui todos os erros são mesclados.
 						
@@ -1175,7 +1180,7 @@
 	
 					Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
 
-		\section{Relatório de Similaridade}
+		\section{Relatório de Similaridade} \label{similaridade}
 		
 			Uma necessidade especial tornou necessária a implementação de um relatório que calculasse o quão similar é o nome de um candidato na fase de solicitação na fase de recurso.
 			
@@ -1185,7 +1190,67 @@
 			
 			O algoritmo é executado tomando como base candidatos que tiveram solicitação de isenção indeferida em primeira instância, mas deferida após recurso, gerando um relatório com o comparativo entre nomes e as duas métricas (similaridade e distância), ordenado pela ordem crescente de similaridade.
 			
-			%Algumas classes estão envolvidas na confecção deste relatório, são elas: a classe \textit{Similaridade}
+			Algumas classes estão envolvidas na confecção deste relatório, são elas: \textit{Similaridade} e \textit{JaroWinkler}, além do gerador de PDF: \textit{PDFSimilaridade}.
+			
+			\subsection{Modelagem de uma Similaridade}
+			
+				Esta classe contém alguns atributos úteis para confecção do relatório de similaridade entre nomes. A figura a seguir ilustra seu diagrama de classe.
+				
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de uma Similaridade}
+						\label{similaridade-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{Similaridade}} \\ \hline
+							+nomeSolicitacao: String                    \\
+							+nomeRecurso: String                        \\
+							+distancia: double                          \\
+							+similaridade: double                       \\ \hline
+							\\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+
+			\subsection{A classe \textit{JaroWinkler}}
+			
+				É uma classe auxiliar que computa o algoritmo de \textit{Jaro-Winkler} \cite{jaro-winkler} nos dados dos candidatos recursantes. Para cálculo das métricas de distância e similaridade, a biblioteca \textit{Apache Commons Text\texttrademark} [\ref{commons-text}] foi utilizada. A seguir seu diagrama de classe.
+			
+				\begin{table}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{JaroWinkler}}
+						\label{jaro-winkler-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{JaroWinkler}} \\ \hline
+							\\ \hline
+							+compute()                                \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{table}
+
+			\subsection{Montagem do Relatório de Similaridade}
+			
+				Realizando uma abordagem integrada, conhecendo os agentes envolvidos na produção do relatório, temos o seguinte diagrama.
+				
+				\begin{figure}[H]
+					\begin{center}
+						
+						\caption{Diagrama do Fluxo de Dados no Relatório}
+						\label{jaro-winkler-report-uml}
+						
+						\includegraphics[scale=0.6]{img/jaro-winkler-uml}
+						
+					\end{center}
+				\end{figure}
+				
+				De uma forma prática e funcional, os dados dos candidatos solicitantes, provenientes de \textit{ListaRetornos}, são encaminhados à classe \textit{JaroWinkler} para computação das métricas de distância e similaridade e salvamento em objetos da classe \textit{Similaridade}. Por fim, \textit{PDFSimilaridade} aproveita estes dados para a confecção do relatório.
 
 		\section{Diretório de Recursos do \textit{IsenSys}} \label{recursos}
 		
@@ -1209,7 +1274,7 @@
 
 	\chapter{Implementação e Resultados}
 	
-		A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textdegree} 13 e 14/GR/UFAM.
+		A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textdegree} 13 \cite{edital-13} e 14/GR/UFAM \cite{edital-14}.
 		
 		Por pura coincidência, o PSC 2024 é a primeira edição a possuir a modalidade de isenção via CadÚnico logo nas primeiras etapas do processo, opção que só era concedida aos candidatos da 3{\textordfeminine} etapa.
 		
@@ -1251,7 +1316,7 @@
 				\item Implementar layouts dinâmicos na interface gráfica, de forma a permitir o redimensionamento das janelas;
 				\item Permitir que o número de edital contenha caracteres alfanuméricos de forma a abranger esta atualização recente do SISTAC;
 				\item Adicionar interfaces gráficas para gerência dos recursos do sistema tais como logomarca e arquivo de situações;
-				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textdegree} 12.799, de 10 de abril de 2013, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018.
+				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textdegree} 12.799, de 10 de abril de 2013 \cite{lei-12799}, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018 \cite{lei-13656}.
 				
 			\end{itemize}
 			
