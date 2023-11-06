@@ -31,6 +31,7 @@
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{indentfirst}        % Indenta o primeiro parágrafo de cada seção.
 \usepackage{float}              % Auxilia no posicionamento de imagens
+\usepackage{amsmath}            % Adiciona suporte a fórmulas
 
 \usepackage[brazilian,hyperpageref]{backref}  % Páginas com as citações na bibl
 \usepackage[num]{abntex2cite}                 % Citações no padrão ABNT
@@ -336,6 +337,12 @@
 				
 				\end{center}
 			\end{figure}
+			
+		\section{Joda-Time} \label{joda-time}
+		
+			A biblioteca \textit{Joda-Time} \cite{joda-time} facilita praticamente qualquer operação e manipulação com datas em um sistema Java, tarefa que é deveras complicada utilizando apenas os recursos nativos da linguagem. Com uma boa documentação e as mais diversas classes para cálculos, formatação e operações com data, tem conquistado muitos desenvolvedores a utilizá-la em seus projetos.
+			
+			Felizmente, \textit{Joda-Time} é uma biblioteca livre para utilização pessoal e comercial, licenciada sobre a \textit{Licença Apache 2.0}. Também é considerada consolidada e estável, estando até os dias atuais recebendo atualizações de otimização e novas funcionalidades.
 
 		\section{Apache POI} \label{apache-poi}
 		
@@ -357,6 +364,10 @@
 					
 				\end{center}
 			\end{figure}
+			
+		\section{Apache Commons} \label{commons-text}
+		
+			
 
 		\section{Apache Maven} \label{maven}
 		
@@ -397,6 +408,70 @@
 					
 				\end{center}
 			\end{figure}
+			
+		\section{Algoritmo de \textit{Jaro-Winkler}} \label{jaro-winkler}
+		
+			O algoritmo de \textit{Jaro-Winkler} \cite{jaro-winkler} é uma técnica de comparação de strings que mede a semelhança entre duas sequências de caracteres. Ele é frequentemente utilizado para encontrar correspondências aproximadas entre strings, especialmente em aplicações de deduplicação de dados e pesquisa de registros. A seguir, encontra-se um resumo da implementação do algoritmo.
+			
+			Dados: Duas strings, $s_1$ e $s_2$
+			
+			\noindent
+			\textbf{Passo 1:} Encontre o comprimento das strings:
+			\[
+			\text{len}_1 = \text{comprimento}(s_1)
+			\]
+			\[
+			\text{len}_2 = \text{comprimento}(s_2)
+			\]
+			
+			\noindent
+			\textbf{Passo 2:} Defina o valor de $m$ como o número de caracteres em comum (correspondentes) entre as duas strings, considerando uma janela de proximidade:
+			\[
+			\text{Janela} = \left\lfloor\max(\text{len}_1, \text{len}_2) / 2\right\rfloor - 1
+			\]
+			
+			\[
+			\text{m} = \text{número de caracteres em comum dentro da janela}
+			\]
+			
+			\noindent
+			\textbf{Passo 3:} Calcule o número de transposições:
+			\[
+			\text{t} = \frac{1}{2} \times \left(\text{número de transposições de caracteres entre $s_1$ e $s_2$}\right)
+			\]
+			
+			\noindent
+			\textbf{Passo 4:} Calcule a medida de similaridade de Jaro:
+			\[
+			\text{Jaro\_Sim} = \frac{m}{\text{len}_1} + \frac{m}{\text{len}_2} + \frac{m - t}{m}
+			\]
+			
+			\noindent
+			\textbf{Passo 5:} Calcule o fator de ajuste de prefixo Winkler:
+			\[
+			\text{Prefix\_Factor} = 0
+			\]
+			\[
+			\text{Prefix\_Len} = \text{número de caracteres idênticos no início das strings}
+			\]
+			
+			Se $\text{Prefix\_Len} > 4$, limite $\text{Prefix\_Len}$ a 4.
+			
+			\[
+			\text{Prefix\_Factor} = \text{Prefix\_Len} \times 0.1 \times (1 - \text{Jaro\_Sim})
+			\]
+			
+			\noindent
+			\textbf{Passo 6:} Calcule a medida de similaridade de Jaro-Winkler:
+			\[
+			\text{Jaro\_Winkler\_Sim} = \text{Jaro\_Sim} + \text{Prefix\_Factor}
+			\]
+			
+			\noindent
+			\textbf{Passo 7:} A medida de similaridade final entre $s_1$ e $s_2$ é dada por $\text{Jaro\_Winkler\_Sim}$.
+			
+			O valor resultante de $\text{Jaro\_Winkler\_Sim}$ está dentro do intervalo [0, 1], onde 0 indica nenhuma semelhança e 1 indica correspondência perfeita. Quanto maior o valor, maior a semelhança entre as duas strings.
+			
 
 	% ----------| Capítulo 3: Desenvolvimento do IsenSys |----------
 	\chapter{Desenvolvimento do \textit{IsenSys}} \label{cap3-desenvolvimento}
@@ -468,7 +543,7 @@
 				
 			\end{itemize}
 			
-			As configurações são salvas em um arquivo binário contido no diretório de recursos do sistema, sob o caminho '\textit{config/program.dat}'.
+			As configurações são salvas em um arquivo binário contido no diretório de recursos do sistema [\ref{recursos}], sob o caminho '\textit{config/program.dat}'.
 
 			\begin{figure}[h]
 				\begin{center}
@@ -1112,7 +1187,7 @@
 			
 			%Algumas classes estão envolvidas na confecção deste relatório, são elas: a classe \textit{Similaridade}
 
-		\section{Diretório de Recursos do \textit{IsenSys}}
+		\section{Diretório de Recursos do \textit{IsenSys}} \label{recursos}
 		
 			O \textit{IsenSys} conta com alguns arquivos de configuração e recursos que estão dispostos em um diretório chamado '\textit{res}', existente no mesmo nível de diretório do arquivo executável do \textit{IsenSys}.
 			
