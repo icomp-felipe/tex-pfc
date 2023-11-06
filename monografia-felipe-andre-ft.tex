@@ -403,22 +403,22 @@
 
 		Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de forma objetiva.
 		
-		O desenvolvimento do \textit{motor} do sistema é regido pelas normas de formato de arquivo e diretivas definidas no documento de orientações gerais do SISTAC \cite{sistac-gerais} e no manual de envio e recebimento de arquivos \cite{sistac-formatos}, versão 10.0, publicada em 24/06/2016.
+		O desenvolvimento do motor do sistema (\textit{backend}) é regido pelas normas de formato de arquivo e diretivas definidas no documento de orientações gerais do SISTAC \cite{sistac-gerais} e no manual de envio e recebimento de arquivos \cite{sistac-formatos}, versão 10.0, publicada em 24/06/2016.
 		
 		Os requisitos funcionais (RF) do sistema são:
 	
 		\begin{itemize}
 
 			\item O sistema deverá permitir a importação de dados de candidatos através de arquivos do tipo \textit{csv} ou planilhas do \textit{Microsoft Excel} (RF01);
-			\item O sistema deverá permitir o cadastro e edição de dados da instituição gerente (RF02);
-			\item O sistema deverá realizar testes de integridade nos dados importados (RF03);
+			\item O sistema deverá permitir o cadastro e edição de dados do órgão gestor (RF02);
+			\item O sistema deverá realizar testes de integridade nos dados de solicitações importadas (RF03);
 			\item O sistema deverá gerar arquivos de importação para o SISTAC (RF04);
-			\item O sistema só pode entregar um arquivo de importação com os dados de candidatos em sua plena completude e integridade (RF05);
-			\item Dados de candidatos que foram informados de forma incompleta ou inválida deverão ser exportados em uma planilha de erros (RF06);
+			\item O sistema só pode entregar um arquivo de importação com os dados de solicitações em sua plena completude e integridade (RF05);
+			\item Dados de solicitações que foram informadas de forma incompleta ou inválida serão considerados erros e deverão ser exportados em uma planilha (RF06);
 			\item O sistema deverá permitir a importação do arquivo de retorno do SISTAC (RF07);
-			\item A partir do arquivo de retorno do SISTAC, o sistema deverá produzir editais de publicação de resultados (RF08);
-			\item O sistema também deve permitir a importação de uma planilha com erros, para inclusão nos editais públicos (RF09);
-			\item O sistema deve gerar relatórios de estatísticas de candidatos deferidos e indeferidos (RF10);
+			\item A partir do arquivo de retorno do SISTAC, o sistema deverá produzir editais de publicação e relatórios de resultados (RF08);
+			\item O sistema também deve permitir a importação da planilha com erros, para inclusão nos editais públicos (RF09);
+			\item O sistema deve gerar relatórios de estatísticas de solicitações deferidas e indeferidas (RF10);
 			\item O sistema deverá gerar um relatório de similaridade entre nomes de candidatos recursantes (RF11).
 			
 		\end{itemize}
@@ -427,31 +427,31 @@
 	
 		\begin{itemize}
 			
-			\item A linguagem \textit{Java Standard Edittion (Java SE)} foi utilizada no desenvolvimento da aplicação (RNF01);
+			\item A linguagem \textit{Java Standard Edition (Java SE)} foi utilizada no desenvolvimento da aplicação (RNF01);
 			\item A versão mínima da \textit{Java Virtual Machine (JVM)} a ser utilizada é a 15 (RNF02);
 			\item O projeto foi desenvolvido utilizando o \textit{Java Development Kit (OpenJDK)} na versão 21 (RNF03);
 			\item A suíte de interface gráfica utilizada é o \textit{Java Swing} (RNF04);
 			\item Por questões de simplicidade, todas as telas foram construídas utilizando layout absoluto com janela não redimensionável (RNF05);
 			\item A versão do \textit{Apache POI} utilizada é a 5.2.3, lançada em 17/09/2022 (RNF06);
 			\item A versão do \textit{JasperReports\textregistered} utilizada é a 6.26.0, lançada em 11/09/2023 (RNF07);
-			\item O sistema pode ser executado em qualquer computador com suporte mínimo à \textit{JDK 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF08).
+			\item O sistema pode ser executado em qualquer computador com suporte mínimo ao \textit{Java Runtime Environment - JRE 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF08).
 			
 		\end{itemize}
 	
-		O sistema conta com dois módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e outro dedicado a processar os arquivos de retorno do SISTAC e produzir relatórios e editais de publicação. As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
+		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC, produzir relatórios e editais de publicação preliminar e definitivo. As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
 
 		\section{Desenvolvimento do Módulo de Envio}
 	
-			Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de candidatos para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
+			Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de solicitações de isenção para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
 	
 			\subsection{Modelagem de um Candidato} \label{candidato}
 	
-				Os dados pessoais de um candidato são o objeto principal deste sistema, pois são eles quem solicitam isenção e têm uma resposta de deferimento ou não destas. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
+				Os dados pessoais de um candidato são o objeto principal deste sistema, pois compõem uma solicitação de isenção que, após análise pelo SISTAC, tem uma resposta de deferimento ou não. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
 
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-				\begin{table}[H]
+				\begin{table}[h]
 				
-					\caption{Dados pessoais de candidatos e seus formatos.}
+					\caption{Dados pessoais de candidatos e seus formatos}
 					\label{tabela-dados-candidato}
 				
 					\begin{tabular}{|c|l|c|c|c|}
@@ -470,648 +470,625 @@
 					
 				\end{table}
 	
-	De posse dos dados e tipos, foi concebida a modelagem da entidade \textit{Candidato}, de acordo com o diagrama a seguir.
+				De posse dos dados e tipos, foi concebida a modelagem da entidade \textit{Candidato}, de acordo com o diagrama a seguir.
 
-	% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da entidade \textit{Candidato}}
-			\label{candidato-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{Candidato}} \\ \hline
-				+nome: String \\
-				+nis: String \\
-				+dataNascimento: DateTime \\
-				+sexo: char \\
-				+rg: String \\
-				+dataEmissaoRG: DateTime \\
-				+orgaoEmissorRG: String \\
-				+cpf: String \\
-				+nomeMae: String \\ \hline
-				\\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	De acordo com o diagrama de classe da entidade \textit{Candidato}, nota-se que esta apenas armazena dados. As validações nos campos são garantidas por uma classe intermediária, detalhada na seção seguinte.
-	
-	\subsection{A classe \textit{CandidatoBuilder}}
-	
-	Esta classe é responsável por montar um \textit{Candidato} com os dados extraídos de um arquivo de entrada. Durante esse processo ela realiza uma série de validações nos dados, e caso haja pelo menos uma inconsistência, uma exceção com detalhes desta inconsistência é lançada, caso contrário, significa que foi possível construir um objeto respeitando todos os requisitos do SISTAC \cite{sistac-formatos}. Segue o diagrama de classe do \textit{CandidatoBuilder}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da entidade \textit{CandidatoBuilder}}
-			\label{candidatobuilder-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{CandidatoBuilder}} \\ \hline
-				\\ \hline
-				+build() \\
-				+parseNome() \\
-				+parseNIS() \\
-				+parseData() \\
-				+parseSexo() \\
-				+parseRG() \\
-				+parseOrgao() \\
-				+parseCPF() \\ \hline
-			\end{tabular}
-		
-		\end{center}
-	\end{figure}
-	
-	Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador}, lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso.
-	
-	Para registrar inconsistências em cada um dos campos de dados de um \textit{Candidato}, é utilizada a classe de exceção \textit{FieldParseException} que, por sua vez, é incorporada à classe de exceção \textit{RowParseException}, montada com todas as exceções percebidas pelo método \textit{build()}.
-
-	\subsection{A classe de exceção \textit{FieldParseException}}
-	
-	Como forma de descentralizar as tratativas de validação de dados de candidatos, a classe de exceção \textit{FieldParseException} é responsável por armazenar informações sobre o motivo de um campo não ter sido validado e qual campo gerou esta exceção. Esta classe apenas estende a superclasse \textit{Exception} e monta uma \textit{String} formatada com o motivo e o nome do campo que não foi validado.
-
-	\subsection{A classe de exceção \textit{RowParseException}}	
-
-	Com o objetivo de concentrar todas as exceções de validação dos campos de dados de um \textit{Candidato}, a classe de exceção \textit{RowParseException} armazena tais exceções em uma lista encadeada e ainda adiciona informações que ajudam a identificar qual foi o candidato que gerou a(s) exceção(ões) e ainda em qual posição do arquivo de entrada ele está.
-	
-	A seguir é possível visualizar o diagrama de classe de \textit{RowParseException}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da entidade \textit{RowParseException}}
-			\label{rowparseexception-uml}
-
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{RowParseException}} \\ \hline
-				+linha: int \\
-				+nis: String \\
-				+cpf: String \\
-				+nome: String \\
-				+listaExcecoes: List\textless{}FieldParseException\textgreater{} \\ \hline
-				+addException() \\
-				+hasException() \\
-				+getMessage() \\
-				+getErrorSummaryArray() \\
-				+getErrorSummaryString() \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-
-	\subsection{A classe \textit{ParseResult}} \label{cap-parse-result}
-	
-	Esta classe é responsável por concentrar o resultado da extração de dados do(s) arquivo(s) de entrada em duas listas:
-		
-	\begin{enumerate}
-			
-		\item Lista de \textit{Candidato}: onde são armazenados apenas dados de candidatos que passaram com sucesso por todas as validações de campos;
-		\item Lista de \textit{RowParseException}: onde são armazenadas a identificação do candidato e o(s) motivos(s) de invalidação de campo(s).
-			
-	\end{enumerate}
-	
-	A seguir podemos compreender melhor a classe por meio de seu diagrama.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da entidade \textit{ParseResult}}
-			\label{parseresult-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{ParseResult}} \\ \hline
-				+listaCandidatos: List\textless{}Candidato\textgreater{} \\
-				+listaExcecoes: List\textless{}RowParseException\textgreater{} \\ \hline
-				+addCandidato() \\
-				+addExcecao() \\
-				+getListaCandidatos() \\
-				+getListaExcecoes() \\
-				+sortLists() \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{Importadores de Dados de Candidato}
-	
-	O \textit{IsenSys} é capaz de importar dados pessoais de candidatos em dois formatos:
-	
-	\begin{enumerate}
-		
-		\item Arquivo \textit{.csv}: que é um arquivo de texto puro (sem formatação), contendo um cabeçalho na sua primeira linha e os dados pessoais requeridos pelo sistema nas outras linhas. O arquivo deve estar codificado em UTF-8, com separador por tabulação, vírgula ou ponto-e-vírgula.
-		
-		\item Planilha do \textit{Microsoft Excel (.xlsx)}: a planilha deve conter um cabeçalho na primeira linha com os nomes dos campos e nas demais linhas os dados dos candidatos.
-		
-	\end{enumerate}
-
-	Nos dois casos a ordem da disposição dos dados é extremamente importante para a correta importação. Tanto as colunas do arquivo \textit{csv} quanto as da planilha do \textit{Microsoft Excel} devem respeitar a seguinte ordem:
-	
-	\begin{enumerate}
-		
-		\item Nome completo;
-		\item NIS;
-		\item Data de nascimento;
-		\item Sexo;
-		\item Número de RG;
-		\item Data de emissão do RG;
-		\item Órgão emissor do RG;
-		\item CPF;
-		\item Nome completo da mãe.
-		
-	\end{enumerate}
-	
-	Para cada tipo de arquivo foi implementado um importador, contendo as especificidades de tratamento de cada formato. Os dados extraídos pelos importadores são então enviados ao \textit{CandidatoBuilder} que irá construir um objeto \textit{Candidato}, tornando todo o processo de tratativa de arquivos transparente às classes superiores.
-	
-	\subsubsection{O importador \textit{CSVSheetReader}}
-	
-	Para o arquivo \textit{.csv} temos o importador descrito na classe \textit{CSVSheetReader}, que é util tanto para o módulo de envio, através do método \textit{read()}, quanto pelo módulo de retorno, através do método \textit{readRetorno()}. A princípio o papel deste importador é detectar o tipo de separador do arquivo \textit{.csv} e extrair os dados de uma linha. A seguir temos seu diagrama de classe.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem do importador de dados \textit{CSVSheetReader}}
-			\label{csvreader-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{CSVSheetReader}} \\ \hline
-				\\ \hline
-				+read() \\
-				+readRetorno() \\
-				+readLine() \\
-				+getInstituicao() \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsubsection{O importador \textit{ExcelSheetReader}}
-
-	Este importador também é comum aos dois módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos e entregá-los ao \textit{CandidatoBuilder}. Seu diagrama de classe está disposto na figura a seguir.
-
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem do importador de dados \textit{ExcelSheetReader}}
-			\label{excelreader-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{ExcelSheetReader}} \\ \hline
-				\\ \hline
-				+read() \\
-				+readErros() \\
-				+readLine() \\
-				+getCellContent() \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{Exportadores de Dados}
-	
-	O estado final do processo de importação de dados dos candidatos solicitantes consiste na concentração deles na classe \textit{ParseResult} [\ref{cap-parse-result}]. A partir daqui, os dados dos candidatos considerados válidos pela classe \textit{CandidatoBuilder} estão prontos para serem exportados para o arquivo no formato de envio do SISTAC \cite{sistac-formatos}. Os dados de solicitações inválidas são exportados para uma planilha do \textit{Microsoft Excel}, para futuro processamento no módulo de retorno.
-	
-	\subsubsection{O exportador \textit{CSVSheetWriter}}
-	
-	Esta classe tem como função exportar os dados de candidatos válidos para o(s) arquivo(s) no formato de envio do SISTAC. Na primeira linha do arquivo é impresso o cabeçalho com alguns dados da instituição gestora (configurados previamente) e nas demais, os dados são dispostos de acordo com o formatação exigida no manual do SISTAC \cite{sistac-formatos}.
-	
-	Empiricamente foi descoberto que o SISTAC tem um limite máximo de candidatos por arquivo de envio setado em 2000. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de candidatos ultrapasse este limite.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama de classe do exportador de dados \textit{CSVSheetWriter}}
-			\label{csvwriter-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{CSVSheetWriter}} \\ \hline
-				\\ \hline
-				+write()                                      \\
-				+getSistacFilename()                          \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsubsection{O exportador \textit{ExcelSheetWriter}}
-	
-	Esta classe tem a função de exportar os dados de candidatos inválidos para uma planilha do \textit{Microsoft Excxel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama de classe do exportador de dados \textit{ExcelSheetWriter}}
-			\label{excelwriter-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{ExcelSheetWriter}} \\ \hline
-				\\ \hline
-				+write()                                      \\
-				+printHeader()                          \\ \hline
-			\end{tabular}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{Integração do Módulo de Envio}
-	
-	Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados dos candidatos para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de um candidato, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama do Fluxo de Dados dos Candidatos}
-			\label{envio-uml}
-			
-			\includegraphics[scale=0.5]{img/envio-uml}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	Em resumo, os dados dos candidatos solicitantes são extraídos de acordo com o tipo de arquivo de origem, pelas classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} que, por sua vez, chamam a classe \textit{CandidatoBuilder} para validar os dados extraídos e, caso sejam 100\% válidos, um novo objeto \textit{Candidato} é gerado, do contrário, uma exceção do tipo \textit{RowParseException} é lançada com informações de todos os campos inválidos (por meio de \textit{FieldParseException}). Por fim, os dados são concentrados no objeto \textit{ParseResult} e estão prontos para exportação.
-	
-	\subsection{Interface Gráfica do Módulo de Envio}
-	
-	Como premissa no desenvolvimento do \textit{frontend} do \textit{IsenSys}, simplicidade e usabilidade sobressaem-se, mas sem perder a essência de uma aplicação robusta e consolidada. Na figura a seguir, está ilustrada a única tela do módulo de envio.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Interface Gráfica do Módulo de Envio}
-			\label{envio-ui}
-			
-			\includegraphics[scale=0.5]{img/envio-ui}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC, tais como CNPJ, nome fantasia e razão social da instituição gestora.
-	
-	No painel 'Arquivo de Entrada' é possível selecionar o arquivo de origem dos dados de solicitações dos candidatos, atualmente planilhas do \textit{Microsoft Excel} e arquivos \textit{csv} são suportados. Também é possível recarregar o arquivo previamente selecionado ou limpar sua seleção. Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas no fundo deste painel, como ilustra a figura a seguir.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Interface Gráfica do Módulo de Envio (arquivo carregado)}
-			\label{envio-ui-loaded}
-			
-			\includegraphics[scale=0.5]{img/envio-ui-loaded}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	Os dois primeiros campos do painel 'Arquivo de Saída' (Num. do Edital e Sequência) também são exigências descritas no manual de envio do SISTAC. O campo 'Num. do Edital' faz parte do nome do arquivo de envio, juntamente com a identificação de sua sequência. Cada arquivo possui uma sequência, geralmente iniciada em '1'. Se dois arquivos são gerados, temos então as sequências '1' e '2'. Sequências são reiniciadas a cada novo dia. Ainda neste painel, podemos escolher o diretório de escrita dos arquivos ou limpar sua seleção.
-
-	Por fim, após todos os dados serem fornecidos, a exportação pode ser realizada clicando no ícone de salvar (disquete). As figuras abaixo ilustram a saída dos arquivos após alimentar a interface com algumas informações.
-
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Tela de Envio preenchida e arquivos de saída}
-			\label{envio-ui-processed}
-			
-			\includegraphics[scale=0.4]{img/envio-ui-processed}
-			\includegraphics[scale=0.3]{img/envio-files}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-
-	De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha pode ser consultada de forma avulsa, mas será necessária para a montagem do edital de publicação no módulo de retorno.
-
-\section{Desenvolvimento do Módulo de Retorno}
-	
-	Esta seção tem por objetivo detalhar o desenvolvimento do \textit{(backend)} de processamento do arquivo de retorno do SISTAC. A partir dele é possível gerar relatórios com algumas métricas e estatísticas úteis ao órgão gestor, bem como editais de publicação.
-	
-	Utilizando a mesma metodologia abordada na seção anterior, vamos começar compreendendo o fluxo de informações conhecendo as classes envolvidas no processo e, posteriormente, conhecer a interface gráfica.
-	
-	\subsection{Modelagem de um Retorno}
-	
-	Para este módulo, apenas alguns dados das solicitações dos candidatos são aproveitados. Temos então a concepção da classe \textit{Retorno}, de acordo com a especificação descrita na figura a seguir:
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da Entidade \textit{Retorno}}
-			\label{retorno-uml}
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Modelagem da entidade \textit{Candidato}}
+						\label{candidato-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{Candidato}} \\ \hline
+							+nome: String \\
+							+nis: String \\
+							+dataNascimento: DateTime \\
+							+sexo: char \\
+							+rg: String \\
+							+dataEmissaoRG: DateTime \\
+							+orgaoEmissorRG: String \\
+							+cpf: String \\
+							+nomeMae: String \\ \hline
+							\\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
 				
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{Retorno}} \\ \hline
-				+situacao: char                        \\
-				+nome: String                          \\
-				+nis: String                           \\
-				+cpf: String                           \\
-				+motivo: int                           \\
-				+nomeAnterior: String                  \\ \hline
-				+defere()                              \\
-				+isDeferido()                          \\
-				+compareTo()                           \\ \hline
-			\end{tabular}
+				De acordo com o diagrama de classe da entidade \textit{Candidato}, nota-se que esta apenas armazena dados. As validações nos campos são garantidas por uma classe intermediária, detalhada na seção seguinte.
+	
+			\subsection{A classe \textit{CandidatoBuilder}} \label{candidato-builder}
 				
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
+				Esta classe é responsável por montar um \textit{Candidato} com os dados extraídos de um arquivo de entrada. Durante esse processo ela realiza uma série de validações nos dados, e caso haja pelo menos uma inconsistência, uma exceção com detalhes desta inconsistência é lançada, caso contrário, significa que foi possível construir um objeto respeitando todos os requisitos de formatos do SISTAC \cite{sistac-formatos}. Segue o diagrama de classe do \textit{CandidatoBuilder}.
+				
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{CandidatoBuilder}}
+						\label{candidatobuilder-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{CandidatoBuilder}} \\ \hline
+							\\ \hline
+							+build() \\
+							+parseNome() \\
+							+parseNIS() \\
+							+parseData() \\
+							+parseSexo() \\
+							+parseRG() \\
+							+parseOrgao() \\
+							+parseCPF() \\ \hline
+						\end{tabular}
+					
+					\end{center}
+				\end{figure}
 	
-	\subsection{A classe \textit{ListaRetornos}}
+				Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador} e lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso.
+				
+				Para registrar inconsistências em cada um dos campos de dados de um \textit{Candidato}, é utilizada a classe de exceção \textit{FieldParseException} que, por sua vez, é incorporada à classe de exceção \textit{RowParseException}, montada com todas as exceções percebidas pelo método \textit{build()}.
 
-	Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia que o módulo de retorno subdivide-se em dois: retorno preliminar e retorno definitivo. Por enquanto, temos que esta classe armazena dados úteis que facilitam a transição entre os dois tipos de retorno.
+			\subsection{A classe de exceção \textit{FieldParseException}}
+	
+				Como forma de descentralizar as tratativas de validação de dados de candidatos, a classe de exceção \textit{FieldParseException} é responsável por armazenar informações sobre o motivo de um campo não ter sido validado e qual campo gerou esta exceção. Esta classe apenas estende a superclasse \textit{Exception} e monta uma \textit{String} formatada com o motivo e o nome do campo inválido.
 
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama de classe de \textit{ListaRetornos}}
-			\label{listaretornos-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{ListaRetornos}}         \\ \hline
-				+listaRetornos: List\textless{}Retorno\textgreater{} \\
-				+cnpj: String                                        \\
-				+nomeFantasia: String                                \\
-				+razaoSocial: String                                 \\
-				+edital: String                                      \\
-				+dataEdital: String                                  \\
-				+cabecalho: String                                   \\ \hline
-				+get()                                               \\
-				+size()                                              \\
-				+getList()                                           \\
-				+clone()                                             \\
-				+add()                                               \\
-				+update()                                            \\
-				+sort()                                              \\ \hline
-			\end{tabular}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{A classe \textit{Compilation}}
-	
-	Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}. Útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama de classe de \textit{Compilation}}
-			\label{compilation-uml}
-			
-			\begin{tabular}{|l|}
-			\hline
-			\multicolumn{1}{|c|}{\textbf{Compilation}} \\ \hline
-			\\ \hline
-			+save()                                    \\
-			+load()                                    \\ \hline
-			\end{tabular}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}	
-	
-	\subsection{Modelagem de uma Situacao}
-	
-	De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas previamente. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema. Durante a confecção do edital de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Modelagem da Entidade \textit{Situacao}}
-			\label{situacao-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{Situacao}} \\ \hline
-				+id: String                             \\
-				+motivo: String                         \\
-				+descricao: String                      \\ \hline
-				                                        \\ \hline
-			\end{tabular}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{A classe \textit{SituacaoDAO}}
-	
-	Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'} contido no diretório de recursos do \textit{IsenSys} para uma lista de \textit{Situacao}, útil na confecção do edital de publicação.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama de classe de \textit{SituacaoDAO}}
-			\label{situacaodao-uml}
-			
-			\begin{tabular}{|l|}
-				\hline
-				\multicolumn{1}{|c|}{\textbf{SituacaoDAO}} \\ \hline
-				                                           \\ \hline
-				+load()                                    \\ \hline
-			\end{tabular}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{Geradores de Relatório}
-	
-	O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) retorno(s) do SISTAC. Cada uma das classes que os implementam contam com o método 'export()' que é capaz de compilar e exportar o relatório para o formato PDF. A figura abaixo ilustra a estrutura de classe dos três geradores.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagramas de classe dos Geradores de Relatório}
-			\label{geradores-uml}
-			
-			\begin{tabular}{|l|l|l|l|l|}
-			\cline{1-1} \cline{3-3} \cline{5-5}
-			\multicolumn{1}{|c|}{\textbf{PDFEdital}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
-			&  &                                          &  &                                               \\ \cline{1-1} \cline{3-3} \cline{5-5} 
-			+export()                                &  & +export()                                &  & +export()                                     \\ \cline{1-1} \cline{3-3} \cline{5-5} 
-			\end{tabular}
-			
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsection{Integração do Módulo de Retorno}
-	
-	Conhecendo individualmente os agentes envolvidos no módulo de retorno, podemos realizar uma abordagem integrada. Existem dois tipos de retorno implementados no \textit{IsenSys}:
-	
-	\subsubsection{Retorno Preliminar}
-	
-	Este é o submódulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura abaixo ilustra o fluxo das informações do submódulo.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
-			\label{preliminar-fluxo}
-			
-			\includegraphics[scale=0.5]{img/retorno-prelim-uml}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam os arquivos de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
-	
-	Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEdital} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
-	
-	\subsubsection{Interface Gráfica do Submódulo de Retorno Preliminar}
-	
-	A figura abaixo ilustra a implementação da interface gráfica do submódulo de retorno preliminar do \textit{IsenSys}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Interface Gráfica do Submódulo de Retorno Preliminar}
-			\label{retorno-prelim-ui}
-			
-			\includegraphics[scale=0.6]{img/retorno-prelim-ui}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC, tais como CNPJ, nome fantasia e razão social da instituição gestora.
-	
-	Em 'Arquivos de Entrada' é possível selecionar o(s) arquivo(s) de retorno do SISTAC e a planilha contendo os erros de validação (gerada no módulo de envio). O usuário também é capaz de limpar a seleção dos arquivos. Abaixo estão enumerados alguns detalhes sobre os arquivos:
-	
-	\begin{itemize}
-		
-		\item \textbf{Retorno Sistac:} o usuário deve selecionar SEMPRE o primeiro arquivo de retorno do SISTAC, caso haja mais de um, o carregamento dos demais arquivos é feito de forma automática, basta que estejam no mesmo diretório do primeiro arquivo.
-		
-		\item \textbf{Planilha Erros:} aqui o usuário deve selecionar a planilha de erros gerada pelo módulo de envio do \textit{IsenSys}.
-		
-	\end{itemize}
-	
-	Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas no canto inferior deste painel, como ilustra a figura a seguir.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Interface Gráfica do Submódulo de Retorno Preliminar}
-			\label{retorno-prelim-ui-processed}
-			
-			\includegraphics[scale=0.6]{img/retorno-prelim-ui-processed}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo submódulo (edital de publicação, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Arquivos de Saída do submódulo 'Retorno Preliminar'}
-			\label{retorno-prelim-files}
-			
-			\includegraphics[scale=0.5]{img/retorno-prelim-files}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	\subsubsection{Retorno Definitivo}
-	
-	Este é o submódulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do submódulo preliminar, através de um arquivo de compilação (gerado por \textit{Compilation}) e importar os novos retornos do SISTAC.
+			\subsection{A classe de exceção \textit{RowParseException}}	
 
-	\begin{figure}[H]
-		\begin{center}
+				Com o objetivo de concentrar todas as exceções de validação dos campos de dados de um \textit{Candidato}, a classe de exceção \textit{RowParseException} armazena tais exceções em uma lista encadeada e ainda adiciona informações que ajudam a identificar qual foi o candidato que gerou a(s) exceção(ões) e ainda em qual posição do arquivo de entrada ele está.
+	
+				A seguir é possível visualizar o diagrama de classe de \textit{RowParseException}.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{RowParseException}}
+						\label{rowparseexception-uml}
 			
-			\caption{Diagrama do Fluxo de Dados no Retorno Definitivo}
-			\label{retorno-def-uml}
-			
-			\includegraphics[scale=0.5]{img/retorno-def-uml}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{RowParseException}} \\ \hline
+							+linha: int \\
+							+nis: String \\
+							+cpf: String \\
+							+nome: String \\
+							+listaExcecoes: List\textless{}FieldParseException\textgreater{} \\ \hline
+							+addException() \\
+							+hasException() \\
+							+getMessage() \\
+							+getErrorSummaryArray() \\
+							+getErrorSummaryString() \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+
+			\subsection{A classe \textit{ParseResult}} \label{cap-parse-result}
 	
-	Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} que carrega os dados provenientes do resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
-	
-	\subsubsection{Interface Gráfica do Submódulo de Retorno Definitivo}
-	
-	A figura abaixo ilustra a implementação da interface gráfica do submódulo de retorno definitivo do \textit{IsenSys}.
-	
-	\begin{figure}[H]
-		\begin{center}
-			
-			\caption{Interface Gráfica do Submódulo de Retorno Definitivo}
-			\label{retorno-def-ui}
-			
-			\includegraphics[scale=0.6]{img/retorno-def-ui}
-			\legend{Fonte: Produzida pelo autor}
-			
-		\end{center}
-	\end{figure}
-	
-	Ao carregar o arquivo de compilação, alguma informações são exibidas no canto inferior do painel 'Resultado Preliminar'. O cabeçalho do edital também é carregado.
-	
-	Da mesma forma que no submódulo do resultado preliminar, o arquivo de retorno a ser selecionado deve ser sempre o primeiro, os demais são carregados automaticamente desde que estejam no mesmo diretório do primeiro arquivo.
-	
-	Se algum arquivo de entrada for selecionado, tanto de retorno quanto de erros, os dados são mesclados com os provenientes do resultado preliminar da seguinte forma:
-	
-	\begin{itemize}
+				Esta classe é responsável por concentrar o resultado da extração de dados do(s) arquivo(s) de entrada em duas listas:
 		
-		\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade;
-		
-		\item \textbf{Erros:} aqui todos os erros são mesclados.
-		
-	\end{itemize}
+				\begin{enumerate}
+						
+					\item Lista de \textit{Candidato}: onde são armazenados apenas dados de candidatos solicitantes de isenção que passaram com sucesso por todas as validações de campos;
+					\item Lista de \textit{RowParseException}: onde são armazenados os dados de solicitações julgados inválidos pela classe \textit{CandidatoBuilder} [\ref{candidato-builder}].
+						
+				\end{enumerate}
 	
-	Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
+				A seguir podemos compreender melhor a classe por meio de seu diagrama.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{ParseResult}}
+						\label{parseresult-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{ParseResult}} \\ \hline
+							+listaCandidatos: List\textless{}Candidato\textgreater{} \\
+							+listaExcecoes: List\textless{}RowParseException\textgreater{} \\ \hline
+							+addCandidato() \\
+							+addExcecao() \\
+							+getListaCandidatos() \\
+							+getListaExcecoes() \\
+							+sortLists() \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{Importadores de Dados de Candidato}
+	
+				O \textit{IsenSys} é capaz de importar dados pessoais de candidatos solicitantes de isenção em dois formatos:
+	
+				\begin{enumerate}
+					
+					\item \textbf{Arquivo \textit{(.csv)}:} que é um arquivo de texto puro (sem formatação), contendo um cabeçalho na sua primeira linha e os dados pessoais requeridos pelo sistema nas outras linhas. O arquivo deve estar codificado em UTF-8, com separador por tabulação, vírgula ou ponto-e-vírgula.
+					
+					\item \textbf{Planilha do \textit{Microsoft Excel (.xlsx)}:} a planilha deve conter um cabeçalho na primeira linha com os nomes dos campos e nas demais linhas os dados dos candidatos solicitantes de isenção.
+					
+				\end{enumerate}
+
+				Nos dois casos a ordem da disposição dos dados é extremamente importante para a correta importação. Tanto as colunas do arquivo \textit{csv} quanto as da planilha do \textit{Microsoft Excel} devem respeitar a seguinte ordem:
+	
+				\begin{enumerate}
+					
+					\item Nome completo;
+					\item NIS;
+					\item Data de nascimento;
+					\item Sexo;
+					\item Número de RG;
+					\item Data de emissão do RG;
+					\item Órgão emissor do RG;
+					\item CPF;
+					\item Nome completo da mãe.
+					
+				\end{enumerate}
+	
+				Para cada tipo de arquivo foi implementado um importador, contendo as especificidades de tratamento de cada formato. Os dados extraídos pelos importadores são então enviados ao \textit{CandidatoBuilder} que irá construir um objeto \textit{Candidato}, tornando todo o processo de tratativa de arquivos transparente às classes superiores.
+	
+				\subsubsection{O importador \textit{CSVSheetReader}}
+	
+					Para o arquivo no formato \textit{.csv}, temos o importador descrito na classe \textit{CSVSheetReader}, que é util tanto para o módulo de envio, através do método \textit{read()}, quanto pelo módulo de retorno, através do método \textit{readRetorno()}. A princípio o papel deste importador é detectar o tipo de separador do arquivo \textit{.csv} e extrair os dados linha-a-linha. A seguir temos seu diagrama de classe.
+	
+					\begin{figure}[H]
+						\begin{center}
+							
+							\caption{Diagrama de Classe de \textit{CSVSheetReader}}
+							\label{csvreader-uml}
+							
+							\begin{tabular}{|l|}
+								\hline
+								\multicolumn{1}{|c|}{\textbf{CSVSheetReader}} \\ \hline
+								\\ \hline
+								+read() \\
+								+readRetorno() \\
+								+readLine() \\
+								+getInstituicao() \\ \hline
+							\end{tabular}
+							
+						\end{center}
+					\end{figure}
+	
+				\subsubsection{O importador \textit{ExcelSheetReader}}
+
+					Este importador também é comum aos três módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos solicitantes de isenção e entregá-los ao \textit{CandidatoBuilder}. Seu diagrama de classe está disposto na figura a seguir.
+
+					\begin{figure}[h]
+						\begin{center}
+							
+							\caption{Diagrama de Classe de \textit{ExcelSheetReader}}
+							\label{excelreader-uml}
+							
+							\begin{tabular}{|l|}
+								\hline
+								\multicolumn{1}{|c|}{\textbf{ExcelSheetReader}} \\ \hline
+								\\ \hline
+								+read() \\
+								+readErros() \\
+								+readLine() \\
+								+getCellContent() \\ \hline
+							\end{tabular}
+							
+						\end{center}
+					\end{figure}
+	
+			\subsection{Exportadores de Dados}
+	
+				O estado final do processo de importação de dados dos candidatos solicitantes consiste na concentração deles na classe \textit{ParseResult} [\ref{cap-parse-result}]. A partir daqui, os dados dos candidatos considerados válidos pela classe \textit{CandidatoBuilder} estão prontos para serem exportados para o arquivo no formato de envio do SISTAC \cite{sistac-formatos}. Os dados de solicitações inválidas são exportados para uma planilha do \textit{Microsoft Excel}, para futuro processamento nos módulos de retorno.
+	
+				\subsubsection{O exportador \textit{CSVSheetWriter}}
+	
+					Esta classe tem como função exportar os dados de candidatos válidos para o(s) arquivo(s) no formato de envio do SISTAC \cite{sistac-formatos}. Na primeira linha do arquivo é impresso o cabeçalho com alguns dados do órgão gestor (configurados previamente) e nas demais, os dados são dispostos de acordo com o formatação exigida no manual.
+	
+					Empiricamente foi descoberto que o SISTAC tem um limite máximo de solicitações por arquivo de envio definido em 2000. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de solicitações ultrapasse este limite.
+	
+					\begin{figure}[h]
+						\begin{center}
+							
+							\caption{Diagrama de Classe de \textit{CSVSheetWriter}}
+							\label{csvwriter-uml}
+							
+							\begin{tabular}{|l|}
+								\hline
+								\multicolumn{1}{|c|}{\textbf{CSVSheetWriter}} \\ \hline
+								\\ \hline
+								+write()                                      \\
+								+getSistacFilename()                          \\ \hline
+							\end{tabular}
+							
+						\end{center}
+					\end{figure}
+	
+				\subsubsection{O exportador \textit{ExcelSheetWriter}}
+	
+					Esta classe tem a função de exportar os dados de solicitações inválidas para uma planilha do \textit{Microsoft Excel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder}.
+	
+					\begin{figure}[h]
+						\begin{center}
+							
+							\caption{Diagrama de Classe de \textit{ExcelSheetWriter}}
+							\label{excelwriter-uml}
+							
+							\begin{tabular}{|l|}
+								\hline
+								\multicolumn{1}{|c|}{\textbf{ExcelSheetWriter}} \\ \hline
+								\\ \hline
+								+write()                                      \\
+								+printHeader()                          \\ \hline
+							\end{tabular}
+							
+						\end{center}
+					\end{figure}
+	
+			\subsection{Integração do Módulo de Envio}
+	
+				Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados das solicitações para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de uma solicitação de isenção, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama do Fluxo de Dados das Solicitações}
+						\label{envio-uml}
+						
+						\includegraphics[scale=0.6]{img/envio-uml}
+						
+					\end{center}
+				\end{figure}
+	
+				Em resumo, os dados dos candidatos solicitantes são extraídos de acordo com o tipo de arquivo de origem, pelas classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} que, por sua vez, chamam a classe \textit{CandidatoBuilder} para validar os dados extraídos e, caso sejam 100\% válidos, um novo objeto \textit{Candidato} é gerado, do contrário, uma exceção do tipo \textit{RowParseException} é lançada com informações de todos os campos inválidos (por meio da classe \textit{FieldParseException}). Por fim, os dados são concentrados no objeto \textit{ParseResult} e estão prontos para exportação.
+	
+			\subsection{Interface Gráfica do Módulo de Envio}
+	
+				Como premissas no desenvolvimento do \textit{frontend} do \textit{IsenSys}, simplicidade e usabilidade sobressaem-se, mas sem perder a essência de uma aplicação robusta e consolidada. Na figura a seguir, está ilustrada a única tela do módulo de envio.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Tela do Módulo de Envio}
+						\label{envio-ui}
+						
+						\includegraphics[scale=0.6]{img/envio-ui}
+						
+					\end{center}
+				\end{figure}
+	
+				No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC, tais como CNPJ, nome fantasia e razão social do órgão gestor.
+	
+				No painel 'Arquivo de Entrada' é possível selecionar o arquivo de origem dos dados de solicitações dos candidatos, atualmente planilhas do \textit{Microsoft Excel} e arquivos \textit{csv} são suportados. Também é possível recarregar o arquivo previamente selecionado ou limpar sua seleção. Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas na porção inferior deste painel, como ilustra a figura a seguir.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Tela do Módulo de Envio (arquivo carregado)}
+						\label{envio-ui-loaded}
+						
+						\includegraphics[scale=0.5]{img/envio-ui-loaded}
+						
+					\end{center}
+				\end{figure}
+	
+				Os dois primeiros campos do painel 'Arquivos de Saída' (Num. do Edital e Sequência) também são exigências descritas no manual de envio do SISTAC \cite{sistac-formatos}. O campo 'Num. do Edital' faz parte do nome do arquivo de envio, juntamente com a identificação de sua sequência. Cada arquivo possui uma sequência geralmente iniciada em '1'. Se dois arquivos são gerados, temos então as sequências '1' e '2'. Sequências são reiniciadas a cada novo dia. Ainda neste painel, podemos escolher o diretório de escrita dos arquivos ou limpar sua seleção.
+
+				Por fim, após todos os dados serem fornecidos na tela, a exportação pode ser realizada clicando no ícone de salvar (disquete). As figuras a seguir ilustram a saída dos arquivos após alimentar a tela com algumas informações.
+
+				\begin{figure}[H]
+					\begin{center}
+						
+						\caption{Tela do Módulo de Envio (preenchida) + Arquivos de Saída}
+						\label{envio-ui-processed}
+						
+						\includegraphics[scale=0.4]{img/envio-ui-processed}
+						\includegraphics[scale=0.3]{img/envio-files}
+						
+					\end{center}
+				\end{figure}
+
+				De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha gerada pode ser consultada de forma avulsa, mas é recomendável mantê-la inalterada, pois é necessária para a montagem dos editais de publicação nos módulos de retorno.
+
+		\section{Desenvolvimento dos Módulos de Retorno}
+	
+			Esta seção tem por objetivo detalhar o desenvolvimento do \textit{backend} de processamento do(s) arquivo(s) de retorno do SISTAC. A partir dele(s) é possível gerar relatórios com algumas métricas e estatísticas úteis ao órgão gestor, bem como os editais de publicação.
+	
+			Utilizando a mesma metodologia abordada na seção anterior, vamos começar compreendendo o fluxo de informações, conhecendo as classes envolvidas no processo e, posteriormente, a interface gráfica.
+	
+			\subsection{Modelagem de um Retorno}
+	
+				Para estes módulos, apenas alguns dados das solicitações dos candidatos são aproveitados. Temos então a concepção da classe \textit{Retorno}, de acordo com a especificação descrita na figura a seguir:
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Modelagem da Entidade \textit{Retorno}}
+						\label{retorno-uml}
+							
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{Retorno}} \\ \hline
+							+situacao: char                        \\
+							+nome: String                          \\
+							+nis: String                           \\
+							+cpf: String                           \\
+							+motivo: int                           \\
+							+nomeAnterior: String                  \\ \hline
+							+defere()                              \\
+							+isDeferido()                          \\
+							+compareTo()                           \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{A classe \textit{ListaRetornos}}
+
+				Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia os dois módulos de retorno, que são: retorno preliminar e retorno definitivo. Por enquanto, temos que esta classe armazena dados úteis aos dois módulos.
+
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de classe de \textit{ListaRetornos}}
+						\label{listaretornos-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{ListaRetornos}}         \\ \hline
+							+listaRetornos: List\textless{}Retorno\textgreater{} \\
+							+cnpj: String                                        \\
+							+nomeFantasia: String                                \\
+							+razaoSocial: String                                 \\
+							+edital: String                                      \\
+							+dataEdital: String                                  \\
+							+cabecalho: String                                   \\ \hline
+							+get()                                               \\
+							+size()                                              \\
+							+getList()                                           \\
+							+clone()                                             \\
+							+add()                                               \\
+							+update()                                            \\
+							+sort()                                              \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{A classe \textit{Compilation}} \label{compilation}
+	
+				Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}, útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{Compilation}}
+						\label{compilation-uml}
+						
+						\begin{tabular}{|l|}
+						\hline
+						\multicolumn{1}{|c|}{\textbf{Compilation}} \\ \hline
+						\\ \hline
+						+save()                                    \\
+						+load()                                    \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{Modelagem de uma Situacao}
+	
+				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Modelagem da Entidade \textit{Situacao}}
+						\label{situacao-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{Situacao}} \\ \hline
+							+id: String                             \\
+							+motivo: String                         \\
+							+descricao: String                      \\ \hline
+							                                        \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{A classe \textit{SituacaoDAO}}
+	
+				Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'}, contido no diretório de recursos do \textit{IsenSys}, para uma lista de \textit{Situacao}, útil na confecção dos editais de publicação.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagrama de Classe de \textit{SituacaoDAO}}
+						\label{situacaodao-uml}
+						
+						\begin{tabular}{|l|}
+							\hline
+							\multicolumn{1}{|c|}{\textbf{SituacaoDAO}} \\ \hline
+							                                           \\ \hline
+							+load()                                    \\ \hline
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{Geradores de Relatório}
+	
+				O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) arquivo(s) de retorno do SISTAC. Cada uma das classes que os implementam contam com o método '\textit{export()}', que é capaz de compilar e exportar o relatório para o formato PDF. A figura a seguir ilustra as estruturas de classe dos três geradores.
+	
+				\begin{figure}[h]
+					\begin{center}
+						
+						\caption{Diagramas de Classe dos Geradores de Relatório}
+						\label{geradores-uml}
+						
+						\begin{tabular}{|l|l|l|l|l|}
+						\cline{1-1} \cline{3-3} \cline{5-5}
+						\multicolumn{1}{|c|}{\textbf{PDFEdital}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+						&  &                                          &  &                                               \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+						+export()                                &  & +export()                                &  & +export()                                     \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+						\end{tabular}
+						
+					\end{center}
+				\end{figure}
+	
+			\subsection{Integração dos Módulos de Retorno}
+	
+				Conhecendo individualmente os agentes envolvidos no módulo de retorno, podemos realizar uma abordagem integrada dos dois tipos de retorno: retorno preliminar e retorno definitivo.
+	
+				\subsubsection{Retorno Preliminar}
+	
+					Este é o módulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura a seguir ilustra o fluxo das informações através do módulo.
+	
+					\begin{figure}[h]
+						\begin{center}
+							
+							\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
+							\label{preliminar-fluxo}
+							
+							\includegraphics[scale=0.5]{img/retorno-prelim-uml}
+							
+						\end{center}
+					\end{figure}
+	
+					Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam o(s) arquivo(s) de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
+	
+					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEdital} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
+	
+				\subsubsection{Tela do Módulo de Retorno Preliminar}
+	
+					A figura a seguir ilustra a implementação da interface gráfica do módulo de retorno preliminar do \textit{IsenSys}.
+	
+					\begin{figure}[H]
+						\begin{center}
+							
+							\caption{Tela do Módulo de Retorno Preliminar}
+							\label{retorno-prelim-ui}
+							
+							\includegraphics[scale=0.6]{img/retorno-prelim-ui}
+							
+						\end{center}
+					\end{figure}
+	
+					No painel 'Dados da Instituição', estão dispostas algumas informações exigidas no cabeçalho do arquivo de envio ao SISTAC \cite{sistac-formatos}, tais como CNPJ, nome fantasia e razão social do órgão gestor.
+	
+					Em 'Arquivos de Entrada' é possível selecionar o(s) arquivo(s) de retorno do SISTAC e a planilha contendo os erros de validação (gerada no módulo de envio). O usuário também é capaz de limpar a seleção do(s) arquivo(s). A seguir estão enumerados alguns detalhes sobre os arquivos:
+	
+					\begin{itemize}
+						
+						\item \textbf{Retorno Sistac:} o usuário deve selecionar SEMPRE o primeiro arquivo de retorno do SISTAC, caso haja mais de um, o carregamento dos demais arquivos é feito de forma automática, basta que estejam no mesmo diretório do primeiro arquivo.
+						
+						\item \textbf{Planilha Erros:} aqui o usuário deve selecionar a planilha de erros gerada pelo módulo de envio do \textit{IsenSys}.
+						
+					\end{itemize}
+		
+					Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas na porção inferior deste painel, como ilustra a figura a seguir.
+		
+					\begin{figure}[h]
+						\begin{center}
+							
+							\caption{Tela do Módulo de Retorno Preliminar (preenchida)}
+							\label{retorno-prelim-ui-processed}
+							
+							\includegraphics[scale=0.6]{img/retorno-prelim-ui-processed}
+							
+						\end{center}
+					\end{figure}
+		
+					O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo módulo (edital de publicação, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
+		
+					\begin{figure}[H]
+						\begin{center}
+							
+							\caption{Arquivos de Saída do Módulo de Retorno Preliminar}
+							\label{retorno-prelim-files}
+							
+							\includegraphics[scale=0.5]{img/retorno-prelim-files}
+							
+						\end{center}
+					\end{figure}
+		
+				\subsubsection{Retorno Definitivo}
+	
+					Este é o módulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do módulo de retorno preliminar, através de um arquivo de compilação (gerado por \textit{Compilation} [\ref{compilation}]) e importar o(s) novo(s) arquivo(s) de retorno do SISTAC.
+
+					\begin{figure}[H]
+						\begin{center}
+							
+							\caption{Diagrama do Fluxo de Dados no Retorno Definitivo}
+							\label{retorno-def-uml}
+							
+							\includegraphics[scale=0.5]{img/retorno-def-uml}
+							
+						\end{center}
+					\end{figure}
+	
+					Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} que carrega os dados provenientes do módulo de resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
+	
+				\subsubsection{Tela do Módulo de Retorno Definitivo}
+	
+					A figura a seguir ilustra a implementação da interface gráfica do módulo de retorno definitivo do \textit{IsenSys}.
+	
+					\begin{figure}[H]
+						\begin{center}
+							
+							\caption{Tela do Módulo de Retorno Definitivo}
+							\label{retorno-def-ui}
+							
+							\includegraphics[scale=0.6]{img/retorno-def-ui}
+							
+						\end{center}
+					\end{figure}
+	
+					Ao carregar o arquivo de compilação, algumas informações são exibidas na porção inferior do painel 'Resultado Preliminar'. O cabeçalho do edital também é carregado.
+	
+					Da mesma forma que no módulo do resultado preliminar, o arquivo de retorno a ser selecionado deve ser sempre o primeiro, os demais são carregados automaticamente desde que estejam no mesmo diretório do primeiro arquivo.
+	
+					Se algum arquivo de entrada for selecionado, tanto de retorno quanto de erros, os dados são mesclados com os provenientes do resultado preliminar da seguinte forma:
+	
+					\begin{itemize}
+						
+						\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade;
+						
+						\item \textbf{Erros:} aqui todos os erros são mesclados.
+						
+					\end{itemize}
+	
+					Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
 
 	\chapter{Implementação e Resultados}
 	
-	A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textdegree} 13 e 14/GR/UFAM.
-	
-	Por pura coincidência, o PSC 2024 é a primeira edição a possuir a modalidade de isenção via CadÚnico logo nas primeiras etapas do processo, opção que só era concedida aos candidatos da 3{\textordfeminine} etapa.
-	
-	Segundo os editais que regem o processo seletivo, o período de solicitações de isenção de taxa de inscrição foi entre as 10h do dia 01/06/2023 até as 17h do dia seguinte, onde foram recebidas \textbf{7.652 solicitações na 1{\textordfeminine} etapa} e \textbf{3.052 na 2{\textordfeminine} etapa}, totalizando incríveis \textbf{10.704 solicitações ao total}, volume até o momento nunca recebido pela COMPEC.
-	
-	A computação das solicitações foi realizada em um computador da marca Lenovo, modelo M93p com as seguintes especificações:
-	
-	\begin{itemize}
+		A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textdegree} 13 e 14/GR/UFAM.
 		
-		\item Memória RAM DDR3-1600, com capacidade total de 16GB;
-		\item Processador Intel{\textregistered} Core{\texttrademark} i5-4570 de 3.60 GHz;
-		\item Sistema operacional Arch Linux de 64 bits, com engine gráfica GNOME;
-		\item Monitor padrão da marca HP com resolução de 1920x1080.
+		Por pura coincidência, o PSC 2024 é a primeira edição a possuir a modalidade de isenção via CadÚnico logo nas primeiras etapas do processo, opção que só era concedida aos candidatos da 3{\textordfeminine} etapa.
 		
-	\end{itemize}
+		Segundo os editais que regem o processo seletivo, o período de solicitações de isenção de taxa de inscrição foi entre as 10h do dia 01/06/2023 até as 17h do dia seguinte, onde foram recebidas \textbf{7.652 solicitações na 1{\textordfeminine} etapa} e \textbf{3.052 na 2{\textordfeminine} etapa}, totalizando incríveis \textbf{10.704 solicitações ao total}, volume até o momento nunca recebido pela COMPEC.
+		
+		A computação das solicitações foi realizada em um computador da marca Lenovo, modelo M93p com as seguintes especificações:
+		
+		\begin{itemize}
+			
+			\item Memória RAM DDR3-1600, com capacidade total de 16GB;
+			\item Processador Intel{\textregistered} Core{\texttrademark} i5-4570 de 3.60 GHz;
+			\item Sistema operacional Arch Linux de 64 bits, com \textit{engine} gráfica GNOME;
+			\item Monitor padrão da marca HP com resolução de 1920x1080 pixels.
+			
+		\end{itemize}
+		
+		Seguindo o fluxo padrão do processo de isenção, começamos pela preparação de dados para envio ao SISTAC, através da Tela de Envio. Toda a interação com a interface gráfica se mostrou estável e não foi detectado nenhum erro de execução ou travamentos, mesmo com alto volume de dados.
+		
+		A exportação dos arquivos de envio geraram as seguintes métricas:
 	
-	Seguindo o fluxo padrão do processo de isenção, começamos pela preparação de dados para envio ao SISTAC, através da Tela de Envio. Toda a interação com a interface gráfica se mostrou estável e não foi detectado nenhum erro de execução ou travamentos, mesmo com alto volume de dados.
-	
-	A exportação dos arquivos de envio geraram as seguintes métricas:
-	
-	{\textgreater} implementando tabela {\textless}
+		{\textgreater} implementando tabela {\textless}
 
 	\chapter{Conclusões}
 	
 		\section{Considerações Finais}
 	
-			Visando valores como agilidade, lisura e transparência no processamento das solicitações de isenção na modalidade CadÚnico, o \textit{IsenSys} surgiu como agente concretizador destes anseios, possibilitando que um órgão gestor consiga preparar dados para envio ao SISTAC e, após o processo de análise, gerar editais de publicação e relatórios com estatísticas e métricas.
+			Visando valores como agilidade, lisura e transparência no processamento das solicitações de isenção na modalidade CadÚnico, o \textit{IsenSys} surgiu como agente concretizador destes anseios, possibilitando que um órgão gestor consiga preparar dados para envio ao SISTAC e, após seu processo de análise, gerar editais de publicação e relatórios com estatísticas e métricas.
 			
 			Mesmo com sua implementação sendo relativamente simples, os resultados obtidos foram de grande satisfação tanto pela COMPEC, quanto pela sociedade, que tiveram um retorno ágil e preciso, respeitando todos os requisitos dispostos nos editais do concurso piloto e instruções normativas sobre o processo de isenção, de acordo com os manuais do SISTAC.
 			
@@ -1119,14 +1096,14 @@
 	
 		\section{Propostas de Atualizações}
 		
-			Não há nada que exista que não possa ser melhorado e, partindo desse pressuposto, algumas otimizações e adições de novos recursos já foram mapeadas durante o processo de desenvolvimento e que, devido ao curto tempo para implementação e conclusão desta monografia, não puderam ser incorporados ao projeto. Listar-se-á algumas:
+			Não há nada que exista que não possa ser melhorado e, partindo desse pressuposto, algumas otimizações e adições de novos recursos já foram mapeadas durante o processo de desenvolvimento e que, devido ao curto tempo para implementação e conclusão desta monografia, ainda não puderam ser incorporados ao projeto. Listar-se-á algumas:
 			
 			\begin{itemize}
 				
 				\item Implementar layouts dinâmicos na interface gráfica, de forma a permitir o redimensionamento das janelas;
 				\item Permitir que o número de edital contenha caracteres alfanuméricos de forma a abranger esta atualização recente do SISTAC;
 				\item Adicionar interfaces gráficas para gerência dos recursos do sistema tais como logomarca e arquivo de situações;
-				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental (definida pela Lei n{\textdegree} 12.799), de 10 de abril de 2013, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018.
+				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textdegree} 12.799, de 10 de abril de 2013, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018.
 				
 			\end{itemize}
 			

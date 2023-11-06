@@ -11,11 +11,11 @@
     </coordinates>
     <panel_attributes>Retorno
 --
-+situacao:char
++situacao: char
 +nome: String
 +nis: String
 +cpf: String
-+motivo:int
++motivo: int
 +nomeAnterior: String
 --
 +defere()
@@ -81,7 +81,7 @@
 
 --
 +read()
-++readErros()
++readErros()
 +readLine()
 +getCellContent()</panel_attributes>
     <additional_attributes/>
@@ -137,16 +137,15 @@
     <id>UMLClass</id>
     <coordinates>
       <x>730</x>
-      <y>290</y>
+      <y>310</y>
       <w>200</w>
-      <h>100</h>
+      <h>80</h>
     </coordinates>
     <panel_attributes>SituacaoDAO
 --
-+id: int
-+motivo: String
-+descricao: String
---</panel_attributes>
+
+--
++load()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

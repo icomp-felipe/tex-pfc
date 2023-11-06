@@ -133,7 +133,7 @@
 
 --
 +read()
-++readErros()
++readErros()
 +readLine()
 +getCellContent()</panel_attributes>
     <additional_attributes/>

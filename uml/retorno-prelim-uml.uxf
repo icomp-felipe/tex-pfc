@@ -11,11 +11,11 @@
     </coordinates>
     <panel_attributes>Retorno
 --
-+situacao:char
++situacao: char
 +nome: String
 +nis: String
 +cpf: String
-+motivo:int
++motivo: int
 +nomeAnterior: String
 --
 +defere()
@@ -163,16 +163,15 @@
     <id>UMLClass</id>
     <coordinates>
       <x>800</x>
-      <y>130</y>
+      <y>160</y>
       <w>200</w>
-      <h>100</h>
+      <h>70</h>
     </coordinates>
     <panel_attributes>SituacaoDAO
 --
-+id: int
-+motivo: String
-+descricao: String
---</panel_attributes>
+
+--
++load()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
