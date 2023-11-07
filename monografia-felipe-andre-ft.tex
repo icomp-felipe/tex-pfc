@@ -10,7 +10,7 @@
 % por Felipe André <felipeandre@ufam.edu.br>
 % -----------------------------------------------------------
 % Utilizando o modelo de pacote 'abntex2', adaptado por mim
-% disponível em: https://icomp.ufam.edu.br/normas-para-tcc/modelos-de-monografia.html
+% disponível em: https://github.com/icomp-felipe/tex-pfc
 % -----------------------------------------------------------
 
 \documentclass[
@@ -303,7 +303,7 @@
 		
 			Por ser uma linguagem independente de plataforma, ela permite que uma mesma aplicação possa ser executada em diversos equipamentos portando sistemas operacionais de diversas arquiteturas, sem a necessidade de adaptação ou reconstrução de código por parte do desenvolvedor, comportamento que torna suas aplicações escaláveis e robustas.
 		
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 				
 					\caption{Logomarca do \textit{Java}}
@@ -334,7 +334,7 @@
 		
 			A utilização deste gerente é muito simples, tendo em vista que muitas suítes de desenvolvimento oferecem suporte nativo ao \textit{Maven}. Após instalada, basta organizar as dependências (bibliotecas) do projeto em um arquivo especifico denominado 'pom.xml', salvar e esperar que o próprio \textit{Maven} configure as bibliotecas no projeto.
 			
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Logo do gerente de projetos \textit{Apache Maven}}
@@ -355,7 +355,7 @@
 			
 			Por ser uma fundação composta por uma comunidade descentralizada, suas soluções estão em constante melhoria, fornecendo ao desenvolvedor final peças de \textit{software} com qualidade garantida.
 			
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Logo da biblioteca \textit{Apache POI}}
@@ -376,7 +376,7 @@
 			
 			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} \cite{maven}.
 			
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{\textit{Eclipse IDE}}
@@ -393,7 +393,7 @@
 			
 			Por ser desenvolvida utilizando a linguagem Java, ela também apresenta o mesmo comportamento e visualização em qualquer sistema operacional onde está disponível, produzindo relatórios de alta qualidade e escalabilidade, oferecendo opções de exportação para outros formatos conhecidos, tais como \textit{PDF}, \textit{Web} e \textit{Microsoft Word}.
 			
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 				
 				
@@ -476,7 +476,36 @@
 
 		\section{Processo de Isenção} \label{isencao}
 		
-			as
+			Compreender o processo de isenção de taxa de inscrição é parte fundamental para entender a importância e seriedade empenhados no desenvolvimento do \textit{IsenSys}. Durante esta seção, serão abordadas de forma detalhada e objetiva as fases e \textit{modus operandi} do processamento das solicitações de isenção de taxa de inscrição, a ser referenciada no decorrer da monografia apenas como \textit{solicitações de isenção} ou ainda \textit{solicitações}.
+		
+			A implementação do processo de isenção de taxa de inscrição a candidatos de concursos e processos seletivos por parte da COMPEC, segue as normativas impostas do Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto} e no manual de envio e recebimento de solicitações de inscrição do SISTAC \cite{sistac-formatos}.
+			
+			Em cada edital regido pela COMPEC, o processo de isenção é a primeira etapa a ser realizada e sua operacionalização segue um padrão:
+			
+			\begin{enumerate}
+				
+				\item \textbf{Publicação de Edital:} onde são definidas as regras gerais do concurso ou processo seletivo;
+				\item \textbf{Período de Solicitação de Isenção:} geralmente dois dias úteis, onde os candidatos que têm interesse em solicitar isenção, o fazem por meio do preenchimento de um formulário de solicitação no sistema PSConcursos;
+				\item \textbf{Período de Análise:} é o tempo que a COMPEC possui para processar as solicitações, geralmente entre 3 a 4 dias úteis. O PSConcursos disponibiliza um arquivo \textit{csv} com todas as solicitações obtidas no período editalício, insumo para envio ao SISTAC que, por sua vez, analisa as solicitações e retorna também um arquivo \textit{csv}, útil para a confecção do resultado preliminar;
+				\item \textbf{Publicação do Resultado Preliminar:} aqui é tornado público o resultado do processamento das solicitações em 1{\textordfeminine} instância;
+				\item \textbf{Período de Recurso:} é a oportunidade que o candidato que teve sua solicitação indeferida em 1{\textordfeminine} instância, recursar, preenchendo o formulário de recurso no site PSConcursos, da UFAM. Vale ressaltar que só podem recursar os candidatos que solicitaram isenção em 1{\textordfeminine} instância!
+				\item \textbf{Período de Análise:} é o tempo que a COMPEC possui para processar os recursos, geralmente entre 2 a 3 dias úteis. Aqui é realizado o mesmo processo descrito no primeiro período de recurso;
+				\item \textbf{Publicação do Resultado Definitivo:} publicação do resultado definitivo, juntamente com a carga de informações no PSConcursos, encerrando o processo de isenção.
+				
+			\end{enumerate}
+			
+			O fluxograma a seguir ilustra de uma forma mais concisa este processo.
+			
+			\begin{figure}[H]
+				\begin{center}
+					
+					\caption{Fluxograma das Etapas de Isenção}
+					\label{isencao-fluxograma}
+					
+					\includegraphics[scale=0.34]{img/isencao-fluxograma}
+					
+				\end{center}
+			\end{figure}
 
 	% ----------| Capítulo 3: Desenvolvimento do IsenSys |----------
 	\chapter{Desenvolvimento do \textit{IsenSys}} \label{cap3-desenvolvimento}
@@ -524,7 +553,7 @@
 		
 			A tela inicial do \textit{IsenSys} agrupa botões que dão acesso a todas as funcionalidades implementadas no sistema. Na primeira utilização é recomendável que o usuário configure os dados do órgão gestor, por meio do botão 'Configurações do Sistema'. A figura a seguir mostra a tela inicial do \textit{IsenSys}.
 			
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Tela Inicial do \textit{IsenSys}}
@@ -550,7 +579,7 @@
 			
 			As configurações são salvas em um arquivo binário contido no diretório de recursos do sistema [\ref{recursos}], sob o caminho '\textit{config/program.dat}'.
 
-			\begin{figure}[h]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Tela de Configurações do Sistema}
@@ -570,7 +599,7 @@
 				Os dados pessoais de um candidato são o objeto principal deste sistema, pois compõem uma solicitação de isenção que, após análise pelo SISTAC, tem uma resposta de deferimento ou não. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
 
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-				\begin{table}[h]
+				\begin{table}[H]
 				
 					\caption{Dados pessoais de candidatos e seus formatos}
 					\label{tabela-dados-candidato}
@@ -594,7 +623,7 @@
 				De posse dos dados e tipos, foi concebida a modelagem da entidade \textit{Candidato}, de acordo com o diagrama a seguir.
 
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Modelagem da entidade \textit{Candidato}}
@@ -624,7 +653,7 @@
 				
 				Esta classe é responsável por montar um \textit{Candidato} com os dados extraídos de um arquivo de entrada. Durante esse processo ela realiza uma série de validações nos dados, e caso haja pelo menos uma inconsistência, uma exceção com detalhes desta inconsistência é lançada, caso contrário, significa que foi possível construir um objeto respeitando todos os requisitos de formatos do SISTAC \cite{sistac-formatos}. Segue o diagrama de classe do \textit{CandidatoBuilder}.
 				
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{CandidatoBuilder}}
@@ -661,7 +690,7 @@
 	
 				A seguir é possível visualizar o diagrama de classe de \textit{RowParseException}.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{RowParseException}}
@@ -698,7 +727,7 @@
 	
 				A seguir podemos compreender melhor a classe por meio de seu diagrama.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{ParseResult}}
@@ -776,7 +805,7 @@
 
 					Este importador também é comum aos três módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos solicitantes de isenção e entregá-los ao \textit{CandidatoBuilder}. Seu diagrama de classe está disposto na figura a seguir.
 
-					\begin{figure}[h]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{ExcelSheetReader}}
@@ -805,7 +834,7 @@
 	
 					Empiricamente foi descoberto que o SISTAC tem um limite máximo de solicitações por arquivo de envio definido em 2000. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de solicitações ultrapasse este limite.
 	
-					\begin{figure}[h]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{CSVSheetWriter}}
@@ -826,7 +855,7 @@
 	
 					Esta classe tem a função de exportar os dados de solicitações inválidas para uma planilha do \textit{Microsoft Excel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder}.
 	
-					\begin{figure}[h]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{ExcelSheetWriter}}
@@ -847,7 +876,7 @@
 	
 				Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados das solicitações para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de uma solicitação de isenção, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama do Fluxo de Dados das Solicitações}
@@ -864,7 +893,7 @@
 	
 				Como premissas no desenvolvimento do \textit{frontend} do \textit{IsenSys}, simplicidade e usabilidade sobressaem-se, mas sem perder a essência de uma aplicação robusta e consolidada. Na figura a seguir, está ilustrada a única tela do módulo de envio.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Tela do Módulo de Envio}
@@ -879,7 +908,7 @@
 	
 				No painel 'Arquivo de Entrada' é possível selecionar o arquivo de origem dos dados de solicitações dos candidatos, atualmente planilhas do \textit{Microsoft Excel} e arquivos \textit{csv} são suportados. Também é possível recarregar o arquivo previamente selecionado ou limpar sua seleção. Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas na porção inferior deste painel, como ilustra a figura a seguir.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Tela do Módulo de Envio (arquivo carregado)}
@@ -918,7 +947,7 @@
 	
 				Para estes módulos, apenas alguns dados das solicitações dos candidatos são aproveitados. Temos então a concepção da classe \textit{Retorno}, de acordo com a especificação descrita na figura a seguir:
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Modelagem da Entidade \textit{Retorno}}
@@ -945,7 +974,7 @@
 
 				Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia os dois módulos de retorno, que são: retorno preliminar e retorno definitivo. Por enquanto, temos que esta classe armazena dados úteis aos dois módulos.
 
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de classe de \textit{ListaRetornos}}
@@ -977,7 +1006,7 @@
 	
 				Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}, útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{Compilation}}
@@ -998,7 +1027,7 @@
 	
 				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema \ref{recursos}. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Modelagem da Entidade \textit{Situacao}}
@@ -1020,7 +1049,7 @@
 	
 				Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'}, contido no diretório de recursos do \textit{IsenSys}, para uma lista de \textit{Situacao}, útil na confecção dos editais de publicação.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{SituacaoDAO}}
@@ -1040,7 +1069,7 @@
 	
 				O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) arquivo(s) de retorno do SISTAC. Cada uma das classes que os implementam contam com o método '\textit{export()}', que é capaz de compilar e exportar o relatório para o formato PDF. A figura a seguir ilustra as estruturas de classe dos três geradores.
 	
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagramas de Classe dos Geradores de Relatório}
@@ -1064,7 +1093,7 @@
 	
 					Este é o módulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura a seguir ilustra o fluxo das informações através do módulo.
 	
-					\begin{figure}[h]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
@@ -1108,13 +1137,13 @@
 		
 					Se um arquivo válido foi selecionado, algumas informações sobre o carregamento são mostradas na porção inferior deste painel, como ilustra a figura a seguir.
 		
-					\begin{figure}[h]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Tela do Módulo de Retorno Preliminar (preenchida)}
 							\label{retorno-prelim-ui-processed}
 							
-							\includegraphics[scale=0.6]{img/retorno-prelim-ui-processed}
+							\includegraphics[scale=0.5]{img/retorno-prelim-ui-processed}
 							
 						\end{center}
 					\end{figure}
@@ -1127,7 +1156,7 @@
 							\caption{Arquivos de Saída do Módulo de Retorno Preliminar}
 							\label{retorno-prelim-files}
 							
-							\includegraphics[scale=0.5]{img/retorno-prelim-files}
+							\includegraphics[scale=0.45]{img/retorno-prelim-files}
 							
 						\end{center}
 					\end{figure}
@@ -1196,7 +1225,7 @@
 			
 				Esta classe contém alguns atributos úteis para confecção do relatório de similaridade entre nomes. A figura a seguir ilustra seu diagrama de classe.
 				
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de uma Similaridade}
@@ -1219,7 +1248,7 @@
 			
 				É uma classe auxiliar que computa o algoritmo de \textit{Jaro-Winkler} \cite{jaro-winkler} nos dados dos candidatos recursantes. Para cálculo das métricas de distância e similaridade, a biblioteca \textit{Apache Commons Text\texttrademark} [\ref{commons-text}] foi utilizada. A seguir seu diagrama de classe.
 			
-				\begin{table}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{JaroWinkler}}
@@ -1233,7 +1262,7 @@
 						\end{tabular}
 						
 					\end{center}
-				\end{table}
+				\end{figure}
 
 			\subsection{Montagem do Relatório de Similaridade}
 			
@@ -1293,9 +1322,17 @@
 		
 		Seguindo o fluxo padrão do processo de isenção, começamos pela preparação de dados para envio ao SISTAC, através da Tela de Envio. Toda a interação com a interface gráfica se mostrou estável e não foi detectado nenhum erro de execução ou travamentos, mesmo com alto volume de dados.
 		
-		A exportação dos arquivos de envio geraram as seguintes métricas:
-	
-		{\textgreater} implementando tabela {\textless}
+		A exportação dos arquivos de envio preliminar foi executada em 05/06/2023 totalizando 1.5 segundo para processar as 7.652 solicitações da 1{\textordfeminine} etapa e 780 ms para processar as 3.052 solicitações da 2{\textordfeminine} etapa. Com os arquivos de retorno correspondentes, utilizou-se de 2.7 s para exportação dos relatórios da 1{\textordfeminine} etapa e 1.25 s para exportação dos relatórios da 2{\textordfeminine} etapa.
+		
+		Após o período de recursos, uma nova exportação de envio foi gerada em 25/06/2023, com dados de 357 recursantes na 1{\textordfeminine} etapa e 157 na 21{\textordfeminine} etapa, gerando tempos de processamento de 250 ms e 138 ms, respectivamente. Após submissão e análise pelo SISTAC, de posse dos arquivos de retorno, tomou-se 3.1 s para exportação dos relatórios da 1{\textordfeminine} etapa e 2.07 s para exportação dos relatórios da 2{\textordfeminine} etapa, tempo maior esperado a exportação do relatório de similaridade, exclusivo no resultado definitivo.
+		
+		Embora tenhamos visto números, o \textit{IsenSys} conseguiu impactar drasticamente o tempo de processamento das solicitações, processo realizado por humanos antes da implementação do sistema. Antes havia uma equipe que, de posse dos dados de solicitação, realizavam a confecção dos arquivos de envio ao SISTAC de forma artesanal, processo lento que se estendia por dias e era extremamente suscetível a erros.
+		
+		É muito provável que esta realidade deva estar estendida em mais órgãos do Poder Executivo, utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir, futuramente, como aplicação institucionalizada e compartilhada, visando eficiência e colaboração no serviço público.
+		
+		Graças à implementação do \textit{IsenSys}, a COMPEC conseguiu reduzir os tempos de processamento de solicitações de isenção de dias para segundos. Atualmente, pouco tempo após o término do prazo de solicitação ou recurso, os editais preliminares ou definitivos já podem ser confeccionados.
+		
+		Ainda com a implementação, foi possível reduzir custos com contratação temporária de pessoal (\textit{processadores manuais de solicitações}) e recursos como impressão em papel, tonner de impressora e energia elétrica, tornando o serviço eficiente e com resultado preciso com alguns cliques e em alguns segundos.
 
 	\chapter{Conclusões}
 	
@@ -1316,6 +1353,7 @@
 				\item Implementar layouts dinâmicos na interface gráfica, de forma a permitir o redimensionamento das janelas;
 				\item Permitir que o número de edital contenha caracteres alfanuméricos de forma a abranger esta atualização recente do SISTAC;
 				\item Adicionar interfaces gráficas para gerência dos recursos do sistema tais como logomarca e arquivo de situações;
+				\item Utilizar banco de dados para salvar configurações;
 				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textdegree} 12.799, de 10 de abril de 2013 \cite{lei-12799}, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018 \cite{lei-13656}.
 				
 			\end{itemize}
@@ -1336,21 +1374,5 @@
 
 	% ----------| Referências Bibliográficas |----------
 	\bibliography{monografia-felipe-andre-ft}
-
-	% ----------| Apêndices |----------
-	%\begin{apendicesenv}
-
-		%\chapter{Primeiro apêndice}
-			%Os apêndices são textos ou documentos elaborados pelo autor, a fim de complementar sua argumentação, sem prejuízo da unidade nuclear do trabalho.
-
-	%\end{apendicesenv}
-
-	% ----------| Anexos |----------
-	%\begin{anexosenv}
-
-		%\chapter{Primeiro anexo.}
-			%Os anexos são textos ou documentos não elaborados pelo autor, que servem de fundamentação, comprovação e ilustração.
-
-	%\end{anexosenv}
 
 \end{document}
