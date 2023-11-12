@@ -257,9 +257,9 @@
 		
 		Atualmente a COMPEC, como qualquer outro órgão do poder executivo do Brasil, adota três tipos de modalidades de isenção: por cadastro no Registro Brasileiro de Doadores Voluntários de Medula Óssea (REDOME), por comprovação de baixa renda e curso de nível médio de forma gratuita e por meio do Cadastro Único para Programas Sociais do Governo Federal (CadÚnico).
 		
-		Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, onde 8.353 deles tiveram isenção de taxa de inscrição concedida.
+		Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, dos quais 18.709 solicitaram isenção de taxa de inscrição, onde 8.947 deles tiveram o benefício concedido.
 		
-		Com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar dados, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a modalidade de isenção mais volumosa em termos de solicitação: a modalidade CadÚnico, regulamentada pelo Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto}.
+		Inicialmente a COMPEC realizava todo o processo de forma artesanal, então, com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar dados, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a modalidade de isenção mais volumosa em termos de solicitação: a modalidade CadÚnico, regulamentada pelo Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto}.
 		
 		A aplicação, denominada \textit{IsenSys}, procura ainda fornecer uma interface simples e objetiva, com dicas e tratamentos de forma a instruir intuitivamente sua utilização ao usuário, tomando ainda como alicerce no seu desenvolvimento, os cinco princípios fundamentais da Administração Pública do Brasil: legalidade, impessoalidade, moralidade, publicidade e eficiência.
 
@@ -273,9 +273,9 @@
 			
 			\begin{itemize}
 				
-				\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC \cite{sistac-formatos};
+				\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC \cite{sistac-formatos}, visando erradicar os erros de processamento dos lotes de envio;
 				\item Utilizar das boas práticas de programação para tornar o projeto simples e permitir colaboração;
-				\item Implementar uma interface gráfica simples e intuitiva, com dicas e tratamentos de exceções.
+				\item Implementar uma interface gráfica simples e intuitiva, com dicas e tratamentos de exceções, visando agilidade e fluidez na interação com o sistema.
 				
 			\end{itemize}
 		
@@ -1077,7 +1077,7 @@
 						
 						\begin{tabular}{|l|l|l|l|l|}
 						\cline{1-1} \cline{3-3} \cline{5-5}
-						\multicolumn{1}{|c|}{\textbf{PDFEdital}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+						\multicolumn{1}{|c|}{\textbf{PDFResultado}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						&  &                                          &  &                                               \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						+export()                                &  & +export()                                &  & +export()                                     \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						\end{tabular}
@@ -1106,7 +1106,7 @@
 	
 					Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam o(s) arquivo(s) de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
 	
-					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEdital} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
+					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFResultado} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
 	
 				\subsubsection{Tela do Módulo de Retorno Preliminar}
 	
@@ -1148,7 +1148,7 @@
 						\end{center}
 					\end{figure}
 		
-					O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo módulo (edital de publicação, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
+					O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo módulo (resultados, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
 		
 					\begin{figure}[H]
 						\begin{center}
@@ -1322,13 +1322,39 @@
 		
 		Seguindo o fluxo padrão do processo de isenção, começamos pela preparação de dados para envio ao SISTAC, através da Tela de Envio. Toda a interação com a interface gráfica se mostrou estável e não foi detectado nenhum erro de execução ou travamentos, mesmo com alto volume de dados.
 		
-		A exportação dos arquivos de envio preliminar foi executada em 05/06/2023 totalizando 1.5 segundo para processar as 7.652 solicitações da 1{\textordfeminine} etapa e 780 ms para processar as 3.052 solicitações da 2{\textordfeminine} etapa. Com os arquivos de retorno correspondentes, utilizou-se de 2.7 s para exportação dos relatórios da 1{\textordfeminine} etapa e 1.25 s para exportação dos relatórios da 2{\textordfeminine} etapa.
+		\begin{table}[H]
+			\begin{center}
+				
+				\caption{Tempos de Processamento de Dados [Preliminar]}
+				
+				\begin{tabular}{|c|c|c|c|}
+						\hline
+						\textbf{Etapa} & \textbf{\begin{tabular}[c]{@{}c@{}}Qtd. de\\ Solicitações\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tempo de\\ Execução (ms)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tempo de\\ Exportação de\\ Relatórios (s)\end{tabular}} \\ \hline
+						1              & 7.652                                                                   & 1.500                                                                     & 2.7                                                                                        \\ \hline
+						2              & 3.052                                                                   & 780                                                                       & 1.25                                                                                       \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{table}
 		
-		Após o período de recursos, uma nova exportação de envio foi gerada em 25/06/2023, com dados de 357 recursantes na 1{\textordfeminine} etapa e 157 na 21{\textordfeminine} etapa, gerando tempos de processamento de 250 ms e 138 ms, respectivamente. Após submissão e análise pelo SISTAC, de posse dos arquivos de retorno, tomou-se 3.1 s para exportação dos relatórios da 1{\textordfeminine} etapa e 2.07 s para exportação dos relatórios da 2{\textordfeminine} etapa, tempo maior esperado a exportação do relatório de similaridade, exclusivo no resultado definitivo.
+		\begin{table}[H]
+			\begin{center}
+				
+				\caption{Tempos de Processamento de Dados [Definitivo]}
+				
+				\begin{tabular}{|c|c|c|c|}
+					\hline
+					\textbf{Etapa} & \textbf{\begin{tabular}[c]{@{}c@{}}Qtd. de\\ Recursos\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tempo de\\ Execução (ms)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Tempo de\\ Exportação de\\ Relatórios (s)\end{tabular}} \\ \hline
+					1              & 357                                                                     & 250                                                                       & 3.1                                                                                        \\ \hline
+					2              & 157                                                                     & 138                                                                       & 2.07                                                                                       \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{table}
 		
-		Embora tenhamos visto números, o \textit{IsenSys} conseguiu impactar drasticamente o tempo de processamento das solicitações, processo realizado por humanos antes da implementação do sistema. Antes havia uma equipe que, de posse dos dados de solicitação, realizavam a confecção dos arquivos de envio ao SISTAC de forma artesanal, processo lento que se estendia por dias e era extremamente suscetível a erros.
+		Como ilustrado em números, o \textit{IsenSys} conseguiu impactar drasticamente o tempo de processamento das solicitações, processo realizado por humanos antes da implementação do sistema. Antes havia uma equipe que, de posse dos dados de solicitação, realizavam a confecção dos arquivos de envio ao SISTAC de forma artesanal, processo lento que se estendia por dias e era extremamente suscetível a erros.
 		
-		É muito provável que esta realidade deva estar estendida em mais órgãos do Poder Executivo, utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir, futuramente, como aplicação institucionalizada e compartilhada, visando eficiência e colaboração no serviço público.
+		Além da confecção manual dos arquivos \textit{csv}, perdia-se muito tempo no processo de envio de lotes ao SISTAC pois, ao detectar o primeiro erro de preenchimento de arquivo, cancela todo o envio do lote e sinaliza apenas o erro corrente. Logo, corrigia-se manualmente o erro e uma nova submissão era realizada, até que o lote fosse totalmente recebido, sem erros.
+		
+		Em concursos com maior volume de solicitações estima-se que pelo menos 25 a 30 tentativas de envio eram realizadas à plataforma. É muito provável que esta realidade deva estar estendida em mais órgãos do Poder Executivo, utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir, futuramente, como aplicação institucionalizada e compartilhada, visando eficiência e colaboração no serviço público.
 		
 		Graças à implementação do \textit{IsenSys}, a COMPEC conseguiu reduzir os tempos de processamento de solicitações de isenção de dias para segundos. Atualmente, pouco tempo após o término do prazo de solicitação ou recurso, os editais preliminares ou definitivos já podem ser confeccionados.
 		
@@ -1340,7 +1366,7 @@
 	
 			Visando valores como agilidade, lisura e transparência no processamento das solicitações de isenção na modalidade CadÚnico, o \textit{IsenSys} surgiu como agente concretizador destes anseios, possibilitando que um órgão gestor consiga preparar dados para envio ao SISTAC e, após seu processo de análise, gerar editais de publicação e relatórios com estatísticas e métricas.
 			
-			Mesmo com sua implementação sendo relativamente simples, os resultados obtidos foram de grande satisfação tanto pela COMPEC, quanto pela sociedade, que tiveram um retorno ágil e preciso, respeitando todos os requisitos dispostos nos editais do concurso piloto e instruções normativas sobre o processo de isenção, de acordo com os manuais do SISTAC.
+			Os resultados obtidos foram de grande satisfação tanto pela COMPEC, quanto pela sociedade, que tiveram um retorno ágil e preciso, respeitando todos os requisitos dispostos nos editais do concurso piloto e instruções normativas sobre o processo de isenção, de acordo com os manuais do SISTAC.
 			
 			Pode-se afirmar então que o objetivo principal do \textit{IsenSys} foi atingido. A aplicação foi construída utilizando uma linguagem de programação amplamente aceita e suportada no mercado, respeitando as boas práticas de programação e convenções internacionais, mantendo sempre a organização e comentários no código-fonte de forma a facilitar futuras colaborações.
 	
