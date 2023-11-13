@@ -35,6 +35,7 @@
 
 \usepackage[brazilian,hyperpageref]{backref}  % Páginas com as citações na bibl
 \usepackage[num]{abntex2cite}                 % Citações no padrão ABNT
+\usepackage[final]{pdfpages}                  % Permite inclusão de arquivos pdf
 \citebrackets[]                               % Faz com que as citações sejam impressas entre colchetes
 
 % ----------| Configurações de Pacotes |----------
@@ -1497,5 +1498,19 @@
 
 	% ----------| Referências Bibliográficas |----------
 	\bibliography{monografia-felipe-andre-ft}
+
+	% ----------| Anexos |----------
+	\begin{anexosenv}
+		
+		\chapter{Resultado Definitivo das Solicitações de Isenção de Taxa de Inscrição do PSC 2023 (apenas algumas páginas)}
+		\includepdf[pages=-]{anexos/psc2023-e12-resultado-definitivo.pdf}
+		
+		\chapter{Relatório de Similaridade Aplicado no PSC 2023 (apenas algumas páginas)}
+		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-similaridade.pdf}
+		
+		\chapter{Relatório de Estatísticas de Processamento (apenas algumas páginas)}
+		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-processamento.pdf}
+		
+	\end{anexosenv}
 
 \end{document}
