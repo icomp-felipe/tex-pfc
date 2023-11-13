@@ -156,7 +156,7 @@
 
 		Em primeiro lugar quero agradecer à minha família que é pequena, mas super unida, minha mãe Adriana, aos meus irmãos Anna Beatriz e Maurício Júnior (\textit{in memoriam}) e nossa amiga Nira, pelo amor incondicional, apoio emocional e encorajamento constante que me proporcionaram durante todos esses anos. Vocês são minha âncora e minha maior motivação.
 		
-		Aos meus grandes amigos: Alexsandro Evangelista, Arianne Kaist, Hítalo Viana, Leonardo Pinheiro, Maurianne Kaist, Milena Lizandra, Munhoz, Naiara, Nilba, Tiago e Will que compartilharam comigo as alegrias, desafios e preocupações deste percurso, agradeço pela amizade, colaboração, apoio mútuo e por não me permitir enlouquecer.
+		Aos meus grandes amigos: Alexsandro Evangelista, Arianne Kaist, Hítalo Viana, Leonardo Pinheiro, Maurianne Kaist, Milena Lizandra, Munhoz, Naiara, Nilba, Thiago Lima e Will que compartilharam comigo as alegrias, desafios e preocupações deste percurso, agradeço pela amizade, colaboração, apoio mútuo e por não me permitir enlouquecer.
 		
 		Também expresso minha gratidão ao meu orientador, Prof. Edson Jr. pela orientação, PACIÊNCIA, dedicação e perseverança ao longo deste processo. Suas orientações e \textit{insights} e sua motivação foram fundamentais para o desenvolvimento deste trabalho e para o meu crescimento como acadêmico e profissional.
 		
@@ -547,7 +547,49 @@
 			
 		\end{itemize}
 	
-		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC, produzir relatórios e editais de publicação preliminar e definitivo. As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
+		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC, produzir relatórios e editais de publicação preliminar e definitivo. A seguir estão ilustrados os diagramas de atividades do sistema, trazendo uma visão geral do funcionamento do \textit{IsenSys}.
+		
+		\clearpage
+		\begin{figure}[!ht]
+			\begin{center}
+				
+				\caption{Diagrama de Atividades do Módulo de Envio}
+				\includegraphics[scale=0.75]{img/diagrama-ativs-envio}
+				
+			\end{center}
+		\end{figure}
+		
+		\clearpage
+		\begin{figure}[!ht]
+			\begin{center}
+				
+				\caption{Diagrama de Atividades do SISTAC}
+				\includegraphics[scale=0.75]{img/diagrama-ativs-sistac}
+				
+			\end{center}
+		\end{figure}
+		
+		\clearpage
+		\begin{figure}[!ht]
+			\begin{center}
+				
+				\caption{Diagrama de Atividades do Módulo de Retorno Preliminar}
+				\includegraphics[scale=0.85]{img/diagrama-ativs-prelim}
+				
+			\end{center}
+		\end{figure}
+		
+		\clearpage
+		\begin{figure}[!ht]
+			\begin{center}
+				
+				\caption{Diagrama de Atividades do Módulo de Retorno Definitivo}
+				\includegraphics[scale=0.85]{img/diagrama-ativs-definitivo}
+				
+			\end{center}
+		\end{figure}
+		
+		As seções a seguir contém um estudo mais aprofundado sobre a implementação de cada módulo.
 
 		\section{Tela Inicial}
 		
