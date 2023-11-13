@@ -538,12 +538,12 @@
 			
 			\item A linguagem \textit{Java Standard Edition (Java SE)} foi utilizada no desenvolvimento da aplicação (RNF01);
 			\item A versão mínima da \textit{Java Virtual Machine (JVM)} a ser utilizada é a 15 (RNF02);
-			\item O projeto foi desenvolvido utilizando o \textit{Java Development Kit (OpenJDK)} na versão 21 (RNF03);
-			\item A suíte de interface gráfica utilizada é o \textit{Java Swing} (RNF04);
-			\item Por questões de simplicidade, todas as telas foram construídas utilizando layout absoluto com janela não redimensionável (RNF05);
-			\item A versão do \textit{Apache POI} utilizada é a 5.2.3, lançada em 17/09/2022 (RNF06);
-			\item A versão do \textit{JasperReports\textregistered} utilizada é a 6.26.0, lançada em 11/09/2023 (RNF07);
-			\item O sistema pode ser executado em qualquer computador com suporte mínimo ao \textit{Java Runtime Environment - JRE 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF08).
+			\item A suíte de interface gráfica utilizada é o \textit{Java Swing} (RNF03);
+			\item Por questões de simplicidade, todas as telas foram construídas utilizando layout absoluto com janela não redimensionável (RNF04);
+			\item A versão do \textit{Apache POI} utilizada é a 5.2.3, lançada em 17/09/2022 (RNF05);
+			\item A versão do \textit{JasperReports\textregistered} utilizada é a 6.26.0, lançada em 11/09/2023 (RNF06);
+			\item O sistema pode ser executado em qualquer computador com suporte mínimo ao \textit{Java Runtime Environment - JRE 15}, mínimo de 1GB de memória RAM disponível e monitor com resolução mínima de 800x600 (RNF07);
+			\item Como limitação do \textit{JRE 15}, somente máquinas com arquitetura de CPU de 64-bits são suportadas pelo sistema (RNF08).
 			
 		\end{itemize}
 	
@@ -585,6 +585,16 @@
 				
 				\caption{Diagrama de Atividades do Módulo de Retorno Definitivo}
 				\includegraphics[scale=0.85]{img/diagrama-ativs-definitivo}
+				
+			\end{center}
+		\end{figure}
+		
+		\clearpage
+		\begin{figure}[!ht]
+			\begin{center}
+				
+				\caption{Diagrama de Casos de Uso do \textit{IsenSys}}
+				\includegraphics[scale=0.5]{img/casos-uso-isensys}
 				
 			\end{center}
 		\end{figure}
@@ -718,7 +728,19 @@
 					\end{center}
 				\end{figure}
 	
-				Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador} e lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso.
+				Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador} e lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso. Eis a metodologia implementada em cada campo de uma solicitação:
+				
+				\begin{itemize}
+					
+					\item \textbf{Nome [candidato e mãe]:} são removidos acentos, cedilhas, múltiplos espaços e quaisquer outros caracteres que não sejam alfabéticos. Se após o processamento, o nome continuar possuindo mais de 100 caracteres, um erro é gerado neste campo;
+					\item \textbf{NIS:} o número de identificação social (NIS) pode ser verificado utilizando um algoritmo que utiliza os próprios dígitos de verificação do NIS para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o NIS, um erro é gerado nesse campo;
+					\item \textbf{Data [nascimento e emissão de RG]:} se uma data vazia ou inválida for informada, a data de "01/01/2000" é inferida, logo, erros não são gerados nesse campo;
+					\item \textbf{Sexo:} caso o sexo informado não seja 'M' ou 'F', um erro é gerado nesse campo;
+					\item \textbf{N{\textordmasculine} de RG:} são extraídos apenas caracteres alfanuméricos e, caso a resultante seja vazia ou possuir mais que 16 caracteres, um erro é gerado nesse campo;
+					\item \textbf{Órgão Emissor:} são extraídos apenas caracteres alfanuméricos e, caso a resultante seja vazia ou possuir mais que 30 caracteres, o órgão "SSP" é inferido, logo, erros não são gerados nesse campo;
+					\item \textbf{CPF:} o número de CPF pode ser verificado utilizando um algoritmo que utiliza os próprios dígitos de verificação do CPF para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o CPF, um erro é gerado nesse campo.
+					
+				\end{itemize}
 				
 				Para registrar inconsistências em cada um dos campos de dados de um \textit{Candidato}, é utilizada a classe de exceção \textit{FieldParseException} que, por sua vez, é incorporada à classe de exceção \textit{RowParseException}, montada com todas as exceções percebidas pelo método \textit{build()}.
 
@@ -917,8 +939,8 @@
 			\subsection{Integração do Módulo de Envio}
 	
 				Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados das solicitações para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de uma solicitação de isenção, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
-	
-				\begin{figure}[ht]
+
+				\begin{figure}[H]
 					\begin{center}
 						
 						\caption{Diagrama do Fluxo de Dados das Solicitações}
@@ -1111,7 +1133,7 @@
 	
 				O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) arquivo(s) de retorno do SISTAC. Cada uma das classes que os implementam contam com o método '\textit{export()}', que é capaz de compilar e exportar o relatório para o formato PDF. A figura a seguir ilustra as estruturas de classe dos três geradores.
 	
-				\begin{figure}[ht]
+				\begin{figure}[h]
 					\begin{center}
 						
 						\caption{Diagramas de Classe dos Geradores de Relatório}
@@ -1135,7 +1157,7 @@
 	
 					Este é o módulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura a seguir ilustra o fluxo das informações através do módulo.
 	
-					\begin{figure}[ht]
+					\begin{figure}[H]
 						\begin{center}
 							
 							\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
@@ -1396,11 +1418,43 @@
 		
 		Além da confecção manual dos arquivos \textit{csv}, perdia-se muito tempo no processo de envio de lotes ao SISTAC pois, ao detectar o primeiro erro de preenchimento de arquivo, cancela todo o envio do lote e sinaliza apenas o erro corrente. Logo, corrigia-se manualmente o erro e uma nova submissão era realizada, até que o lote fosse totalmente recebido, sem erros.
 		
-		Em concursos com maior volume de solicitações estima-se que pelo menos 25 a 30 tentativas de envio eram realizadas à plataforma. É muito provável que esta realidade deva estar estendida em mais órgãos do Poder Executivo, utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir, futuramente, como aplicação institucionalizada e compartilhada, visando eficiência e colaboração no serviço público.
+		Em concursos com maior volume de solicitações estima-se que pelo menos 25 a 30 tentativas de envio eram realizadas à plataforma. É muito provável que esta realidade estenda-se em mais órgãos do Poder Executivo utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir como aplicação institucionalizada, visando eficiência e colaboração no serviço público.
+		
+		O diagrama a seguir ilustra o pré-processamento de dados realizado tanto pelo SISTAC quanto pelo \textit{IsenSys}. Podemos verificar que, ao primeiro erro encontrado no arquivo de solicitações, o SISTAC rejeita o lote por completo.
+		
+		A otimização implementada no \textit{IsenSys} faz com que os dados das solicitações passem por filtros analistas de dados, implementados de acordo com as normativas do manual do SISTAC \cite{sistac-formatos}. Ao detectar alguma disparidade entre o dado e o formato aceito, o \textit{IsenSys} tenta ajustá-lo e caso não seja possível, o separa em uma lista de erros e o processamento continua.
+		
+		Ao fim do processo, um arquivo de envio 100\% válido no formato do SISTAC é gerado e os erros, separados em uma planilha, para futura confecção dos relatórios de resultados preliminar e definitivo.
+		
+		\begin{figure}[H]
+			\begin{center}
+				
+				\caption{Diagrama Comparativo entre o SISTAC e IsenSys}
+				
+				\includegraphics[scale=0.5]{img/diagrama-ativs-ganhos}
+				
+			\end{center}
+		\end{figure}
 		
 		Graças à implementação do \textit{IsenSys}, a COMPEC conseguiu reduzir os tempos de processamento de solicitações de isenção de dias para segundos. Atualmente, pouco tempo após o término do prazo de solicitação ou recurso, os editais preliminares ou definitivos já podem ser confeccionados.
 		
-		Ainda com a implementação, foi possível reduzir custos com contratação temporária de pessoal (\textit{processadores manuais de solicitações}) e recursos como impressão em papel, tonner de impressora e energia elétrica, tornando o serviço eficiente e com resultado preciso com alguns cliques e em alguns segundos.
+		A tabela a seguir traz um comparativo entre o tempo necessário para confeccionar um arquivo de envio válido ao SISTAC, utilizando o processo manual e o \textit{IsenSys}. Vale ressaltar que nos dois processos, apenas o \textit{IsenSys} foi utilizado, as quantidades de dias foram calculadas com base em concursos anteriores de porte semelhante realizados pela COMPEC.
+		
+		\begin{table}[ht]
+			\begin{center}
+				
+				\caption{Comparativo de Tempo de Processamento do Arquivo de Envio}
+				
+				\begin{tabular}{|l|c|c|c|}
+					\hline
+					\multicolumn{1}{|c|}{\textbf{Processo}} & \textbf{\begin{tabular}[c]{@{}c@{}}Qtd.\\ Solicitações\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Preparo\\ Manual (dias)\end{tabular}} & \textbf{\begin{tabular}[c]{@{}c@{}}Preparo no\\ IsenSys (s)\end{tabular}} \\ \hline
+					PSC 2023                                & 11.477                                                               & 15                                                                        & 5                                                                           \\ \hline
+					PSTEC 2023                              & 5.020                                                                & 13                                                                        & 4                                                                           \\ \hline
+				\end{tabular}
+			\end{center}
+		\end{table}
+		
+		Vimos que, com a implementação do \textit{IsenSys}, foi possível reduzir custos com contratação temporária de pessoal (\textit{processadores manuais de solicitações}) e recursos como impressão em papel, tonner de impressora e energia elétrica, tornando o serviço eficiente e com resultado preciso com alguns cliques e em alguns segundos.
 
 	\chapter{Conclusões}
 	
@@ -1412,12 +1466,13 @@
 			
 			Pode-se afirmar então que o objetivo principal do \textit{IsenSys} foi atingido. A aplicação foi construída utilizando uma linguagem de programação amplamente aceita e suportada no mercado, respeitando as boas práticas de programação e convenções internacionais, mantendo sempre a organização e comentários no código-fonte de forma a facilitar futuras colaborações.
 	
-		\section{Propostas de Atualizações}
+		\section{Limitações e Propostas de Atualizações}
 		
 			Não há nada que exista que não possa ser melhorado e, partindo desse pressuposto, algumas otimizações e adições de novos recursos já foram mapeadas durante o processo de desenvolvimento e que, devido ao curto tempo para implementação e conclusão desta monografia, ainda não puderam ser incorporados ao projeto. Listar-se-á algumas:
 			
 			\begin{itemize}
 				
+				\item Estender o suporte do \textit{IsenSys} à máquinas de 32-bits, com a utilização do JDK 8;
 				\item Implementar layouts dinâmicos na interface gráfica, de forma a permitir o redimensionamento das janelas;
 				\item Permitir que o número de edital contenha caracteres alfanuméricos de forma a abranger esta atualização recente do SISTAC;
 				\item Adicionar interfaces gráficas para gerência dos recursos do sistema tais como logomarca e arquivo de situações;
