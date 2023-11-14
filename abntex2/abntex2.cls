@@ -11,6 +11,7 @@
 % + Abstract 100% em inglês                                                       %
 % + Capa com logo da UFAM                                                         %
 % + Novo estilo de folha de rosto                                                 %
+% + Indexação da ficha catalográfica                                              %
 % + Utilização da fonte open-source 'Bookman'                                     %
 % --------------------------------------------------------------------------------%
 
@@ -793,6 +794,7 @@
 % catalogação-na-publicacao)
 \newenvironment{fichacatalografica}{%
     \thispagestyle{empty}
+    \PRIVATEbookmarkthis{Ficha catalográfica}
     \begin{SingleSpacing}
       \ABNTEXfontereduzida
 }{%   
