@@ -1041,19 +1041,19 @@
 					\end{center}
 				\end{figure}
 	
-			\subsection{A classe \textit{Compilation}} \label{compilation}
+			\subsection{A classe \textit{Compilacao}} \label{compilacao}
 	
-				Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}, útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
+				Esta classe possui a incumbência de gravar ou carregar um arquivo com a extensão \textit{(.icf - IsenSys Compilation File)} objetos da classe \textit{ListaRetornos}, útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
 	
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
-						\caption{Diagrama de Classe de \textit{Compilation}}
+						\caption{Diagrama de Classe de \textit{Compilacao}}
 						
 						\begin{tabular}{|l|}
 						\hline
-						\multicolumn{1}{|c|}{\textbf{Compilation}} \\ \hline
+						\multicolumn{1}{|c|}{\textbf{Compilacao}} \\ \hline
 						\\ \hline
 						+save()                                    \\
 						+load()                                    \\ \hline
@@ -1144,7 +1144,7 @@
 	
 					Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam o(s) arquivo(s) de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
 	
-					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEstatisticas} e \textit{PDFResultado} e, por fim, salvos em um arquivo binário denominado de 'compilação', por meio da classe \textit{Compilation}.
+					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEstatisticas} e \textit{PDFResultado} e, por fim, salvos em um arquivo binário denominado de 'compilação', por meio da classe \textit{Compilacao}.
 	
 				\subsubsection{Tela do Módulo de Retorno Preliminar}
 	
@@ -1195,7 +1195,7 @@
 		
 				\subsubsection{Retorno Definitivo} \label{retorno-definitivo}
 	
-					Este é o módulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do módulo de retorno preliminar, através de um arquivo de compilação (gerado pela classe \textit{Compilation} [\ref{compilation}]) e importar o(s) novo(s) arquivo(s) de retorno do SISTAC.
+					Este é o módulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do módulo de retorno preliminar, através de um arquivo de compilação (gerado pela classe \textit{Compilacao} [\ref{compilacao}]) e importar o(s) novo(s) arquivo(s) de retorno do SISTAC.
 
 					\begin{figure}[ht]
 						\begin{center}
@@ -1206,7 +1206,7 @@
 						\end{center}
 					\end{figure}
 	
-					Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} [\ref{compilation}] que carrega os dados provenientes do módulo de resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
+					Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilacao} [\ref{compilacao}] que carrega os dados provenientes do módulo de resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
 	
 				\subsubsection{Tela do Módulo de Retorno Definitivo}
 	
