@@ -110,7 +110,7 @@
       <w>200</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>PDFEdital
+    <panel_attributes>PDFResultado
 --
 
 --
@@ -233,7 +233,7 @@
       <w>200</w>
       <h>70</h>
     </coordinates>
-    <panel_attributes>PDFRetorno
+    <panel_attributes>PDFEstatisticas
 --
 
 --

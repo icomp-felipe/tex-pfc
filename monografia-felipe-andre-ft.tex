@@ -163,7 +163,7 @@
 		
 		Aos meus grandes amigos: Alexsandro Evangelista, Arianne Kaist, Hítalo Viana, Leonardo Pinheiro, Maurianne Kaist, Milena Lizandra, Munhoz, Naiara, Nilba, Thiago Lima e Will que compartilharam comigo as alegrias, desafios e preocupações deste percurso, agradeço pela amizade, colaboração, apoio mútuo e por não me permitir enlouquecer.
 		
-		Também expresso minha gratidão ao meu orientador, Prof. Edson Jr. pela orientação, PACIÊNCIA, dedicação e perseverança ao longo deste processo. Suas orientações e \textit{insights} e sua motivação foram fundamentais para o desenvolvimento deste trabalho e para o meu crescimento como acadêmico e profissional.
+		Também expresso minha gratidão ao meu orientador, Prof. Edson Jr. pela orientação, PACIÊNCIA, dedicação e perseverança ao longo deste processo. Suas orientações, \textit{insights} e sua motivação foram fundamentais para o desenvolvimento deste trabalho e para o meu crescimento como acadêmico e profissional.
 		
 		Por último, mas não menos importante, quero agradecer a todos os membros do corpo docente, distribuídos nos mais diversos departamentos por onde passei como estudante, cujo conhecimento e ensinamentos moldaram minha jornada acadêmica. Suas aulas foram inspiradoras e enriquecedoras, contribuindo muito para meu crescimento acadêmico.
 		
@@ -191,7 +191,7 @@
 	\setlength{\absparsep}{18pt}
 	\begin{resumo}
 
-		Este documento versa sobre o desenvolvimento de um aplicativo computacional para processar solicitações de isenção de taxa de inscrição em concursos públicos de acordo com as normativas do Ministério do Desenvolvimento Social do Brasil e os interesses da Comissão Permanente de Concursos da UFAM. O sistema, que opera coletivamente com o Sistema de Isenção de Taxa de Concurso, do Ministério do Desenvolvimento Social do Brasil, permite que um órgão gestor prepare dados pessoais de candidatos solicitantes de isenção de taxa de inscrição para envio ao sistema do Ministério do Desenvolvimento, e após o processamento de tais solicitações pelo sistema, gere editais de publicação e relatórios com o objetivo de garantir a lisura e transparência deste processo tão democrático. No desenvolvimento foi utilizada a linguagem de programação \textit{Java} e tecnologias de grande consolidação no mercado como o \textit{Jasper Reports}, para geração de relatórios e o \textit{Apache POI}, adicionando suporte a arquivos do \textit{Microsoft Excel}.
+		Este documento versa sobre o desenvolvimento de um aplicativo computacional para processar solicitações de isenção de taxa de inscrição em concursos públicos de acordo com as normativas do Ministério do Desenvolvimento Social do Brasil e os interesses da Comissão Permanente de Concursos da UFAM. O sistema, que opera coletivamente com o Sistema de Isenção de Taxa de Concurso, do Ministério do Desenvolvimento Social do Brasil, permite que um órgão gestor prepare dados pessoais de candidatos solicitantes de isenção de taxa de inscrição para envio ao sistema do Ministério do Desenvolvimento e, após o processamento de tais solicitações pelo sistema, gere documentos de publicação de resultados e relatórios com o objetivo de garantir a lisura e transparência deste processo tão democrático. No desenvolvimento foi utilizada a linguagem de programação \textit{Java} e tecnologias de grande consolidação no mercado como o \textit{Jasper Reports}, para geração de relatórios e o \textit{Apache POI}, adicionando suporte a arquivos do \textit{Microsoft Excel}.
 
 		\vspace{\onelineskip}
 
@@ -228,8 +228,12 @@
 	\begin{siglas}
 
 		\item[CadÚnico] Cadastro Único para Programas Sociais do Governo Federal
+		\item[CNPJ] Cadastro Nacional de Pessoas Jurídicas
 		\item[CSV] \textit{Comma-separated values} - valores separados por vírgula
 		\item[COMPEC] Comissão Permanente de Concursos da UFAM
+		\item[IDE] \textit{Integrated Development Environment} - ambiente de desenvolvimento integrado
+		\item[IRPF] Imposto sobre a Renda das Pessoas Físicas
+		\item[IRPJ] Imposto sobre a Renda das Pessoas Jurídicas
 		\item[MDS] Ministério do Desenvolvimento Social
 		\item[NIS] Número de Identificação Social
 		\item[REDOME] Registro Brasileiro de Doadores Voluntários de Medula Óssea
@@ -237,13 +241,6 @@
 		\item[UFAM] Universidade Federal do Amazonas
 
 	\end{siglas}
-
-	% ----------| Lista de Símbolos |----------
-	%\begin{simbolos}
-
-  		%\item[$ \lambda $] Lambda
-
-	%\end{simbolos}
 
 	% ----------| Sumário |----------
 	\pdfbookmark[0]{\contentsname}{toc}
@@ -266,7 +263,7 @@
 		
 		Um dos desafios enfrentados pela COMPEC é a gerência e correto processamento das solicitações de isenção, de forma a não prejudicar os candidatos, tampouco a imagem da UFAM e do funcionalismo público. Para ilustrar, apenas em 2023 a COMPEC realizou 10 concursos, mobilizando ao total 39.289 candidatos, dos quais 18.709 solicitaram isenção de taxa de inscrição, onde 8.947 deles tiveram o benefício concedido.
 		
-		Inicialmente a COMPEC realizava todo o processo de forma artesanal, então, com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar dados, processar e gerar relatórios e editais de publicação, tomando como objeto de estudo a modalidade de isenção mais volumosa em termos de solicitação: a modalidade CadÚnico, regulamentada pelo Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto}.
+		Inicialmente a COMPEC realizava todo o processo de forma artesanal, logo, com o intuito de automatizar e otimizar tal processo, este trabalho apresenta uma aplicação de computador capaz de analisar dados, processar e confeccionar relatórios para publicação, tomando como objeto de estudo a modalidade de isenção mais volumosa em termos de solicitação: a modalidade CadÚnico, regulamentada pelo Decreto n{\textordmasculine} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto}.
 		
 		A aplicação, denominada \textit{IsenSys}, procura ainda fornecer uma interface simples e objetiva, com dicas e tratamentos de forma a instruir intuitivamente sua utilização ao usuário, tomando ainda como alicerce no seu desenvolvimento, os cinco princípios fundamentais da Administração Pública do Brasil: legalidade, impessoalidade, moralidade, publicidade e eficiência.
 
@@ -280,7 +277,7 @@
 			
 			\begin{itemize}
 				
-				\item Implementar à risca o motor do sistema utilizando as normativas do manual do SISTAC \cite{sistac-formatos}, visando erradicar os erros de processamento dos lotes de envio;
+				\item Implementar à risca o motor do sistema \textit{(backend)} utilizando as normativas do manual do SISTAC \cite{sistac-formatos}, visando erradicar os erros de processamento dos lotes de envio;
 				\item Utilizar das boas práticas de programação para tornar o projeto simples e permitir colaboração;
 				\item Implementar uma interface gráfica simples e intuitiva, com dicas e tratamentos de exceções, visando agilidade e fluidez na interação com o sistema.
 				
@@ -293,18 +290,18 @@
 			\begin{itemize}
 				
 				\item \textbf{Capítulo 2}: aborda os fundamentos teóricos, principais tecnologias e bibliotecas utilizadas no desenvolvimento do \textit{IsenSys};
-				\item \textbf{Capítulo 3}: detalha o processo de desenvolvimento do \textit{IsenSys}, por meio de diagramas de classes, detalhamento de suas funcionalidades e exibição da interface gráfica;
+				\item \textbf{Capítulo 3}: detalha o processo de desenvolvimento do \textit{IsenSys}, por meio de diagramas de alto nível, detalhamento de funcionalidades e exibição da interface gráfica;
 				\item \textbf{Capítulo 4}: descreve resultados e métricas que permitem ter um comparativo entre o antes e depois da implementação do \textit{IsenSys};
 				\item \textbf{Capítulo 5}: apresenta as considerações finais, conclusão e futuras atualizações no \textit{IsenSys}.
 				
 			\end{itemize}
 	
 	% ----------| Capítulo 2: Referencial Teórico |----------
-	\chapter{Referencial Teórico} \label{cap2-referencial}
+	\chapter{Referencial Teórico}
 	
-		Este capítulo referencia as principais ferramentas e tecnologias utilizadas no desenvolvimento do \textit{IsenSys}, tais como linguagem de programação, bibliotecas de funções e o ambiente de desenvolvimento. A última seção deste capítulo explica e detalha o funcionamento do processo de isenção adotado pela COMPEC.
+		Este capítulo referencia as principais ferramentas e tecnologias utilizadas no desenvolvimento do \textit{IsenSys}, tais como linguagem de programação, bibliotecas de funções e o ambiente de desenvolvimento. A última seção deste capítulo [\ref{isencao}] explica e detalha o funcionamento do processo de isenção adotado pela COMPEC.
 		
-		\section{Java} \label{java}
+		\section{Java}
 		
 			A linguagem de programação Java \cite{java} é uma das mais bem conceituadas e utilizadas ao redor do mundo. Concebida em meados de 1995 pela empresa \textit{Sun Microsystems}, tem conquistado o mundo pela sua simplicidade, boa curva de aprendizagem, forma de organização e versatilidade entre os vários sistemas operacionais e dispositivos.
 		
@@ -314,10 +311,7 @@
 				\begin{center}
 				
 					\caption{Logomarca do \textit{Java}}
-					\label{java-img}
-								
 					\includegraphics[scale=0.04]{img/java-logo}
-					
 					\legend{Fonte: \url{https://www.oracle.com/br/java/technologies/java-se-glance.html}}
 					
 				\end{center}
@@ -329,9 +323,9 @@
 		
 		\section{Apache Commons Text\texttrademark} \label{commons-text}
 		
-			O \textit{Apache Commons Text\texttrademark} \cite{commons-text} é uma biblioteca livre (\textit{open-source}) escrita em linguagem Java, desenvolvida e mantida pela \textit{Apache Software Foundation}. Ela oferece funcionalidades para manipulação e processamento de texto, tornando tarefas comuns de manipulação de strings mais eficientes e simples para desenvolvedores Java.
-		
-			Algumas das funcionalidades da biblioteca são: manipulação e escapamento de \textit{Strings}, algoritmos de distância e similaridade, tokenização, geração de senhas aleatórias, formatação em geral, dentre muitas outras.
+			O \textit{Apache Commons Text\texttrademark} \cite{commons-text} é uma biblioteca livre (\textit{open-source}) escrita em linguagem Java, desenvolvida e mantida pela \textit{Apache Software Foundation}, que é uma organização mundial sem fins lucrativos criada para dar suporte de desenvolvimento a projetos de programação de código aberto, ou seja, livres para todos.
+			
+			A biblioteca oferece funcionalidades para manipulação e processamento de texto, tornando tarefas comuns de manipulação de strings mais eficientes e simples para desenvolvedores Java, algumas são: manipulação e escapamento de \textit{Strings}, algoritmos de distância e similaridade, tokenização, geração de senhas aleatórias, formatação em geral, dentre muitas outras.
 		
 		\section{Apache Maven} \label{maven}
 		
@@ -345,68 +339,53 @@
 				\begin{center}
 					
 					\caption{Logo do gerente de projetos \textit{Apache Maven}}
-					\label{maven-img}
-					
-					\includegraphics[scale=0.5]{img/maven-logo}
-					
+					\includegraphics[scale=0.45]{img/maven-logo}
 					\legend{Fonte: \url{https://maven.apache.org}}
 					
 				\end{center}
 			\end{figure}
 		
-		\section{Apache POI} \label{apache-poi}
+		\section{Apache POI}
 		
 			O \textit{Apache POI} \cite{poi} também é uma biblioteca gratuita escrita utilizando a linguagem Java, que adiciona suporte de leitura e escrita de dados em documentos do \textit{Microsoft Office} diretamente das aplicações Java, sem a necessidade de aquisição e instalação dos aplicativos da \textit{Microsoft}.
-			
-			Este complemento é desenvolvido e mantido pela \textit{fundação Apache}, que é uma organização mundial sem fins lucrativos criada para dar suporte de desenvolvimento a projetos de programação de código aberto, ou seja, livres para todos.
-			
-			Por ser uma fundação composta por uma comunidade descentralizada, suas soluções estão em constante melhoria, fornecendo ao desenvolvedor final peças de \textit{software} com qualidade garantida.
 			
 			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Logo da biblioteca \textit{Apache POI}}
-					\label{apache-poi-img}
-					
-					\includegraphics[scale=0.35]{img/apache-poi}
-					
+					\includegraphics[scale=0.3]{img/apache-poi}
 					\legend{Fonte: \url{https://poi.apache.org}}
 					
 				\end{center}
 			\end{figure}
 		
-		\section{Eclipse IDE} \label{eclipse-ide}
+		\section{Eclipse IDE}
 		
 			No mundo do desenvolvimento de software, agilidade e escalabilidade estão entre as qualidades mais requisitadas nas linguagens. Como forma de satisfazer tais demandas, existe no mercado uma vasta gama do que chamamos de \textit{IDE - integrated development environment} ou ambiente de desenvolvimento integrado, amplamente aceitos pela comunidade.
 			
-			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem Java, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc e ainda por ser de código aberto, pode ser modificado para outras finalidades.
+			Inicialmente o projeto \textit{Eclipse} \cite{eclipse} foi concebido pensando no desenvolvimento utilizando a linguagem Java, mas atualmente suporta extensões \textit{(plugins)} que adicionam suporte a várias outras linguagens, tais como \textit{PHP}, \textit{Python}, \textit{Arduino} etc e ainda, por ser de código aberto, pode ser modificado para outras finalidades.
 			
-			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} \cite{maven}.
+			O aplicativo adiciona funcionalidades que auxiliam muito no desenvolvimento em uma linguagem, tais como autocomplemento de código, exibição de sugestões, dicas e tratamentos de erros, verificador de sintaxe e semântica e até integração com outras tecnologias como versionadores de código e o \textit{Apache Maven} [\ref{maven}].
 			
 			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{\textit{Eclipse IDE}}
-					\label{eclipse-img}
-					
-					\includegraphics[scale=0.25]{img/eclipse-ide}
+					\includegraphics[scale=0.2]{img/eclipse-ide}
 					
 				\end{center}
 			\end{figure}
 		
-		\section{JasperReports\textregistered} \label{jasper-reports}
+		\section{JasperReports\textregistered}
 		
-			A biblioteca \textit{JasperReports\textregistered} \cite{jasper} é gratuita e uma das mais robustas e populares utilizadas para criação de relatórios para aplicações Java. Possui sua própria suíte de design, onde o desenvolvedor pode rapidamente configurar um novo relatório com poucos passos, seguindo guias e instruções diretamente na interface gráfica do editor.
+			A biblioteca \textit{JasperReports\textregistered} \cite{jasper} é gratuita e uma das mais robustas e populares utilizadas para criação de relatórios para aplicações escritas em Java. Possui sua própria suíte de design, onde o desenvolvedor pode rapidamente configurar um novo relatório com poucos passos, seguindo guias e instruções diretamente na interface gráfica do editor.
 			
 			Por ser desenvolvida utilizando a linguagem Java, ela também apresenta o mesmo comportamento e visualização em qualquer sistema operacional onde está disponível, produzindo relatórios de alta qualidade e escalabilidade, oferecendo opções de exportação para outros formatos conhecidos, tais como \textit{PDF}, \textit{Web} e \textit{Microsoft Word}.
 			
 			\begin{figure}[ht]
 				\begin{center}
 				
-				
 				\caption{Suíte de desenvolvimento \textit{JasperReports\textregistered}}
-				\label{jasper-img}
-				
 				\includegraphics[scale=0.35]{img/jaspersoft}
 				
 				\end{center}
@@ -475,7 +454,7 @@
 			
 			O valor resultante de $\text{Jaro\_Winkler\_Sim}$ está dentro do intervalo [0, 1], onde 0 indica nenhuma semelhança e 1 indica correspondência perfeita. Quanto maior o valor, maior a semelhança entre as duas strings.
 			
-		\section{Joda-Time} \label{joda-time}
+		\section{Joda-Time}
 			
 			A biblioteca \textit{Joda-Time} \cite{joda-time} facilita praticamente qualquer operação e manipulação com datas em um sistema Java, tarefa que é deveras complicada utilizando apenas os recursos nativos da linguagem. Com uma boa documentação e as mais diversas classes para cálculos, formatação e operações com data, tem conquistado muitos desenvolvedores a utilizá-la em seus projetos.
 			
@@ -483,41 +462,42 @@
 
 		\section{Processo de Isenção} \label{isencao}
 		
-			Compreender o processo de isenção de taxa de inscrição é parte fundamental para entender a importância e seriedade empenhados no desenvolvimento do \textit{IsenSys}. Durante esta seção, serão abordadas de forma detalhada e objetiva as fases e \textit{modus operandi} do processamento das solicitações de isenção de taxa de inscrição, a ser referenciada no decorrer da monografia apenas como \textit{solicitações de isenção} ou ainda \textit{solicitações}.
+			Compreender o processo de isenção de taxa de inscrição é parte fundamental para entender a importância e seriedade empenhados no desenvolvimento do \textit{IsenSys}. Durante esta seção, serão abordadas de forma detalhada e objetiva as fases e o \textit{modus operandi} do processamento das solicitações de isenção de taxa de inscrição, a ser referenciada no decorrer da monografia apenas como \textit{solicitações de isenção} ou ainda \textit{solicitações}.
 		
-			A implementação do processo de isenção de taxa de inscrição a candidatos de concursos e processos seletivos por parte da COMPEC, segue as normativas impostas do Decreto n{\textdegree} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto} e no manual de envio e recebimento de solicitações de inscrição do SISTAC \cite{sistac-formatos}.
+			A implementação do processo de isenção de taxa de inscrição a candidatos de concursos e processos seletivos por parte da COMPEC, segue as normativas impostas do Decreto n{\textordmasculine} 6.593, de 2 de outubro de 2008 \cite{cadunico-decreto} e no manual de envio e recebimento de solicitações de inscrição do SISTAC \cite{sistac-formatos}.
 			
-			Em cada edital regido pela COMPEC, o processo de isenção é a primeira etapa a ser realizada e sua operacionalização segue um padrão:
+			Como fonte de insumo e também como entrega do resultado final, o sistema denominado "PSConcursos", da UFAM foi utilizado. É ele quem concentra dados dos candidatos a concursos da universidade bem como solicitações de isenção e inscrição. O \textit{IsenSys}, por sua vez, é capaz de importar as solicitações geradas pelo PSConcursos e realizar seu trabalho.
+			
+			Em cada edital regido pela COMPEC, o processo de isenção é a primeira etapa a ser realizada e sua operacionalização respeita o seguinte fluxo:
 			
 			\begin{enumerate}
 				
 				\item \textbf{Publicação de Edital:} onde são definidas as regras gerais do concurso ou processo seletivo;
-				\item \textbf{Período de Solicitação de Isenção:} geralmente dois dias úteis, onde os candidatos que têm interesse em solicitar isenção, o fazem por meio do preenchimento de um formulário de solicitação no sistema PSConcursos;
+				\item \textbf{Período de Solicitação de Isenção [1{\textordfeminine} instância]:} geralmente dois dias úteis, onde os candidatos que têm interesse em solicitar isenção, o fazem por meio do preenchimento de um formulário de solicitação no sistema PSConcursos;
 				\item \textbf{Período de Análise:} é o tempo que a COMPEC possui para processar as solicitações, geralmente entre 3 a 4 dias úteis. O PSConcursos disponibiliza um arquivo \textit{csv} com todas as solicitações obtidas no período editalício, insumo para envio ao SISTAC que, por sua vez, analisa as solicitações e retorna também um arquivo \textit{csv}, útil para a confecção do resultado preliminar;
 				\item \textbf{Publicação do Resultado Preliminar:} aqui é tornado público o resultado do processamento das solicitações em 1{\textordfeminine} instância;
-				\item \textbf{Período de Recurso:} é a oportunidade que o candidato que teve sua solicitação indeferida em 1{\textordfeminine} instância, recursar, preenchendo o formulário de recurso no site PSConcursos, da UFAM. Vale ressaltar que só podem recursar os candidatos que solicitaram isenção em 1{\textordfeminine} instância!
-				\item \textbf{Período de Análise:} é o tempo que a COMPEC possui para processar os recursos, geralmente entre 2 a 3 dias úteis. Aqui é realizado o mesmo processo descrito no primeiro período de recurso;
+				\item \textbf{Período de Recurso [2{\textordfeminine} instância]:} é a oportunidade que o candidato que teve sua solicitação indeferida em 1{\textordfeminine} instância, recursar, preenchendo um formulário de recurso no sistema PSConcursos. Vale ressaltar que só podem recursar os candidatos que solicitaram isenção em 1{\textordfeminine} instância!
+				\item \textbf{Período de Análise:} é o tempo que a COMPEC possui para processar os recursos, geralmente entre 2 a 3 dias úteis. Aqui é realizado o mesmo processo descrito no primeiro período de análise;
 				\item \textbf{Publicação do Resultado Definitivo:} publicação do resultado definitivo, juntamente com a carga de informações no PSConcursos, encerrando o processo de isenção.
 				
 			\end{enumerate}
 			
 			O fluxograma a seguir ilustra de uma forma mais concisa este processo.
 			
-			\begin{figure}[H]
+			\begin{figure}[ht]
 				\begin{center}
 					
 					\caption{Fluxograma das Etapas de Isenção}
-					\label{isencao-fluxograma}
 					
-					\includegraphics[scale=0.34]{img/isencao-fluxograma}
+					\includegraphics[scale=0.37]{img/isencao-fluxograma}
 					
 				\end{center}
 			\end{figure}
 
 	% ----------| Capítulo 3: Desenvolvimento do IsenSys |----------
-	\chapter{Desenvolvimento do \textit{IsenSys}} \label{cap3-desenvolvimento}
+	\chapter{Desenvolvimento do \textit{IsenSys}}
 
-		Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de forma objetiva.
+		Introduzidas as principais ferramentas utilizadas no projeto, aprofundar-se-á no processo de desenvolvimento do aplicativo \textit{IsenSys}. Conceitos como especificações de sistema, requisitos para utilização e formas de aplicação serão demonstrados de maneira objetiva.
 		
 		O desenvolvimento do motor do sistema (\textit{backend}) é regido pelas normas de formato de arquivo e diretivas definidas no documento de orientações gerais do SISTAC \cite{sistac-gerais} e no manual de envio e recebimento de arquivos \cite{sistac-formatos}, versão 10.0, publicada em 24/06/2016.
 		
@@ -532,8 +512,8 @@
 			\item O sistema só pode entregar um arquivo de importação com os dados de solicitações em sua plena completude e integridade (RF05);
 			\item Dados de solicitações que foram informadas de forma incompleta ou inválida serão considerados erros e deverão ser exportados em uma planilha (RF06);
 			\item O sistema deverá permitir a importação do arquivo de retorno do SISTAC (RF07);
-			\item A partir do arquivo de retorno do SISTAC, o sistema deverá produzir editais de publicação e relatórios de resultados (RF08);
-			\item O sistema também deve permitir a importação da planilha com erros, para inclusão nos editais públicos (RF09);
+			\item A partir do arquivo de retorno do SISTAC, o sistema deverá produzir relatórios prontos para análise e publicação (RF08);
+			\item O sistema também deve permitir a importação da planilha com erros, para inclusão nos relatórios públicos (RF09);
 			\item O sistema deve gerar relatórios de estatísticas de solicitações deferidas e indeferidas (RF10);
 			\item O sistema deverá gerar um relatório de similaridade entre nomes de candidatos recursantes (RF11).
 			
@@ -554,10 +534,10 @@
 			
 		\end{itemize}
 	
-		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC, produzir relatórios e editais de publicação preliminar e definitivo. A seguir estão ilustrados os diagramas de atividades do sistema, trazendo uma visão geral do funcionamento do \textit{IsenSys}.
+		O sistema conta com três módulos distintos: um dedicado a preparar os dados de candidatos para envio ao SISTAC e os outros dois dedicados a processar os arquivos de retorno do SISTAC e produzir relatórios de publicação preliminar e definitivo. A seguir estão ilustrados os diagramas de atividades do sistema, trazendo uma visão geral do funcionamento do \textit{IsenSys}.
 		
 		\clearpage
-		\begin{figure}[!ht]
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama de Atividades do Módulo de Envio}
@@ -567,7 +547,7 @@
 		\end{figure}
 		
 		\clearpage
-		\begin{figure}[!ht]
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama de Atividades do SISTAC}
@@ -577,7 +557,7 @@
 		\end{figure}
 		
 		\clearpage
-		\begin{figure}[!ht]
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama de Atividades do Módulo de Retorno Preliminar}
@@ -587,7 +567,7 @@
 		\end{figure}
 		
 		\clearpage
-		\begin{figure}[!ht]
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama de Atividades do Módulo de Retorno Definitivo}
@@ -597,7 +577,7 @@
 		\end{figure}
 		
 		\clearpage
-		\begin{figure}[!ht]
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama de Casos de Uso do \textit{IsenSys}}
@@ -616,8 +596,6 @@
 				\begin{center}
 					
 					\caption{Tela Inicial do \textit{IsenSys}}
-					\label{tela-inicial-img}
-					
 					\includegraphics[scale=0.5]{img/inicial}
 					
 				\end{center}
@@ -642,13 +620,12 @@
 				\begin{center}
 					
 					\caption{Tela de Configurações do Sistema}
-					\label{configs-img}
-					
 					\includegraphics[scale=0.45]{img/configs-ui}
 					
 				\end{center}
 			\end{figure}
 
+		\clearpage
 		\section{Desenvolvimento do Módulo de Envio}
 	
 			Esta seção tem por objetivo detalhar o desenvolvimento do motor \textit{(backend)} de preparação de dados de solicitações de isenção para envio ao SISTAC. Primeiramente precisamos entender como está distribuído o fluxo de informações pelo sistema. Para isto, serão detalhadas as entidades principais e auxiliares deste módulo.
@@ -658,10 +635,9 @@
 				Os dados pessoais de um candidato são o objeto principal deste sistema, pois compõem uma solicitação de isenção que, após análise pelo SISTAC, tem uma resposta de deferimento ou não. Segundo o manual do SISTAC \cite{sistac-formatos}, os dados pessoais de candidatos necessários para o processamento estão dispostos na tabela a seguir.
 
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-				\begin{table}[H]
+				\begin{table}[ht]
 				
 					\caption{Dados pessoais de candidatos e seus formatos}
-					\label{tabela-dados-candidato}
 				
 					\begin{tabular}{|c|l|c|c|c|}
 						\hline
@@ -686,7 +662,6 @@
 					\begin{center}
 						
 						\caption{Modelagem da entidade \textit{Candidato}}
-						\label{candidato-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -712,11 +687,11 @@
 				
 				Esta classe é responsável por montar um \textit{Candidato} com os dados extraídos de um arquivo de entrada. Durante esse processo ela realiza uma série de validações nos dados, e caso haja pelo menos uma inconsistência, uma exceção com detalhes desta inconsistência é lançada, caso contrário, significa que foi possível construir um objeto respeitando todos os requisitos de formatos do SISTAC \cite{sistac-formatos}. Segue o diagrama de classe do \textit{CandidatoBuilder}.
 				
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{CandidatoBuilder}}
-						\label{candidatobuilder-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -735,17 +710,17 @@
 					\end{center}
 				\end{figure}
 	
-				Os métodos \textit{parse...()}, responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador} e lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso. Eis a metodologia implementada em cada campo de uma solicitação:
+				Os métodos \textit{parse...()}, são responsáveis por realizar validações específicas em cada campo de dados de um \textit{Colaborador} e lançam exceções detalhadas para que, posteriormente, tanto o órgão gestor dos dados quanto o candidato possam ter conhecimento de quais campos enviaram fora de formato e se ainda cabe algum recurso. Eis a metodologia implementada em cada campo de uma solicitação:
 				
 				\begin{itemize}
 					
-					\item \textbf{Nome [candidato e mãe]:} são removidos acentos, cedilhas, múltiplos espaços e quaisquer outros caracteres que não sejam alfabéticos. Se após o processamento, o nome continuar possuindo mais de 100 caracteres, um erro é gerado neste campo;
-					\item \textbf{NIS:} o número de identificação social (NIS) pode ser verificado utilizando um algoritmo que utiliza os próprios dígitos de verificação do NIS para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o NIS, um erro é gerado nesse campo;
-					\item \textbf{Data [nascimento e emissão de RG]:} se uma data vazia ou inválida for informada, a data de "01/01/2000" é inferida, logo, erros não são gerados nesse campo;
+					\item \textbf{Nome [candidato e mãe]:} são removidos acentos, cedilhas, múltiplos espaços e quaisquer outros caracteres que não sejam alfabéticos. Se após o processamento, o nome for vazio ou possuir mais que 100 caracteres, um erro é gerado neste campo;
+					\item \textbf{NIS:} o número de identificação social (NIS) pode ser verificado pr meio de um algoritmo que utiliza os próprios dígitos de verificação do NIS para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o NIS, um erro é gerado nesse campo;
+					\item \textbf{Data [nascimento e emissão de RG]:} se uma data vazia ou inválida for informada, a data de "01/01/2000"\space é inferida, logo, erros não são gerados nesse campo;
 					\item \textbf{Sexo:} caso o sexo informado não seja 'M' ou 'F', um erro é gerado nesse campo;
 					\item \textbf{N{\textordmasculine} de RG:} são extraídos apenas caracteres alfanuméricos e, caso a resultante seja vazia ou possuir mais que 16 caracteres, um erro é gerado nesse campo;
-					\item \textbf{Órgão Emissor:} são extraídos apenas caracteres alfanuméricos e, caso a resultante seja vazia ou possuir mais que 30 caracteres, o órgão "SSP" é inferido, logo, erros não são gerados nesse campo;
-					\item \textbf{CPF:} o número de CPF pode ser verificado utilizando um algoritmo que utiliza os próprios dígitos de verificação do CPF para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o CPF, um erro é gerado nesse campo.
+					\item \textbf{Órgão Emissor:} são extraídos apenas caracteres alfanuméricos e, caso a resultante seja vazia ou possuir mais que 30 caracteres, o órgão "SSP"\space é inferido, logo, erros não são gerados nesse campo;
+					\item \textbf{CPF:} o número de CPF pode ser verificado por meio de um algoritmo que utiliza os próprios dígitos de verificação do CPF para validá-lo. No \textit{IsenSys}, esta implementação consta na biblioteca \textit{Phills Libs} \cite{phills-libs}. Caso o algoritmo não consiga validar o CPF, um erro é gerado nesse campo.
 					
 				\end{itemize}
 				
@@ -753,19 +728,19 @@
 
 			\subsection{A classe de exceção \textit{FieldParseException}}
 	
-				Como forma de descentralizar as tratativas de validação de dados de candidatos, a classe de exceção \textit{FieldParseException} é responsável por armazenar informações sobre o motivo de um campo não ter sido validado e qual campo gerou esta exceção. Esta classe apenas estende a superclasse \textit{Exception} e monta uma \textit{String} formatada com o motivo e o nome do campo inválido.
+				Como forma de descentralizar as tratativas de validação de dados de candidatos, a classe de exceção \textit{FieldParseException} é responsável por armazenar informações sobre o motivo de um campo não ter sido validado e qual campo gerou esta exceção. Esta classe estende a superclasse \textit{Exception} e monta uma \textit{String} formatada com o motivo e o nome do campo inválido.
 
 			\subsection{A classe de exceção \textit{RowParseException}}	
 
-				Com o objetivo de concentrar todas as exceções de validação dos campos de dados de um \textit{Candidato}, a classe de exceção \textit{RowParseException} armazena tais exceções em uma lista encadeada e ainda adiciona informações que ajudam a identificar qual foi o candidato que gerou a(s) exceção(ões) e ainda em qual posição do arquivo de entrada ele está.
+				Com o objetivo de concentrar todas as exceções de validação dos campos de dados de um \textit{Candidato}, a classe de exceção \textit{RowParseException} armazena tais exceções em uma lista encadeada e ainda adiciona informações que ajudam a identificar qual foi a solicitação que gerou a(s) exceção(ões) e ainda em qual posição do arquivo de entrada ele está.
 	
 				A seguir é possível visualizar o diagrama de classe de \textit{RowParseException}.
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{RowParseException}}
-						\label{rowparseexception-uml}
 			
 						\begin{tabular}{|l|}
 							\hline
@@ -785,24 +760,24 @@
 					\end{center}
 				\end{figure}
 
-			\subsection{A classe \textit{ParseResult}} \label{cap-parse-result}
+			\subsection{A classe \textit{ParseResult}} \label{parse-result}
 	
 				Esta classe é responsável por concentrar o resultado da extração de dados do(s) arquivo(s) de entrada em duas listas:
 		
 				\begin{enumerate}
 						
-					\item Lista de \textit{Candidato}: onde são armazenados apenas dados de candidatos solicitantes de isenção que passaram com sucesso por todas as validações de campos;
-					\item Lista de \textit{RowParseException}: onde são armazenados os dados de solicitações julgados inválidos pela classe \textit{CandidatoBuilder} [\ref{candidato-builder}].
+					\item \textbf{Lista de \textit{Candidato}:} onde são armazenados apenas dados de candidatos solicitantes de isenção que passaram com sucesso por todas as validações de campos definidas na classe \textit{CandidatoBuilder} [\ref{candidato-builder}];
+					\item \textbf{Lista de \textit{RowParseException}:} onde são armazenados os dados de solicitações julgados inválidos pela classe \textit{CandidatoBuilder} [\ref{candidato-builder}].
 						
 				\end{enumerate}
 	
 				A seguir podemos compreender melhor a classe por meio de seu diagrama.
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{ParseResult}}
-						\label{parseresult-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -825,7 +800,7 @@
 	
 				\begin{enumerate}
 					
-					\item \textbf{Arquivo \textit{(.csv)}:} que é um arquivo de texto puro (sem formatação), contendo um cabeçalho na sua primeira linha e os dados pessoais requeridos pelo sistema nas outras linhas. O arquivo deve estar codificado em UTF-8, com separador por tabulação, vírgula ou ponto-e-vírgula.
+					\item \textbf{Arquivo \textit{(.csv)}:} que é um arquivo de texto puro (sem formatação), contendo um cabeçalho na sua primeira linha e os dados pessoais requeridos pelo sistema nas outras linhas. O arquivo deve estar codificado em UTF-8, com separador por tabulação, vírgula ou ponto-e-vírgula;
 					
 					\item \textbf{Planilha do \textit{Microsoft Excel (.xlsx)}:} a planilha deve conter um cabeçalho na primeira linha com os nomes dos campos e nas demais linhas os dados dos candidatos solicitantes de isenção.
 					
@@ -847,17 +822,17 @@
 					
 				\end{enumerate}
 	
-				Para cada tipo de arquivo foi implementado um importador, contendo as especificidades de tratamento de cada formato. Os dados extraídos pelos importadores são então enviados ao \textit{CandidatoBuilder} que irá construir um objeto \textit{Candidato}, tornando todo o processo de tratativa de arquivos transparente às classes superiores.
+				Para cada tipo de arquivo foi implementado um importador, contendo as especificidades de tratamento de cada formato. Os dados extraídos pelos importadores são então enviados ao \textit{CandidatoBuilder} [\ref{candidato-builder}] que irá construir um objeto \textit{Candidato} [\ref{candidato}], tornando todo o processo de tratativa de arquivos transparente às classes superiores.
 	
 				\subsubsection{O importador \textit{CSVSheetReader}}
 	
-					Para o arquivo no formato \textit{.csv}, temos o importador descrito na classe \textit{CSVSheetReader}, que é util tanto para o módulo de envio, através do método \textit{read()}, quanto pelo módulo de retorno, através do método \textit{readRetorno()}. A princípio o papel deste importador é detectar o tipo de separador do arquivo \textit{.csv} e extrair os dados linha-a-linha. A seguir temos seu diagrama de classe.
+					Para o arquivo no formato \textit{.csv}, temos o importador descrito na classe \textit{CSVSheetReader}, que é util tanto para o módulo de envio, através do método \textit{read()}, quanto pelo módulo de retorno, através do método \textit{readRetorno()}. A princípio o papel deste importador é detectar o tipo de separador do arquivo \textit{csv} e extrair os dados linha-a-linha. A seguir temos seu diagrama de classe.
 	
-					\begin{figure}[H]
+					% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{CSVSheetReader}}
-							\label{csvreader-uml}
 							
 							\begin{tabular}{|l|}
 								\hline
@@ -874,13 +849,13 @@
 	
 				\subsubsection{O importador \textit{ExcelSheetReader}}
 
-					Este importador também é comum aos três módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos solicitantes de isenção e entregá-los ao \textit{CandidatoBuilder}. Seu diagrama de classe está disposto na figura a seguir.
+					Este importador também é comum aos três módulos do sistema, mas em momentos distintos. Sua função no módulo de envio é iterar sobre as linhas e colunas de uma planilha com os dados de candidatos solicitantes de isenção e entregá-los ao \textit{CandidatoBuilder} [\ref{candidato-builder}]. Seu diagrama de classe está disposto na figura a seguir.
 
+					% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{ExcelSheetReader}}
-							\label{excelreader-uml}
 							
 							\begin{tabular}{|l|}
 								\hline
@@ -897,19 +872,19 @@
 	
 			\subsection{Exportadores de Dados}
 	
-				O estado final do processo de importação de dados dos candidatos solicitantes consiste na concentração deles na classe \textit{ParseResult} [\ref{cap-parse-result}]. A partir daqui, os dados dos candidatos considerados válidos pela classe \textit{CandidatoBuilder} estão prontos para serem exportados para o arquivo no formato de envio do SISTAC \cite{sistac-formatos}. Os dados de solicitações inválidas são exportados para uma planilha do \textit{Microsoft Excel}, para futuro processamento nos módulos de retorno.
+				O estado final do processo de importação de dados dos candidatos solicitantes consiste na concentração deles na classe \textit{ParseResult} [\ref{parse-result}]. A partir daqui, os dados dos candidatos considerados válidos pela classe \textit{CandidatoBuilder} [\ref{candidato-builder}] estão prontos para serem exportados para o arquivo no formato de envio do SISTAC \cite{sistac-formatos}. Os dados de solicitações inválidas são exportados para uma planilha do \textit{Microsoft Excel}, para futuro processamento nos módulos de retorno.
 	
 				\subsubsection{O exportador \textit{CSVSheetWriter}}
 	
-					Esta classe tem como função exportar os dados de candidatos válidos para o(s) arquivo(s) no formato de envio do SISTAC \cite{sistac-formatos}. Na primeira linha do arquivo é impresso o cabeçalho com alguns dados do órgão gestor (configurados previamente) e nas demais, os dados são dispostos de acordo com o formatação exigida no manual.
+					Esta classe tem como função exportar os dados de candidatos válidos para o(s) arquivo(s) no formato de envio do SISTAC \cite{sistac-formatos}. Na primeira linha do arquivo é impresso o cabeçalho com alguns dados do órgão gestor (configurados previamente) e nas demais, os dados são dispostos de acordo com a formatação exigida no manual.
 	
-					Empiricamente foi descoberto que o SISTAC tem um limite máximo de solicitações por arquivo de envio definido em 2000. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de solicitações ultrapasse este limite.
+					Empiricamente foi descoberto que o SISTAC tem um limite máximo de solicitações por arquivo de envio definido em 2.000 unidades. Portanto, o exportador automaticamente gera outros arquivos na sequência caso a quantidade de solicitações ultrapasse este limite.
 	
+					% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{CSVSheetWriter}}
-							\label{csvwriter-uml}
 							
 							\begin{tabular}{|l|}
 								\hline
@@ -924,13 +899,13 @@
 	
 				\subsubsection{O exportador \textit{ExcelSheetWriter}}
 	
-					Esta classe tem a função de exportar os dados de solicitações inválidas para uma planilha do \textit{Microsoft Excel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder}.
+					Esta classe tem a função de exportar os dados de solicitações inválidas para uma planilha do \textit{Microsoft Excel}, onde a primeira linha contém um cabeçalho com títulos das colunas de erros e nas demais linhas, os dados de identificação do candidato e a lista de campos que foram considerados inválidos pela classe \textit{CandidatoBuilder} [\ref{candidato-builder}].
 	
+					% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama de Classe de \textit{ExcelSheetWriter}}
-							\label{excelwriter-uml}
 							
 							\begin{tabular}{|l|}
 								\hline
@@ -947,12 +922,12 @@
 	
 				Após conhecer individualmente todos os agentes envolvidos no módulo de envio, far-se-á uma análise em conjunto de todos eles, possibilitando compreender o fluxo das informações e os estágios do processo de preparação dos dados das solicitações para envio ao SISTAC. A seguir temos uma visão geral do fluxo dos dados de uma solicitação de isenção, desde o arquivo de origem até o estágio onde todos estão devidamente processados.
 
-				\begin{figure}[H]
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+				\clearpage
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama do Fluxo de Dados das Solicitações}
-						\label{envio-uml}
-						
 						\includegraphics[scale=0.6]{img/envio-uml}
 						
 					\end{center}
@@ -968,8 +943,6 @@
 					\begin{center}
 						
 						\caption{Tela do Módulo de Envio}
-						\label{envio-ui}
-						
 						\includegraphics[scale=0.6]{img/envio-ui}
 						
 					\end{center}
@@ -983,8 +956,6 @@
 					\begin{center}
 						
 						\caption{Tela do Módulo de Envio (arquivo carregado)}
-						\label{envio-ui-loaded}
-						
 						\includegraphics[scale=0.5]{img/envio-ui-loaded}
 						
 					\end{center}
@@ -994,11 +965,11 @@
 
 				Por fim, após todos os dados serem fornecidos na tela, a exportação pode ser realizada clicando no ícone de salvar (disquete). As figuras a seguir ilustram a saída dos arquivos após alimentar a tela com algumas informações.
 
-				\begin{figure}[H]
+				\clearpage
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Tela do Módulo de Envio (preenchida) + Arquivos de Saída}
-						\label{envio-ui-processed}
 						
 						\includegraphics[scale=0.4]{img/envio-ui-processed}
 						\includegraphics[scale=0.3]{img/envio-files}
@@ -1006,11 +977,11 @@
 					\end{center}
 				\end{figure}
 
-				De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha gerada pode ser consultada de forma avulsa, mas é recomendável mantê-la inalterada, pois é necessária para a montagem dos editais de publicação nos módulos de retorno.
+				De posse dos arquivos exportados, o envio já pode ser realizado à plataforma do SISTAC. A planilha gerada pode ser consultada de forma avulsa, mas é recomendável mantê-la inalterada, pois é necessária para a montagem dos relatórios de publicação nos módulos de retorno.
 
 		\section{Desenvolvimento dos Módulos de Retorno}
 	
-			Esta seção tem por objetivo detalhar o desenvolvimento do \textit{backend} de processamento do(s) arquivo(s) de retorno do SISTAC. A partir dele(s) é possível gerar relatórios com algumas métricas e estatísticas úteis ao órgão gestor, bem como os editais de publicação.
+			Esta seção tem por objetivo detalhar o desenvolvimento do \textit{backend} de processamento do(s) arquivo(s) de retorno do SISTAC. A partir dele(s) é possível gerar relatórios com resultados e algumas métricas e estatísticas úteis ao órgão gestor, todos prontos para publicação.
 	
 			Utilizando a mesma metodologia abordada na seção anterior, vamos começar compreendendo o fluxo de informações, conhecendo as classes envolvidas no processo e, posteriormente, a interface gráfica.
 	
@@ -1018,11 +989,11 @@
 	
 				Para estes módulos, apenas alguns dados das solicitações dos candidatos são aproveitados. Temos então a concepção da classe \textit{Retorno}, de acordo com a especificação descrita na figura a seguir:
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Modelagem da Entidade \textit{Retorno}}
-						\label{retorno-uml}
 							
 						\begin{tabular}{|l|}
 							\hline
@@ -1043,13 +1014,13 @@
 	
 			\subsection{A classe \textit{ListaRetornos}}
 
-				Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia os dois módulos de retorno, que são: retorno preliminar e retorno definitivo. Por enquanto, temos que esta classe armazena dados úteis aos dois módulos.
+				Esta classe concentra todos os \textit{Retorno}'s extraídos do arquivo de retorno do SISTAC, com adição dos atributos do órgão gestor e dados do edital de publicação. Será detalhado ao decorrer desta monografia os dois módulos de retorno, que são: retorno preliminar [\ref{retorno-preliminar}] e retorno definitivo [\ref{retorno-definitivo}]. Por enquanto, temos que esta classe armazena dados úteis aos dois módulos.
 
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de classe de \textit{ListaRetornos}}
-						\label{listaretornos-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -1077,11 +1048,11 @@
 	
 				Esta classe possui a incumbência de gravar ou carregar em arquivo um objeto da classe \textit{ListaRetornos}, útil no processamento do retorno definitivo. Eis o seu diagrama de classe:
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{Compilation}}
-						\label{compilation-uml}
 						
 						\begin{tabular}{|l|}
 						\hline
@@ -1094,15 +1065,15 @@
 					\end{center}
 				\end{figure}
 	
-			\subsection{Modelagem de uma Situacao}
+			\subsection{Modelagem de uma Situacao} \label{situacao}
 	
-				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema \ref{recursos}. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
+				De acordo com o manual do SISTAC \cite{sistac-formatos}, existem algumas situações de indeferimento definidas. No \textit{IsenSys}, tais situações são armazenadas em um arquivo (\textit{csv}) com codificação UTF-8 no diretório de recursos do sistema [\ref{recursos}]. Durante a confecção dos editais de publicação, as situações são carregadas do arquivo e enviadas à classe geradora de relatórios, juntamente com os dados dos retornos.
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Modelagem da Entidade \textit{Situacao}}
-						\label{situacao-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -1118,13 +1089,13 @@
 	
 			\subsection{A classe \textit{SituacaoDAO}}
 	
-				Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'}, contido no diretório de recursos do \textit{IsenSys}, para uma lista de \textit{Situacao}, útil na confecção dos editais de publicação.
+				Basicamente esta classe é responsável por carregar as situações a partir do arquivo \textit{'situacoes.csv'}, contido no diretório de recursos do \textit{IsenSys}, para uma lista de \textit{Situacao} [\ref{situacao}], útil na confecção dos relatórios de publicação.
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{SituacaoDAO}}
-						\label{situacaodao-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -1140,15 +1111,15 @@
 	
 				O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) arquivo(s) de retorno do SISTAC. Cada uma das classes que os implementam contam com o método '\textit{export()}', que é capaz de compilar e exportar o relatório para o formato PDF. A figura a seguir ilustra as estruturas de classe dos três geradores.
 	
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[h]
 					\begin{center}
 						
 						\caption{Diagramas de Classe dos Geradores de Relatório}
-						\label{geradores-uml}
 						
 						\begin{tabular}{|l|l|l|l|l|}
 						\cline{1-1} \cline{3-3} \cline{5-5}
-						\multicolumn{1}{|c|}{\textbf{PDFResultado}} &  & \multicolumn{1}{c|}{\textbf{PDFRetorno}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
+						\multicolumn{1}{|c|}{\textbf{PDFEstatisticas}} &  & \multicolumn{1}{c|}{\textbf{PDFResultado}} &  & \multicolumn{1}{c|}{\textbf{PDFSimilaridade}} \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						&  &                                          &  &                                               \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						+export()                                &  & +export()                                &  & +export()                                     \\ \cline{1-1} \cline{3-3} \cline{5-5} 
 						\end{tabular}
@@ -1160,16 +1131,15 @@
 	
 				Conhecendo individualmente os agentes envolvidos no módulo de retorno, podemos realizar uma abordagem integrada dos dois tipos de retorno: retorno preliminar e retorno definitivo.
 	
-				\subsubsection{Retorno Preliminar}
+				\subsubsection{Retorno Preliminar} \label{retorno-preliminar}
 	
 					Este é o módulo destinado ao processamento do resultado preliminar das solicitações de isenção. A figura a seguir ilustra o fluxo das informações através do módulo.
 	
-					\begin{figure}[H]
+					\clearpage
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama do Fluxo de Dados no Retorno Preliminar}
-							\label{preliminar-fluxo}
-							
 							\includegraphics[scale=0.5]{img/retorno-prelim-uml}
 							
 						\end{center}
@@ -1177,18 +1147,17 @@
 	
 					Começando pelos arquivos de entrada, as classes \textit{CSVSheetReader} e \textit{ExcelSheetReader} carregam o(s) arquivo(s) de retorno do SISTAC e planilha de erros, respectivamente, produzindo então objetos da classe \textit{Retorno} que são agrupados em uma lista na classe \textit{ListaRetornos}.
 	
-					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFResultado} e \textit{PDFRetorno} e, por fim, salvos em um arquivo binário denominado de 'compilação', através da classe \textit{Compilation}.
+					Na exportação, os dados armazenados na classe \textit{ListaRetornos} são enviados aos geradores de PDF implementados em \textit{PDFEstatisticas} e \textit{PDFResultado} e, por fim, salvos em um arquivo binário denominado de 'compilação', por meio da classe \textit{Compilation}.
 	
 				\subsubsection{Tela do Módulo de Retorno Preliminar}
 	
 					A figura a seguir ilustra a implementação da interface gráfica do módulo de retorno preliminar do \textit{IsenSys}.
 	
-					\begin{figure}[H]
+					\clearpage
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Tela do Módulo de Retorno Preliminar}
-							\label{retorno-prelim-ui}
-							
 							\includegraphics[scale=0.6]{img/retorno-prelim-ui}
 							
 						\end{center}
@@ -1200,9 +1169,8 @@
 	
 					\begin{itemize}
 						
-						\item \textbf{Retorno Sistac:} o usuário deve selecionar SEMPRE o primeiro arquivo de retorno do SISTAC, caso haja mais de um, o carregamento dos demais arquivos é feito de forma automática, basta que estejam no mesmo diretório do primeiro arquivo.
-						
-						\item \textbf{Planilha Erros:} aqui o usuário deve selecionar a planilha de erros gerada pelo módulo de envio do \textit{IsenSys}.
+						\item \textbf{Retorno Sistac:} o usuário deve selecionar SEMPRE o primeiro arquivo de retorno do SISTAC, caso haja mais de um, o carregamento dos demais arquivos é feito de forma automática, basta que estejam no mesmo diretório do primeiro arquivo;
+						\item \textbf{Planilha Erros:} aqui o usuário deve selecionar a planilha de erros gerada pelo módulo de envio do \textit{IsenSys};
 						
 					\end{itemize}
 		
@@ -1212,54 +1180,46 @@
 						\begin{center}
 							
 							\caption{Tela do Módulo de Retorno Preliminar (preenchida)}
-							\label{retorno-prelim-ui-processed}
-							
-							\includegraphics[scale=0.5]{img/retorno-prelim-ui-processed}
+							\includegraphics[scale=0.45]{img/retorno-prelim-ui-processed}
 							
 						\end{center}
 					\end{figure}
 		
 					O nome do edital pode ser informado no campo de texto do painel 'Edital' e no painel 'Arquivos de Saída' é possível selecionar o diretório para saída dos arquivos gerados pelo módulo (resultados, relatório de estatísticas e arquivo de compilação), como mostra a figura a seguir.
 		
-					\begin{figure}[H]
+					\begin{figure}[!ht]
 						\begin{center}
 							
 							\caption{Arquivos de Saída do Módulo de Retorno Preliminar}
-							\label{retorno-prelim-files}
-							
 							\includegraphics[scale=0.45]{img/retorno-prelim-files}
 							
 						\end{center}
 					\end{figure}
 		
-				\subsubsection{Retorno Definitivo}
+				\subsubsection{Retorno Definitivo} \label{retorno-definitivo}
 	
-					Este é o módulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do módulo de retorno preliminar, através de um arquivo de compilação (gerado por \textit{Compilation} [\ref{compilation}]) e importar o(s) novo(s) arquivo(s) de retorno do SISTAC.
+					Este é o módulo destinado ao processamento do resultado definitivo. É capaz de recuperar as informações do módulo de retorno preliminar, através de um arquivo de compilação (gerado pela classe \textit{Compilation} [\ref{compilation}]) e importar o(s) novo(s) arquivo(s) de retorno do SISTAC.
 
-					\begin{figure}[H]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Diagrama do Fluxo de Dados no Retorno Definitivo}
-							\label{retorno-def-uml}
-							
 							\includegraphics[scale=0.5]{img/retorno-def-uml}
 							
 						\end{center}
 					\end{figure}
 	
-					Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} que carrega os dados provenientes do módulo de resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
+					Para o processamento do retorno definitivo, a principal classe alimentadora é a \textit{Compilation} [\ref{compilation}] que carrega os dados provenientes do módulo de resultado preliminar e, a princípio, já estão prontos para serem exportados como resultado definitivo.
 	
 				\subsubsection{Tela do Módulo de Retorno Definitivo}
 	
 					A figura a seguir ilustra a implementação da interface gráfica do módulo de retorno definitivo do \textit{IsenSys}.
 	
-					\begin{figure}[H]
+					\begin{figure}[ht]
 						\begin{center}
 							
 							\caption{Tela do Módulo de Retorno Definitivo}
-							\label{retorno-def-ui}
-							
-							\includegraphics[scale=0.6]{img/retorno-def-ui}
+							\includegraphics[scale=0.45]{img/retorno-def-ui}
 							
 						\end{center}
 					\end{figure}
@@ -1272,21 +1232,19 @@
 	
 					\begin{itemize}
 						
-						\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade \ref{similaridade};
+						\item \textbf{Retorno Sistac:} se o candidato retornado tiver sua solicitação \textbf{indeferida}, apenas seu status é atualizado na lista preexistente. Caso tenha sido \textbf{deferida}, além de ter seu estado alterado, o novo deferido fará parte de uma nova lista, para futuro cálculo de similaridade [\ref{similaridade}];
 						
 						\item \textbf{Erros:} aqui todos os erros são mesclados.
 						
 					\end{itemize}
-	
-					Após a seleção do diretório de saída o sistema está pronto para exportar os relatórios definitivos.
 
 		\section{Relatório de Similaridade} \label{similaridade}
 		
-			Uma necessidade especial tornou necessária a implementação de um relatório que calculasse o quão similar é o nome de um candidato na fase de solicitação na fase de recurso.
+			Uma necessidade especial tornou necessária a implementação de um relatório que calculasse o quão similar é o nome de um candidato na fase de solicitação (1{\textordfeminine} instância) e na fase de recurso (2{\textordfeminine} instância).
 			
 			Empiricamente foi detectado que um candidato qualquer que teve sua solicitação de isenção indeferida em primeira instância e recursou trocando seus dados pessoais pelos de alguém que tem ciência de isenção garantida, teve recurso deferido pelo SISTAC.
 			
-			Como forma de evitar que tais candidatos praticantes deste ato ilícito tivessem isenção deferida sem ciência do órgão gestor, foi desenvolvido um relatório chamado de 'Relatório de Similaridade e Distância entre Nomes', que computa porcentagens das referidas métricas utilizando o algoritmo de \textit{Jaro-Winkler}, entre o nome informado na fase de solicitação e recurso, pelo candidato.
+			Como forma de evitar que tais candidatos praticantes deste ato ilícito tivessem isenção deferida sem ciência do órgão gestor, foi desenvolvido um relatório chamado de 'Relatório de Similaridade e Distância entre Nomes', que computa porcentagens das referidas métricas utilizando o algoritmo de \textit{Jaro-Winkler} [\ref{jaro-winkler}], entre o nome informado na fase de solicitação e recurso, pelo candidato.
 			
 			O algoritmo é executado tomando como base candidatos que tiveram solicitação de isenção indeferida em primeira instância, mas deferida após recurso, gerando um relatório com o comparativo entre nomes e as duas métricas (similaridade e distância), ordenado pela ordem crescente de similaridade.
 			
@@ -1296,11 +1254,11 @@
 			
 				Esta classe contém alguns atributos úteis para confecção do relatório de similaridade entre nomes. A figura a seguir ilustra seu diagrama de classe.
 				
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de uma Similaridade}
-						\label{similaridade-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -1317,13 +1275,13 @@
 
 			\subsection{A classe \textit{JaroWinkler}}
 			
-				É uma classe auxiliar que computa o algoritmo de \textit{Jaro-Winkler} \cite{jaro-winkler} nos dados dos candidatos recursantes. Para cálculo das métricas de distância e similaridade, a biblioteca \textit{Apache Commons Text\texttrademark} [\ref{commons-text}] foi utilizada. A seguir seu diagrama de classe.
+				É uma classe auxiliar que computa o algoritmo de \textit{Jaro-Winkler} [\ref{jaro-winkler}] nos dados dos candidatos recursantes. Para cálculo das métricas de distância e similaridade, a biblioteca \textit{Apache Commons Text\texttrademark} [\ref{commons-text}] foi utilizada. A seguir seu diagrama de classe.
 			
+				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama de Classe de \textit{JaroWinkler}}
-						\label{jaro-winkler-uml}
 						
 						\begin{tabular}{|l|}
 							\hline
@@ -1339,13 +1297,11 @@
 			
 				Realizando uma abordagem integrada, conhecendo os agentes envolvidos na produção do relatório, temos o seguinte diagrama.
 				
-				\begin{figure}[H]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagrama do Fluxo de Dados no Relatório}
-						\label{jaro-winkler-report-uml}
-						
-						\includegraphics[scale=0.6]{img/jaro-winkler-uml}
+						\includegraphics[scale=0.65]{img/jaro-winkler-uml}
 						
 					\end{center}
 				\end{figure}
@@ -1362,10 +1318,10 @@
 				
 				\item \textbf{\textit{config/program.dat:}} contém as configurações globais do sistema;
 				\item \textbf{\textit{fonts/fonts-extension.jar:}} fontes utilizadas na confecção dos relatórios;
-				\item \textbf{\textit{i18n/*.lng:}} arquivos contendo as strings de interface do sistema;
+				\item \textbf{\textit{i18n/*.lng:}} arquivos contendo as \textit{strings} de interface do sistema;
 				\item \textbf{\textit{icon/*.png:}} contém os ícones utilizados nas telas;
 				\item \textbf{\textit{img/:}} diretório contendo as imagens de fundo das telas;
-				\item \textbf{\textit{relatorios/*.jasper:}} arquivos dos relatórios;
+				\item \textbf{\textit{relatorios/*.jasper:}} arquivos-modelos dos relatórios;
 				\item \textbf{\textit{situacoes/situacoes.csv:}} arquivo contendo as situações de indeferimento.
 				
 			\end{itemize}
@@ -1374,11 +1330,11 @@
 
 	\chapter{Implementação e Resultados}
 	
-		A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textdegree} 13 \cite{edital-13} e 14/GR/UFAM \cite{edital-14}.
+		A versão corrente do sistema (v.3.8) foi implementada no início de Junho de 2023 na COMPEC, com o objetivo de ter como piloto o processamento das solicitações de isenção do Processo Seletivo Contínuo - PSC 2024 - Etapas 1 e 2, fruto dos Editais de n{\textordmasculine} \cite{edital-13} e \cite{edital-14}/GR/UFAM.
 		
 		Por pura coincidência, o PSC 2024 é a primeira edição a possuir a modalidade de isenção via CadÚnico logo nas primeiras etapas do processo, opção que só era concedida aos candidatos da 3{\textordfeminine} etapa.
 		
-		Segundo os editais que regem o processo seletivo, o período de solicitações de isenção de taxa de inscrição foi entre as 10h do dia 01/06/2023 até as 17h do dia seguinte, onde foram recebidas \textbf{7.652 solicitações na 1{\textordfeminine} etapa} e \textbf{3.052 na 2{\textordfeminine} etapa}, totalizando incríveis \textbf{10.704 solicitações ao total}, volume até o momento nunca recebido pela COMPEC.
+		Segundo os editais que regem o processo seletivo, o período de solicitações de isenção de taxa de inscrição foi entre as 10h do dia 01/06/2023 até as 17h do dia seguinte, onde foram recebidas \textbf{7.652 solicitações na 1{\textordfeminine} etapa} e \textbf{3.052 na 2{\textordfeminine} etapa}, totalizando incríveis \textbf{10.704 solicitações}.
 		
 		A computação das solicitações foi realizada em um computador da marca Lenovo, modelo M93p com as seguintes especificações:
 		
@@ -1387,13 +1343,14 @@
 			\item Memória RAM DDR3-1600, com capacidade total de 16GB;
 			\item Processador Intel{\textregistered} Core{\texttrademark} i5-4570 de 3.60 GHz;
 			\item Sistema operacional Arch Linux de 64 bits, com \textit{engine} gráfica GNOME;
-			\item Monitor padrão da marca HP com resolução de 1920x1080 pixels.
+			\item Monitor padrão da marca HP, modelo V225hz, com resolução de 1920x1080.
 			
 		\end{itemize}
 		
 		Seguindo o fluxo padrão do processo de isenção, começamos pela preparação de dados para envio ao SISTAC, através da Tela de Envio. Toda a interação com a interface gráfica se mostrou estável e não foi detectado nenhum erro de execução ou travamentos, mesmo com alto volume de dados.
 		
-		\begin{table}[H]
+		% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+		\begin{table}[ht]
 			\begin{center}
 				
 				\caption{Tempos de Processamento de Dados [Preliminar]}
@@ -1407,7 +1364,8 @@
 			\end{center}
 		\end{table}
 		
-		\begin{table}[H]
+		% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
+		\begin{table}[ht]
 			\begin{center}
 				
 				\caption{Tempos de Processamento de Dados [Definitivo]}
@@ -1421,32 +1379,32 @@
 			\end{center}
 		\end{table}
 		
-		Como ilustrado em números, o \textit{IsenSys} conseguiu impactar drasticamente o tempo de processamento das solicitações, processo realizado por humanos antes da implementação do sistema. Antes havia uma equipe que, de posse dos dados de solicitação, realizavam a confecção dos arquivos de envio ao SISTAC de forma artesanal, processo lento que se estendia por dias e era extremamente suscetível a erros.
+		Como ilustrado em números, o \textit{IsenSys} conseguiu reduzir drasticamente o tempo de processamento das solicitações, processo realizado por humanos antes da implementação do sistema. Antes havia uma equipe que, de posse dos dados de solicitação, realizavam a confecção dos arquivos de envio ao SISTAC de forma artesanal, processo lento que se estendia por dias e era extremamente suscetível a erros.
 		
 		Além da confecção manual dos arquivos \textit{csv}, perdia-se muito tempo no processo de envio de lotes ao SISTAC pois, ao detectar o primeiro erro de preenchimento de arquivo, cancela todo o envio do lote e sinaliza apenas o erro corrente. Logo, corrigia-se manualmente o erro e uma nova submissão era realizada, até que o lote fosse totalmente recebido, sem erros.
 		
 		Em concursos com maior volume de solicitações estima-se que pelo menos 25 a 30 tentativas de envio eram realizadas à plataforma. É muito provável que esta realidade estenda-se em mais órgãos do Poder Executivo utilizadores do SISTAC e é quando o \textit{IsenSys} pode servir como aplicação institucionalizada, visando eficiência e colaboração no serviço público.
 		
-		O diagrama a seguir ilustra o pré-processamento de dados realizado tanto pelo SISTAC quanto pelo \textit{IsenSys}. Podemos verificar que, ao primeiro erro encontrado no arquivo de solicitações, o SISTAC rejeita o lote por completo.
-		
 		A otimização implementada no \textit{IsenSys} faz com que os dados das solicitações passem por filtros analistas de dados, implementados de acordo com as normativas do manual do SISTAC \cite{sistac-formatos}. Ao detectar alguma disparidade entre o dado e o formato aceito, o \textit{IsenSys} tenta ajustá-lo e caso não seja possível, o separa em uma lista de erros e o processamento continua.
 		
 		Ao fim do processo, um arquivo de envio 100\% válido no formato do SISTAC é gerado e os erros, separados em uma planilha, para futura confecção dos relatórios de resultados preliminar e definitivo.
 		
-		\begin{figure}[H]
+		O diagrama a seguir ilustra o pré-processamento de dados realizado tanto pelo SISTAC quanto pelo \textit{IsenSys}. Podemos verificar que, ao primeiro erro encontrado no arquivo de solicitações, o SISTAC rejeita o lote por completo.
+		
+		\begin{figure}[ht]
 			\begin{center}
 				
 				\caption{Diagrama Comparativo entre o SISTAC e IsenSys}
-				
-				\includegraphics[scale=0.5]{img/diagrama-ativs-ganhos}
+				\includegraphics[scale=0.4]{img/diagrama-ativs-ganhos}
 				
 			\end{center}
 		\end{figure}
 		
-		Graças à implementação do \textit{IsenSys}, a COMPEC conseguiu reduzir os tempos de processamento de solicitações de isenção de dias para segundos. Atualmente, pouco tempo após o término do prazo de solicitação ou recurso, os editais preliminares ou definitivos já podem ser confeccionados.
+		Graças à implementação do \textit{IsenSys}, a COMPEC conseguiu reduzir os tempos de processamento de solicitações de isenção de dias para segundos. Atualmente, pouco tempo após o término do prazo de solicitação ou recurso, os resultados preliminares ou definitivos já podem ser confeccionados.
 		
-		A tabela a seguir traz um comparativo entre o tempo necessário para confeccionar um arquivo de envio válido ao SISTAC, utilizando o processo manual e o \textit{IsenSys}. Vale ressaltar que nos dois processos, apenas o \textit{IsenSys} foi utilizado, as quantidades de dias foram calculadas com base em concursos anteriores de porte semelhante realizados pela COMPEC.
+		A tabela a seguir traz um comparativo entre o tempo necessário para confeccionar um arquivo de envio válido ao SISTAC, utilizando o processo manual e o \textit{IsenSys}. Vale ressaltar que nos dois processos, apenas o \textit{IsenSys} foi utilizado, as quantidades de dias foram calculadas com base em concursos anteriores de porte semelhante realizados pela COMPEC, utilizando as mesmas metodologias.
 		
+		% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
 		\begin{table}[ht]
 			\begin{center}
 				
@@ -1461,13 +1419,13 @@
 			\end{center}
 		\end{table}
 		
-		Vimos que, com a implementação do \textit{IsenSys}, foi possível reduzir custos com contratação temporária de pessoal (\textit{processadores manuais de solicitações}) e recursos como impressão em papel, tonner de impressora e energia elétrica, tornando o serviço eficiente e com resultado preciso com alguns cliques e em alguns segundos.
+		Vimos que, com a implementação do \textit{IsenSys}, foi possível reduzir custos com contratação temporária de pessoal e recursos como impressão em papel, tonner de impressora e energia elétrica, tornando o serviço eficiente e com resultado preciso com alguns cliques e em alguns segundos.
 
 	\chapter{Conclusões}
 	
 		\section{Considerações Finais}
 	
-			Visando valores como agilidade, lisura e transparência no processamento das solicitações de isenção na modalidade CadÚnico, o \textit{IsenSys} surgiu como agente concretizador destes anseios, possibilitando que um órgão gestor consiga preparar dados para envio ao SISTAC e, após seu processo de análise, gerar editais de publicação e relatórios com estatísticas e métricas.
+			Visando valores como agilidade, lisura e transparência no processamento das solicitações de isenção de taxa de inscrição na modalidade CadÚnico, o \textit{IsenSys} surgiu como agente concretizador destes anseios, possibilitando que um órgão gestor consiga preparar dados para envio ao SISTAC e, após seu processo de análise, gerar relatórios de publicação de resultados e relatórios com estatísticas e métricas.
 			
 			Os resultados obtidos foram de grande satisfação tanto pela COMPEC, quanto pela sociedade, que tiveram um retorno ágil e preciso, respeitando todos os requisitos dispostos nos editais do concurso piloto e instruções normativas sobre o processo de isenção, de acordo com os manuais do SISTAC.
 			
@@ -1484,7 +1442,7 @@
 				\item Permitir que o número de edital contenha caracteres alfanuméricos de forma a abranger esta atualização recente do SISTAC;
 				\item Adicionar interfaces gráficas para gerência dos recursos do sistema tais como logomarca e arquivo de situações;
 				\item Utilizar banco de dados para salvar configurações;
-				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textdegree} 12.799, de 10 de abril de 2013 \cite{lei-12799}, e doadores de medula óssea, regulamentado pela Lei n{\textdegree} 13.656, de 30 de abril de 2018 \cite{lei-13656}.
+				\item Integrar as outras modalidades de isenção de taxa de inscrição, como a modalidade de análise documental, definida pela Lei n{\textordmasculine} 12.799, de 10 de abril de 2013 \cite{lei-12799}, e doadores de medula óssea, regulamentado pela Lei n{\textordmasculine} 13.656, de 30 de abril de 2018 \cite{lei-13656}.
 				
 			\end{itemize}
 			
@@ -1509,13 +1467,13 @@
 	\begin{anexosenv}
 		
 		\chapter{Resultado Definitivo das Solicitações de Isenção de Taxa de Inscrição do PSC 2023 (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-resultado-definitivo.pdf}
+		\includepdf[pages=-]{anexos/psc2023-e12-resultado-definitivo}
 		
 		\chapter{Relatório de Similaridade Aplicado no PSC 2023 (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-similaridade.pdf}
+		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-similaridade}
 		
 		\chapter{Relatório de Estatísticas de Processamento (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-processamento.pdf}
+		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-processamento}
 		
 	\end{anexosenv}
 
