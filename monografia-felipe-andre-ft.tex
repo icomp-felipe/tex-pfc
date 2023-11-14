@@ -107,11 +107,13 @@
 
 	% ----------| Folha de Rosto |----------
 	% (* indica que existe a ficha bibliográfica)
-	\imprimirfolhaderosto*
+	\imprimirfolhaderosto
 	
 	% ----------| Ficha Catalográfica |----------
 	% Gerada automaticamente pelo sistema da biblioteca central da UFAM: https://fichacatalografica.ufam.edu.br/ficha/create
-	\includepdf{docs/ficha-catalografica}
+	\begin{fichacatalografica}
+		\includepdf{docs/ficha-catalografica}
+	\end{fichacatalografica}
 
 	% ----------| Folha de Aprovação |----------
 	%
