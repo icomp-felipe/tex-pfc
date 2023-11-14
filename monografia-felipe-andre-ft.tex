@@ -30,7 +30,6 @@
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{indentfirst}        % Indenta o primeiro parágrafo de cada seção.
-\usepackage{float}              % Auxilia no posicionamento de imagens
 \usepackage{amsmath}            % Adiciona suporte a fórmulas
 
 \usepackage[brazilian,hyperpageref]{backref}  % Páginas com as citações na bibl
@@ -223,7 +222,6 @@
 	\listoftables*
 	\cleardoublepage
 
-
 	% ----------| Lista de Abreviaturas e Siglas |----------
 	\begin{siglas}
 
@@ -234,7 +232,6 @@
 		\item[IDE] \textit{Integrated Development Environment} - ambiente de desenvolvimento integrado
 		\item[IRPF] Imposto sobre a Renda das Pessoas Físicas
 		\item[IRPJ] Imposto sobre a Renda das Pessoas Jurídicas
-		\item[MDS] Ministério do Desenvolvimento Social
 		\item[NIS] Número de Identificação Social
 		\item[REDOME] Registro Brasileiro de Doadores Voluntários de Medula Óssea
 		\item[SISTAC] Sistema de Isenção de Taxa de Concurso
@@ -1112,7 +1109,7 @@
 				O \textit{IsenSys} implementa três tipos de relatórios a partir dos dados provenientes do(s) arquivo(s) de retorno do SISTAC. Cada uma das classes que os implementam contam com o método '\textit{export()}', que é capaz de compilar e exportar o relatório para o formato PDF. A figura a seguir ilustra as estruturas de classe dos três geradores.
 	
 				% Tabela gerada com o auxílio da aplicação: https://www.tablesgenerator.com/latex_tables
-				\begin{figure}[h]
+				\begin{figure}[ht]
 					\begin{center}
 						
 						\caption{Diagramas de Classe dos Geradores de Relatório}
@@ -1466,14 +1463,14 @@
 	% ----------| Anexos |----------
 	\begin{anexosenv}
 		
-		\chapter{Resultado Definitivo das Solicitações de Isenção de Taxa de Inscrição do PSC 2023 (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-resultado-definitivo}
+		\chapter{Resultado Definitivo da Isenção do PSC 2023 (apenas algumas páginas)}
+		\includepdf[pages=-,pagecommand={},width=175 mm]{anexos/psc2023-e12-resultado-definitivo}
 		
 		\chapter{Relatório de Similaridade Aplicado no PSC 2023 (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-similaridade}
+		\includepdf[pages=-,pagecommand={},width=175 mm]{anexos/psc2023-e12-relatorio-similaridade}
 		
 		\chapter{Relatório de Estatísticas de Processamento (apenas algumas páginas)}
-		\includepdf[pages=-]{anexos/psc2023-e12-relatorio-processamento}
+		\includepdf[pages=-,pagecommand={},width=175 mm]{anexos/psc2023-e12-relatorio-processamento}
 		
 	\end{anexosenv}
 
